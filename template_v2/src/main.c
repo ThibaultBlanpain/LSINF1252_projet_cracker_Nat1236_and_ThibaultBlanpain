@@ -55,14 +55,18 @@ seront pas d office des int ou char*) */
   */
   /* on cherche tous les fichier .bin (a lire) */
   int i ;
-  char *fichs ;
+  int placeFich = 0;
+  char fichs[argc];
   for(i = 0; i < argc, i++)
   {
     char *argTestBin = argv[i];
     int lengthArg = strlen(argTestBin);
     if(argTestBin[lengthArg - 1] == 'n' and argTestBin[lengthArg - 2] == 'i' and
   argTestBin[lengthArg - 3] == 'b' and argTestBin[lengthArg - 4] == '.')
-      fichs[] = argTestBin ; 
+      {
+        fichs[placeFich] = argTestBin ;
+        placeFich = placeFich + 1;
+      }
   }
 
 
