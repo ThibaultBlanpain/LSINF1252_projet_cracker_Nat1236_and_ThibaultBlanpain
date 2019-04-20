@@ -26,23 +26,25 @@ int main(int argc, char **argv){
   {
     switch(opt)
     {
-      case "t":
+      case 't':
        nthread = optarg;
        break;
-      case "c":
+      case 'c':
        consonne = true;
        break;
-      case "o":
+      case 'o':
        fichier = optarg;
        break;
-      case "?":
+      case '?':
        if (optopt == 't')
-         printf (stderr, "Option -%c requiert un argument.\n", optopt);
+         fprintf (stderr, "Option -%c requiert un argument.\n", optopt);
        if (optopt == 'o')
-         printf (stderr, "Option -%c requiert un argument.\n", optopt);
+         fprintf (stderr, "Option -%c requiert un argument.\n", optopt);
        else
-         printf(stderr, "Option -`\\x%x' inconnu"\n", optopt);
-       break;
+       fprintf (stderr,
+                 "Caractere d option inconnu `\\x%x'.\n",
+                 optopt);
+       return -1;
     }
 
   }
