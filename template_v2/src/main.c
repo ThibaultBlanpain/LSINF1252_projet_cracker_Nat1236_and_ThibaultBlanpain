@@ -41,9 +41,7 @@ int main(int argc, char **argv){
        if (optopt == 'o')
          fprintf (stderr, "Option -%c requiert un argument.\n", optopt);
        else
-       fprintf (stderr,
-                 "Caractere d option inconnu `\\x%x'.\n",
-                 optopt);
+         fprintf (stderr, "Caractere d option inconnu `\\x%x'.\n", optopt);
        return -1;
     }
 
