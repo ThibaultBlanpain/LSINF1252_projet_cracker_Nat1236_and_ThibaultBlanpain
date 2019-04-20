@@ -18,7 +18,9 @@ int main(int argc, char **argv){
   4- display ligne par ligne
   */
 
-  /* etape 0: lecture des arguments */
+  /* etape 0: lecture des options */
+  /* penser a implementer de la programmation defensive (sur les options, qui ne
+seront pas d office des int ou char*) */
   long int nthread = 1;
   bool consonne = false;
   char *fichier = NULL;
