@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <unistd.h>
 #include <stdbool.h>
+#include <ctype.h>
 
 #include "reverse.h"
 #include "sha256.h"
@@ -42,9 +43,8 @@ int main(int argc, char **argv){
        else
          printf(stderr, "Option -`\\x%x' inconnu"\n", optopt);
        break;
-      default:
-       
     }
+
   }
 
 
