@@ -24,7 +24,7 @@ int main(int argc, char **argv){
 seront pas d office des int ou char*) */
   long int nthread = 1;
   bool consonne = false;
-  char *fichier = NULL;
+  char *fichierout = NULL;
   int opt;
   while ((opt = getopt(argc, argv, "t:co:")) != -1)
   {
@@ -37,7 +37,7 @@ seront pas d office des int ou char*) */
        consonne = true;
        break;
       case 'o':
-       fichier = optarg;
+       fichierout = optarg;
        break;
       case '?':
        if (optopt == 't')
