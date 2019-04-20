@@ -11,7 +11,7 @@ int main(int argc, char **argv){
   1- lire les fichiers
   2- utiliser la fonction reversehash(const uint8_t *hash, char *res, size_t len);
   3- trier
-  4- display
+  4- display ligne par ligne 
   */
 
 
