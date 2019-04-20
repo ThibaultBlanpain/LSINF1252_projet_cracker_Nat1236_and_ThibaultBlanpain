@@ -48,6 +48,9 @@ int main(int argc, char **argv){
 
   }
 
+  /* etape 1 :  */
+  int fd = open();
+
 
   return EXIT_SUCCESS;
 }
