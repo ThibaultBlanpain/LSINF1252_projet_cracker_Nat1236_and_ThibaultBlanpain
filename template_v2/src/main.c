@@ -3,6 +3,7 @@
 #include <unistd.h>
 #include <stdbool.h>
 #include <ctype.h>
+#include <string.h>
 
 #include "reverse.h"
 #include "sha256.h"
@@ -18,7 +19,7 @@ int main(int argc, char **argv){
   */
 
   /* etape 0: lecture des arguments */
-  int nthread = 1;
+  long int nthread = 1;
   bool consonne = false;
   char *fichier = NULL;
   int opt;
@@ -27,7 +28,7 @@ int main(int argc, char **argv){
     switch(opt)
     {
       case 't':
-       nthread = optarg;
+       nthread = atol(optarg);
        break;
       case 'c':
        consonne = true;
@@ -41,7 +42,7 @@ int main(int argc, char **argv){
        if (optopt == 'o')
          fprintf (stderr, "Option -%c requiert un argument.\n", optopt);
        else
-       fprintf (stderr,
+         fprintf (stderr,
                  "Caractere d option inconnu `\\x%x'.\n",
                  optopt);
        return -1;
