@@ -19,6 +19,7 @@ int main(int argc, char **argv){
   */
 
   /* etape 0: lecture des arguments */
+  /* penser a implementer de la programmation defensive (sur les arguments)*/
   long int nthread = 1;
   bool consonne = false;
   char *fichier = NULL;
