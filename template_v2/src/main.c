@@ -1,8 +1,10 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <unistd.h>
 
 #include "reverse.h"
 #include "sha256.h"
+
 int main(int argc, char **argv){
   /*
   les etapes du programme:
@@ -11,5 +13,9 @@ int main(int argc, char **argv){
   3- trier
   4- display
   */
-    return EXIT_SUCCESS;
+
+
+
+
+  return EXIT_SUCCESS;
 }
