@@ -4,6 +4,7 @@
 #include <stdbool.h>
 #include <ctype.h>
 #include <string.h>
+#include <pthread.h>
 
 #include "reverse.h"
 #include "sha256.h"
@@ -47,11 +48,21 @@ seront pas d office des int ou char*) */
          fprintf (stderr, "Caractere d option inconnu `\\x%x'.\n", optopt);
        return -1;
     }
-
   }
 
-  /* etape 1 :  */
-  int fd = open();
+  /* etape 1: lecture des fichiers de hash
+  il faut des threads (un par type d entree)
+  */
+  /* on cherche tous les fichier .bin (a lire) */
+  int i;
+  for(i = 0; i < argc, i++)
+  {
+    char *argTestBin = argv[i];
+    int lengthArg = strlen(argTestBin);
+    if(argTestBin[lengthArg - 1] == 'n' and argTestBin[lengthArg - 2] == 'i' and
+  argTestBin[lengthArg - 3] == 'b' and argTestBin[lengthArg - 4] == '.')
+      
+  }
 
 
   return EXIT_SUCCESS;
