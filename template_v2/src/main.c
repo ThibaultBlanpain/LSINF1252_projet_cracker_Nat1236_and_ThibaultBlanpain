@@ -50,6 +50,13 @@ seront pas d office des int ou char*) */
     }
   }
 
+  /* petite section de test de verification des options */
+  printf("Nombres de threads: %d \n", nthread);
+  printf("Tri par consonne? %s \n", consonne ? "true" : "false");
+  if (fichierout != NULL)
+    printf("Le fichier de sortie a ete specifie comme: %s \n", fichierout);
+  /* fin de la petite section de test des options */
+
   /* etape 1: lecture des fichiers de hash
   il faut des threads (un par type d entree)
   */
@@ -57,12 +64,12 @@ seront pas d office des int ou char*) */
   int i ;
   int placeFich = 0;
   char fichs[argc];
-  for(i = 0; i < argc, i++)
+  for(i = 0; i < argc; i++)
   {
     char *argTestBin = argv[i];
     int lengthArg = strlen(argTestBin);
-    if(argTestBin[lengthArg - 1] == 'n' and argTestBin[lengthArg - 2] == 'i' and
-  argTestBin[lengthArg - 3] == 'b' and argTestBin[lengthArg - 4] == '.')
+    if(argTestBin[lengthArg - 1] == 'n' && argTestBin[lengthArg - 2] == 'i' &&
+  argTestBin[lengthArg - 3] == 'b' && argTestBin[lengthArg - 4] == '.')
       {
         fichs[placeFich] = argTestBin ;
         placeFich = placeFich + 1;
@@ -70,7 +77,7 @@ seront pas d office des int ou char*) */
   }
   /* maintenant que les fichiers a lire (.bin) sont stockes dans un tableau, il
   faut les differencier, selon leur provenance et les lire */
-  
+
 
 
   return EXIT_SUCCESS;
