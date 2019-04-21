@@ -68,6 +68,9 @@ seront pas d office des int ou char*) */
         placeFich = placeFich + 1;
       }
   }
+  /* maintenant que les fichiers a lire (.bin) sont stockes dans un tableau, il
+  faut les differencier, selon leur provenance et les lire */
+  
 
 
   return EXIT_SUCCESS;
