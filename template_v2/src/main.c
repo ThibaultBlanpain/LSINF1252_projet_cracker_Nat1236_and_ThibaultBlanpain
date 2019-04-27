@@ -49,6 +49,10 @@ seront pas d office des int ou char*) */
        return -1;
     }
   }
+  if (optind == argc) {
+        fprintf (stderr, "Il est necessaire de specifier au moins un argument.\n");
+        return 1;
+    }
 
   /* petite section de test de verification des options */
   printf("Nombres de threads: %d \n", nthread);
