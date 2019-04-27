@@ -113,7 +113,7 @@ seront pas d office des int ou char*) */
 
 
   pthread_t thread_lectureEasy ;
-  if (pthread_create(&thread_lectureEasy, NULL, lecture, (&fichs[argc],argc)) == -1) {
+  if (pthread_create(&thread_lectureEasy, NULL, lecture, (&fichs,argc)) == -1) {
     perror("pthread_create");
     return EXIT_FAILURE ;
   }
