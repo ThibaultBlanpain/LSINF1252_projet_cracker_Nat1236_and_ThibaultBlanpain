@@ -109,7 +109,7 @@ seront pas d office des int ou char*) */
     char *argTestBin = argv[i];
     int lengthArg = strlen(argTestBin);
     if(argTestBin[lengthArg - 1] == 'n' && argTestBin[lengthArg - 2] == 'i' &&
-  argTestBin[lengthArg - 3] == 'b' && argTestBin[lengthArg - 4] == '.') 
+  argTestBin[lengthArg - 3] == 'b' && argTestBin[lengthArg - 4] == '.')
       {
         fichs[placeFich] = argTestBin;
         placeFich = placeFich + 1;

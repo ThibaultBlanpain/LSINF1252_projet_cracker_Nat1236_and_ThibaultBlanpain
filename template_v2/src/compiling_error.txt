@@ -1,4 +1,0 @@
-/tmp/ccPfHJuC.o : Dans la fonction « main » :
-main.c:(.text+0x436) : référence indéfinie vers « pthread_create »
-main.c:(.text+0x45f) : référence indéfinie vers « pthread_join »
-collect2: error: ld returned 1 exit status
