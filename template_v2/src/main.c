@@ -92,4 +92,36 @@ void *lecture(void *arg) { //fonction de lecture
         placeFich = placeFich + 1;
       }
   }
+<<<<<<< HEAD
+=======
+
+  
+
+  pthread_t thread_lecture ;
+  if (pthread_create(&thread_lecture, NULL, lecture, NULL) == -1) {
+    perror("pthread_create");
+    return EXIT_FAILURE ;
+  }
+  return EXIT_SUCCESS;
+}
+
+void *lecture(void *arg) { //fonction de lecture
+  for(i = 0; i < argc && fichs[i] != NULL; i++)
+  {
+    int fd = open(filename, O_RDONLY);
+    if(fd == -1)
+      return -1; //fails to open ok
+    int size = sizeof(int);
+    int buf;
+    int rd = read(fd, &buf, size);
+    if( rd < 0)
+    {
+      int err;
+      err = close(fd);
+      if(err==-1)
+        return -3;
+      return -2; //fails to read ok
+    }
+  }
+>>>>>>> 8ee64720e816674b1974cab676b01554cba93fb3
 }
