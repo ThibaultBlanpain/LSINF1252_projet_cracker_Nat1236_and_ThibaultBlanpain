@@ -9,6 +9,30 @@
 #include "reverse.h"
 #include "sha256.h"
 
+
+void *lecture(void *fichs, void *argnbr)
+{ //fonction de lecture
+  int i;
+  int argc = (int) argnbr;
+  for(i = 0; i < argc && fichs[i] != NULL; i++)
+  {
+    int fd = open(filename, O_RDONLY);
+    if(fd == -1)
+      return -1; //fails to open ok
+    int size = sizeof(int);
+    int buf;
+    int rd = read(fd, &buf, size);
+    if( rd < 0)
+    {
+      int err;
+      err = close(fd);
+      if(err==-1)
+        return -3;
+      return -2; //fails to read ok
+    }
+  }
+}
+
 int main(int argc, char **argv){
   /*
   les etapes du programme:
@@ -55,7 +79,7 @@ seront pas d office des int ou char*) */
     }
 
   /* petite section de test de verification des options */
-  printf("Nombres de threads: %d \n", nthread);
+  printf("Nombres de threads: %ld \n", nthread);
   printf("Tri par consonne? %s \n", consonne ? "true" : "false");
   if (fichierout != NULL)
     printf("Le fichier de sortie a ete specifie comme: %s \n", fichierout);
@@ -88,7 +112,7 @@ seront pas d office des int ou char*) */
 
 
   pthread_t thread_lectureEasy ;
-  if (pthread_create(&thread_lectureEasy, NULL, lecture, NULL) == -1) {
+  if (pthread_create(&thread_lectureEasy, NULL, lecture, ((void *) fichs, *argc)) == -1) {
     perror("pthread_create");
     return EXIT_FAILURE ;
   }
@@ -96,26 +120,4 @@ seront pas d office des int ou char*) */
   pthread_join(thread_lectureEasy, NULL);
 
   return EXIT_SUCCESS;
-}
-
-
-
-void *lecture(void *arg) { //fonction de lecture
-  for(i = 0; i < argc && fichs[i] != NULL; i++)
-  {
-    int fd = open(filename, O_RDONLY);
-    if(fd == -1)
-      return -1; //fails to open ok
-    int size = sizeof(int);
-    int buf;
-    int rd = read(fd, &buf, size);
-    if( rd < 0)
-    {
-      int err;
-      err = close(fd);
-      if(err==-1)
-        return -3;
-      return -2; //fails to read ok
-    }
-  }
 }
