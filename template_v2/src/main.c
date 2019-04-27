@@ -81,6 +81,8 @@ seront pas d office des int ou char*) */
       }
   }
 
+  
+
   pthread_t thread_lecture ;
   if (pthread_create(&thread_lecture, NULL, lecture, NULL) == -1) {
     perror("pthread_create");
