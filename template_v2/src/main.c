@@ -8,21 +8,22 @@
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <fcntl.h>
+#include <errno.h>
 
 #include "reverse.h"
 #include "sha256.h"
 
-
-void *lecture(void *fichiers, void * argnbr)
+int TAILLEFICHIERLIRE;
+void *lecture(void *fichiers)
 { //fonction de lecture
-  int argc = (int) argnbr;
+  int argc = TAILLEFICHIERLIRE;
   char ** fichs = (char **) fichiers;
   int i;
   for(i = 0; i < argc && fichs[i] != NULL; i++)
   {
     int fd = open(fichs[i], O_RDONLY);
     if(fd == -1)
-      return -1; //fails to open ok
+      pthread_exit(NULL); //fails to open ok
     int size = sizeof(int);
     int buf;
     int rd = read(fd, &buf, size);
@@ -31,10 +32,11 @@ void *lecture(void *fichiers, void * argnbr)
       int err;
       err = close(fd);
       if(err==-1)
-        return -3;
-      return -2; //fails to read ok
+        pthread_exit(NULL);
+      pthread_exit(NULL); //fails to read ok
     }
   }
+  pthread_exit(NULL);
 }
 
 int main(int argc, char **argv){
@@ -100,7 +102,8 @@ seront pas d office des int ou char*) */
 
   int i ;
   int placeFich = 0;
-  char fichs[argc];
+  TAILLEFICHIERLIRE = argc;
+  char *fichs[argc];
   for(i = 0; i < argc; i++)
   {
     char *argTestBin = argv[i];
@@ -108,7 +111,7 @@ seront pas d office des int ou char*) */
     if(argTestBin[lengthArg - 1] == 'n' && argTestBin[lengthArg - 2] == 'i' &&
   argTestBin[lengthArg - 3] == 'b' && argTestBin[lengthArg - 4] == '.')
       {
-        fichs[placeFich] = argTestBin ;
+        fichs[placeFich] = argTestBin;
         placeFich = placeFich + 1;
       }
   }
@@ -118,7 +121,7 @@ seront pas d office des int ou char*) */
 
 
   pthread_t thread_lectureEasy ;
-  if (pthread_create(&thread_lectureEasy, NULL, lecture, (&fichs,argc)) == -1) {
+  if (pthread_create(&thread_lectureEasy, NULL, lecture, &fichs) == -1) {
     perror("pthread_create");
     return EXIT_FAILURE ;
   }
