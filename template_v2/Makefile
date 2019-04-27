@@ -1,1 +1,2 @@
-# TODO
+clean:
+	rm -rf *.o
