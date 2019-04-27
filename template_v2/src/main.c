@@ -66,18 +66,6 @@ seront pas d office des int ou char*) */
   /* maintenant que les fichiers a lire (.bin) sont stockes dans un tableau, il
   faut les differencier, selon leur provenance et les lire */
 
-  pthread_t thread1 ;
-  if (pthread_create(&thread1, NULL, lecture, NULL) == -1)
-  {
-    perror("pthread_create");
-    return EXIT_FAILURE ;
-  }
-  return EXIT_SUCCESS;
-}
-
-
-
-void *lecture(void *arg) { //fonction de lecture
   int i ;
   int placeFich = 0;
   char fichs[argc];
@@ -92,10 +80,8 @@ void *lecture(void *arg) { //fonction de lecture
         placeFich = placeFich + 1;
       }
   }
-<<<<<<< HEAD
-=======
 
-  
+
 
   pthread_t thread_lecture ;
   if (pthread_create(&thread_lecture, NULL, lecture, NULL) == -1) {
@@ -104,6 +90,8 @@ void *lecture(void *arg) { //fonction de lecture
   }
   return EXIT_SUCCESS;
 }
+
+
 
 void *lecture(void *arg) { //fonction de lecture
   for(i = 0; i < argc && fichs[i] != NULL; i++)
@@ -123,5 +111,4 @@ void *lecture(void *arg) { //fonction de lecture
       return -2; //fails to read ok
     }
   }
->>>>>>> 8ee64720e816674b1974cab676b01554cba93fb3
 }
