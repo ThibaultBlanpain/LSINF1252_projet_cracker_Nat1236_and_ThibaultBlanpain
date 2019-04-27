@@ -21,9 +21,13 @@ void *lecture(void *fichiers)
   int i;
   for(i = 0; i < argc && fichs[i] != NULL; i++)
   {
+    printf("blabla %s blabla \n", fichs[i]);
     int fd = open(fichs[i], O_RDONLY);
     if(fd == -1)
+    {
+      printf("aie1");
       pthread_exit(NULL); //fails to open ok
+    }
     int size = sizeof(int);
     int buf;
     int rd = read(fd, &buf, size);
@@ -32,10 +36,15 @@ void *lecture(void *fichiers)
       int err;
       err = close(fd);
       if(err==-1)
+      {
+        printf("aie2");
         pthread_exit(NULL);
+      }
+      printf("aie3");
       pthread_exit(NULL); //fails to read ok
     }
   }
+  printf("aie4");
   pthread_exit(NULL);
 }
 
@@ -114,6 +123,7 @@ seront pas d office des int ou char*) */
         fichs[placeFich] = argTestBin;
         placeFich = placeFich + 1;
       }
+
   }
 
   /* creer la structure comprenant les arguments de lecture*/
@@ -121,7 +131,7 @@ seront pas d office des int ou char*) */
 
 
   pthread_t thread_lectureEasy ;
-  if (pthread_create(&thread_lectureEasy, NULL, lecture, &fichs) == -1) {
+  if (pthread_create(&thread_lectureEasy, NULL, lecture, (void*)&fichs) == -1) {
     perror("pthread_create");
     return EXIT_FAILURE ;
   }
