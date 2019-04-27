@@ -1,0 +1,35 @@
+/home/natacha/Documents/UCL/Q4/LSINF1252 - Systèmes informatiques/LSINF1252_projet_cracker_Nat1236_and_ThibaultBlanpain/template_v2/src/main.c: In function ‘lecture’:
+/home/natacha/Documents/UCL/Q4/LSINF1252 - Systèmes informatiques/LSINF1252_projet_cracker_Nat1236_and_ThibaultBlanpain/template_v2/src/main.c:18:14: warning: cast from pointer to integer of different size [-Wpointer-to-int-cast]
+   int argc = (int) argnbr;
+              ^
+/home/natacha/Documents/UCL/Q4/LSINF1252 - Systèmes informatiques/LSINF1252_projet_cracker_Nat1236_and_ThibaultBlanpain/template_v2/src/main.c:25:14: warning: return makes pointer from integer without a cast [-Wint-conversion]
+       return -1; //fails to open ok
+              ^
+/home/natacha/Documents/UCL/Q4/LSINF1252 - Systèmes informatiques/LSINF1252_projet_cracker_Nat1236_and_ThibaultBlanpain/template_v2/src/main.c:34:16: warning: return makes pointer from integer without a cast [-Wint-conversion]
+         return -3;
+                ^
+/home/natacha/Documents/UCL/Q4/LSINF1252 - Systèmes informatiques/LSINF1252_projet_cracker_Nat1236_and_ThibaultBlanpain/template_v2/src/main.c:35:14: warning: return makes pointer from integer without a cast [-Wint-conversion]
+       return -2; //fails to read ok
+              ^
+/home/natacha/Documents/UCL/Q4/LSINF1252 - Systèmes informatiques/LSINF1252_projet_cracker_Nat1236_and_ThibaultBlanpain/template_v2/src/main.c: In function ‘main’:
+/home/natacha/Documents/UCL/Q4/LSINF1252 - Systèmes informatiques/LSINF1252_projet_cracker_Nat1236_and_ThibaultBlanpain/template_v2/src/main.c:111:26: warning: assignment makes integer from pointer without a cast [-Wint-conversion]
+         fichs[placeFich] = argTestBin ;
+                          ^
+/home/natacha/Documents/UCL/Q4/LSINF1252 - Systèmes informatiques/LSINF1252_projet_cracker_Nat1236_and_ThibaultBlanpain/template_v2/src/main.c:121:49: warning: passing argument 3 of ‘pthread_create’ from incompatible pointer type [-Wincompatible-pointer-types]
+   if (pthread_create(&thread_lectureEasy, NULL, lecture, (&fichs,argc)) == -1) {
+                                                 ^~~~~~~
+In file included from /home/natacha/Documents/UCL/Q4/LSINF1252 - Systèmes informatiques/LSINF1252_projet_cracker_Nat1236_and_ThibaultBlanpain/template_v2/src/main.c:7:0:
+/usr/include/pthread.h:234:12: note: expected ‘void * (*)(void *)’ but argument is of type ‘void * (*)(void *, void *)’
+ extern int pthread_create (pthread_t *__restrict __newthread,
+            ^~~~~~~~~~~~~~
+/home/natacha/Documents/UCL/Q4/LSINF1252 - Systèmes informatiques/LSINF1252_projet_cracker_Nat1236_and_ThibaultBlanpain/template_v2/src/main.c:121:58: warning: passing argument 4 of ‘pthread_create’ makes pointer from integer without a cast [-Wint-conversion]
+   if (pthread_create(&thread_lectureEasy, NULL, lecture, (&fichs,argc)) == -1) {
+                                                          ^
+In file included from /home/natacha/Documents/UCL/Q4/LSINF1252 - Systèmes informatiques/LSINF1252_projet_cracker_Nat1236_and_ThibaultBlanpain/template_v2/src/main.c:7:0:
+/usr/include/pthread.h:234:12: note: expected ‘void * restrict’ but argument is of type ‘int’
+ extern int pthread_create (pthread_t *__restrict __newthread,
+            ^~~~~~~~~~~~~~
+/tmp/cc2xkzRQ.o : Dans la fonction « main » :
+main.c:(.text+0x42c) : référence indéfinie vers « pthread_create »
+main.c:(.text+0x455) : référence indéfinie vers « pthread_join »
+collect2: error: ld returned 1 exit status
