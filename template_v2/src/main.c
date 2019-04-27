@@ -66,6 +66,18 @@ seront pas d office des int ou char*) */
   /* maintenant que les fichiers a lire (.bin) sont stockes dans un tableau, il
   faut les differencier, selon leur provenance et les lire */
 
+  pthread_t thread1 ;
+  if (pthread_create(&thread1, NULL, lecture, NULL) == -1)
+  {
+    perror("pthread_create");
+    return EXIT_FAILURE ;
+  }
+  return EXIT_SUCCESS;
+}
+
+
+
+void *lecture(void *arg) { //fonction de lecture
   int i ;
   int placeFich = 0;
   char fichs[argc];
@@ -79,32 +91,5 @@ seront pas d office des int ou char*) */
         fichs[placeFich] = argTestBin ;
         placeFich = placeFich + 1;
       }
-  }
-
-  pthread_t thread_lecture ;
-  if (pthread_create(&thread_lecture, NULL, lecture, NULL) == -1) {
-    perror("pthread_create");
-    return EXIT_FAILURE ;
-  }
-  return EXIT_SUCCESS;
-}
-
-void *lecture(void *arg) { //fonction de lecture
-  for(i = 0; i < argc && fichs[i] != NULL; i++)
-  {
-    int fd = open(filename, O_RDONLY);
-    if(fd == -1)
-      return -1; //fails to open ok
-    int size = sizeof(int);
-    int buf;
-    int rd = read(fd, &buf, size);
-    if( rd < 0)
-    {
-      int err;
-      err = close(fd);
-      if(err==-1)
-        return -3;
-      return -2; //fails to read ok
-    }
   }
 }
