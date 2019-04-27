@@ -10,10 +10,11 @@
 #include "sha256.h"
 
 
-void *lecture(void *fichs, void *argnbr)
+void *lecture(void *arg, void *argnbr)
 { //fonction de lecture
   int i;
   int argc = (int) argnbr;
+  char *fichs[argc] = arg ;
   for(i = 0; i < argc && fichs[i] != NULL; i++)
   {
     int fd = open(filename, O_RDONLY);
@@ -112,7 +113,7 @@ seront pas d office des int ou char*) */
 
 
   pthread_t thread_lectureEasy ;
-  if (pthread_create(&thread_lectureEasy, NULL, lecture, ((void *) fichs, *argc)) == -1) {
+  if (pthread_create(&thread_lectureEasy, NULL, lecture, (&fichs[argc],argc)) == -1) {
     perror("pthread_create");
     return EXIT_FAILURE ;
   }
