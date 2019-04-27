@@ -5,19 +5,22 @@
 #include <ctype.h>
 #include <string.h>
 #include <pthread.h>
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <fcntl.h>
 
 #include "reverse.h"
 #include "sha256.h"
 
 
-void *lecture(void *arg, void *argnbr)
+void *lecture(void *fichiers, void * argnbr)
 { //fonction de lecture
-  int i;
   int argc = (int) argnbr;
-  char *fichs[argc] = arg ;
+  char ** fichs = (char **) fichiers;
+  int i;
   for(i = 0; i < argc && fichs[i] != NULL; i++)
   {
-    int fd = open(filename, O_RDONLY);
+    int fd = open(fichs[i], O_RDONLY);
     if(fd == -1)
       return -1; //fails to open ok
     int size = sizeof(int);
@@ -110,6 +113,8 @@ seront pas d office des int ou char*) */
       }
   }
 
+  /* creer la structure comprenant les arguments de lecture*/
+
 
 
   pthread_t thread_lectureEasy ;
@@ -121,4 +126,4 @@ seront pas d office des int ou char*) */
   pthread_join(thread_lectureEasy, NULL);
 
   return EXIT_SUCCESS;
-}
+} //fin de la main()
