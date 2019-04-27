@@ -81,7 +81,7 @@ seront pas d office des int ou char*) */
       }
   }
 
-  
+
 
   pthread_t thread_lecture ;
   if (pthread_create(&thread_lecture, NULL, lecture, NULL) == -1) {
@@ -90,6 +90,8 @@ seront pas d office des int ou char*) */
   }
   return EXIT_SUCCESS;
 }
+
+
 
 void *lecture(void *arg) { //fonction de lecture
   for(i = 0; i < argc && fichs[i] != NULL; i++)
