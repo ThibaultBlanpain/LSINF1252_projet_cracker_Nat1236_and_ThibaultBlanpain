@@ -45,14 +45,9 @@ seront pas d office des int ou char*) */
        if (optopt == 'o')
          fprintf (stderr, "Option -%c requiert un argument.\n", optopt);
        else
-         fprintf (stderr, "Caractere d option inconnu `\\x%x'.\n", optopt);
+         fprintf (stderr, "Caractere d'option inconnu `\\x%x'.\n", optopt);
        return -1;
     }
-  }
-  if (optind == argc)
-  {
-    fprintf (stderr, "Au moins un argument doit etre specifie.\n");
-    return 1;
   }
 
   /* petite section de test de verification des options */
@@ -66,6 +61,17 @@ seront pas d office des int ou char*) */
   il faut des threads (un par type d entree)
   */
   /* on cherche tous les fichier .bin (a lire) */
+
+
+  /* maintenant que les fichiers a lire (.bin) sont stockes dans un tableau, il
+  faut les differencier, selon leur provenance et les lire */
+
+  int pthread_create(pthread_t * thread, NULL, void *(*start_routine) (void *), void *arg)
+
+  return EXIT_SUCCESS;
+}
+
+int lecture() { //focntion de lecture 
   int i ;
   int placeFich = 0;
   char fichs[argc];
@@ -80,30 +86,4 @@ seront pas d office des int ou char*) */
         placeFich = placeFich + 1;
       }
   }
-  /* maintenant que les fichiers a lire (.bin) sont stockes dans un tableau, il
-  faut les differencier, selon leur provenance et les lire */
-
-  for(i = 0; i < argc && fichs[i] != NULL; i++)
-  {
-    int fd = open(filename, O_RDONLY);
-    if(fd == -1)
-      return -1;
-      //fails to open ok
-
-    int size = sizeof(int);
-    int buf;
-    int rd = read(fd, &buf, size);
-    if( rd < 0)
-    {
-      int err;
-      err = close(fd);
-      if(err==-1)
-        return -3;
-      return -2;
-    }
-    //fails to read ok
-  }
-
-
-  return EXIT_SUCCESS;
 }
