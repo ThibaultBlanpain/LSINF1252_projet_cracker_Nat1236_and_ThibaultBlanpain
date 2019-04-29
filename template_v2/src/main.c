@@ -14,6 +14,7 @@
 #include "sha256.h"
 
 int TAILLEFICHIERLIRE;
+
 void *lecture(void *fichiers)
 { //fonction de lecture
   int argc = TAILLEFICHIERLIRE;
@@ -31,7 +32,7 @@ void *lecture(void *fichiers)
     }
     printf("reading file number %d\n", i);
     int size = sizeof(int);
-    uint8_t buf;
+    uint8_t* buf = malloc(sizeof(uint8_t)*100);
     int rd = read(fd, &buf, size);
     printf("fichier numero %d lu\n", i);
     if( rd < 0)
@@ -136,10 +137,10 @@ seront pas d office des int ou char*) */
   if (pthread_create(&thread_lectureEasy, NULL, lecture, (void*)&(*fichs)) == -1) {
     perror("pthread_create");
     return EXIT_FAILURE ;
-  printf("le thread de lecture basic a ete cree");
   }
+  printf("le thread de lecture basic a ete cree");
+
 
   pthread_join(thread_lectureEasy, NULL);
-
   return EXIT_SUCCESS;
 } //fin de la main()
