@@ -21,30 +21,35 @@ void *lecture(void *fichiers)
   int i;
   for(i = 0; i < argc && fichs[i] != NULL; i++)
   {
-    printf("blabla %s blabla \n", fichs[i]);
+    printf("preparartion de l ouverture du fichier %s\n", fichs[i]);
     int fd = open(fichs[i], O_RDONLY);
+    printf("fichier numero %d ouvert\n", i);
     if(fd == -1)
     {
-      printf("aie1");
+      printf("echec de l ouverture du fichier %s\n", fichs[i]);
       pthread_exit(NULL); //fails to open ok
     }
+    printf("reading file number %d\n", i);
     int size = sizeof(int);
-    int buf;
+    uint8_t buf;
     int rd = read(fd, &buf, size);
+    printf("fichier numero %d lu\n", i);
     if( rd < 0)
     {
       int err;
       err = close(fd);
       if(err==-1)
       {
-        printf("aie2");
+        printf("echec de la fermeture du fichier %s\n", fichs[i]);
         pthread_exit(NULL);
       }
-      printf("aie3");
+      printf("echec de la lecture du fichier %s\n", fichs[i]);
+      printf("le fichier %s a ete ferme\n", fichs[i]);
       pthread_exit(NULL); //fails to read ok
     }
+    printf("le fichier %s a ete ouvert, lu et ferme\n", fichs[i]);
   }
-  printf("aie4");
+  printf("tous les fichirs ont ete lus, ouverts et fermes\n");
   pthread_exit(NULL);
 }
 
@@ -94,10 +99,11 @@ seront pas d office des int ou char*) */
     }
 
   /* petite section de test de verification des options */
-  printf("Nombres de threads: %ld \n", nthread);
+  printf("Nombre de threads: %ld \n", nthread);
   printf("Tri par consonne? %s \n", consonne ? "true" : "false");
   if (fichierout != NULL)
     printf("Le fichier de sortie a ete specifie comme: %s \n", fichierout);
+  printf("argc: %d, optind: %d \n", argc, optind);
   /* fin de la petite section de test des options */
 
   /* etape 1: lecture des fichiers de hash
@@ -111,9 +117,9 @@ seront pas d office des int ou char*) */
 
   int i ;
   int placeFich = 0;
-  TAILLEFICHIERLIRE = argc;
-  char *fichs[argc];
-  for(i = 0; i < argc; i++)
+  TAILLEFICHIERLIRE = argc-optind;
+  char *fichs[TAILLEFICHIERLIRE];
+  for(i = optind; i < argc; i++)
   {
     char *argTestBin = argv[i];
     int lengthArg = strlen(argTestBin);
@@ -123,17 +129,14 @@ seront pas d office des int ou char*) */
         fichs[placeFich] = argTestBin;
         placeFich = placeFich + 1;
       }
-
   }
-
-  /* creer la structure comprenant les arguments de lecture*/
-
 
 
   pthread_t thread_lectureEasy ;
-  if (pthread_create(&thread_lectureEasy, NULL, lecture, (void*)&fichs) == -1) {
+  if (pthread_create(&thread_lectureEasy, NULL, lecture, (void*)&(*fichs)) == -1) {
     perror("pthread_create");
     return EXIT_FAILURE ;
+  printf("le thread de lecture basic a ete cree");
   }
 
   pthread_join(thread_lectureEasy, NULL);
