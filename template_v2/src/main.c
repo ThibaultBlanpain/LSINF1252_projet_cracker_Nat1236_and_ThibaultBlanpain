@@ -26,26 +26,26 @@ void *lecture(void *fichiers)
   int i;
   for(i = 0; i < argc && fichs[i] != NULL; i++)
   {
-    printf("preparartion de l ouverture du fichier %s\n", fichs[i]);
+    printf("Preparation de l ouverture du fichier %s\n", fichs[i]);
     int fd = open(fichs[i], O_RDONLY);
     printf("fichier numero %d ouvert\n", i);
     if(fd == -1)
     {
-      printf("echec de l ouverture du fichier %s\n", fichs[i]);
+      printf("Echec de l ouverture du fichier %s\n", fichs[i]);
       pthread_exit(NULL); //fails to open ok
     }
-    printf("reading file number %d\n", i);
+    printf("Reading file number %d\n", i);
     int size = sizeof(int);
     buf = malloc(bufSize);
     int rd = read(fd, &buf, size);
-    printf("fichier numero %d lu\n", i);
+    printf("Fichier numero %d lu\n", i);
     if( rd < 0)
     {
       int err;
       err = close(fd);
       if(err==-1)
       {
-        printf("echec de la fermeture du fichier %s\n", fichs[i]);
+        printf("Echec de la fermeture du fichier %s\n", fichs[i]);
         pthread_exit(NULL);
       }
       printf("echec de la lecture du fichier %s\n", fichs[i]);
