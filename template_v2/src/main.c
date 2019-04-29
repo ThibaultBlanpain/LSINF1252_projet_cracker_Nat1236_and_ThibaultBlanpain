@@ -14,6 +14,10 @@
 #include "sha256.h"
 
 int TAILLEFICHIERLIRE;
+uint8_t ** buf;
+int bufSize = sizeof(uint8_t)*100;
+char ** bufReverseHash;
+char * candidat[16];
 
 void *lecture(void *fichiers)
 { //fonction de lecture
@@ -32,7 +36,7 @@ void *lecture(void *fichiers)
     }
     printf("reading file number %d\n", i);
     int size = sizeof(int);
-    uint8_t* buf = malloc(sizeof(uint8_t)*100);
+    buf = malloc(bufSize);
     int rd = read(fd, &buf, size);
     printf("fichier numero %d lu\n", i);
     if( rd < 0)
@@ -53,6 +57,38 @@ void *lecture(void *fichiers)
   printf("tous les fichirs ont ete lus, ouverts et fermes\n");
   pthread_exit(NULL);
 }
+
+
+
+/*
+fonction de thread qui va reversehash les hashs presents dans buf
+et stocker les mdp au clair dans le bufReverseHash
+                         !!!!!!!!!!!!!!!!!!
+ATTENTION: il faut maintenir le thread en vie tout le long du programme
+                         !!!!!!!!!!!!!!!!!!
+*/
+void *reverseHashFunc()
+{
+  int i;
+  for(i = 0; i < bufSize; i++)
+  {
+    char *res = malloc(sizeof(char)*16);
+    size_t sizeReverseMdp = strlen("abcdabcdabcdabcd");
+    if(buf[i] != NULL && reversehash(buf[i], res, sizeReverseMdp))
+    {
+      int j = 0;
+      while(bufReverseHash[j] != NULL)
+      {
+        j++;
+      }
+      strcpy(bufReverseHash[j], res);
+    }
+  }
+  pthread_exit(NULL);
+}
+
+
+
 
 int main(int argc, char **argv){
   /*
@@ -133,12 +169,22 @@ seront pas d office des int ou char*) */
   }
 
 
-  pthread_t thread_lectureEasy ;
+  pthread_t thread_lectureEasy;
   if (pthread_create(&thread_lectureEasy, NULL, lecture, (void*)&(*fichs)) == -1) {
     perror("pthread_create");
     return EXIT_FAILURE ;
   }
-  printf("le thread de lecture basic a ete cree");
+  printf("le thread de lecture basic a ete cree\n");
+
+  pthread_t thread_reverseHash;
+  for(i = 0; i < nthread; i++)
+  {
+    if(pthread_create(&thread_reverseHash, NULL, reverseHashFunc, NULL) == -1)
+    {
+      perror("pthread_create");
+      return EXIT_FAILURE;
+    }
+  }
 
 
   pthread_join(thread_lectureEasy, NULL);
