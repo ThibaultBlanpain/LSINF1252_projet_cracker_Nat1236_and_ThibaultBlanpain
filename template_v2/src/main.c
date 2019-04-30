@@ -26,19 +26,19 @@ void *lecture(void *fichiers)
   int i;
   for(i = 0; i < argc && fichs[i] != NULL; i++)
   {
-    printf("Preparation de l ouverture du fichier %s\n", fichs[i]);
+    printf("Préparation de l'ouverture du fichier %s\n", fichs[i]);
     int fd = open(fichs[i], O_RDONLY);
-    printf("fichier numero %d ouvert\n", i);
+    printf("Fichier numéro %d ouvert\n", i);
     if(fd == -1)
     {
-      printf("Echec de l ouverture du fichier %s\n", fichs[i]);
+      printf("Echec de l'ouverture du fichier %s\n", fichs[i]);
       pthread_exit(NULL); //fails to open ok
     }
     printf("Reading file number %d\n", i);
     int size = sizeof(int);
     buf = malloc(bufSize);
     int rd = read(fd, &buf, size);
-    printf("Fichier numero %d lu\n", i);
+    printf("Fichier numéro %d lu\n", i);
     if( rd < 0)
     {
       int err;
@@ -48,13 +48,13 @@ void *lecture(void *fichiers)
         printf("Echec de la fermeture du fichier %s\n", fichs[i]);
         pthread_exit(NULL);
       }
-      printf("echec de la lecture du fichier %s\n", fichs[i]);
-      printf("le fichier %s a ete ferme\n", fichs[i]);
+      printf("Echec de la lecture du fichier %s\n", fichs[i]);
+      printf("Le fichier %s a été fermé\n", fichs[i]);
       pthread_exit(NULL); //fails to read ok
     }
-    printf("le fichier %s a ete ouvert, lu et ferme\n", fichs[i]);
+    printf("Le fichier %s a été ouvert, lu et fermé\n", fichs[i]);
   }
-  printf("tous les fichirs ont ete lus, ouverts et fermes\n");
+  printf("Tous les fichiers ont été lus, ouverts et fermés\n");
   pthread_exit(NULL);
 }
 
@@ -126,12 +126,12 @@ seront pas d office des int ou char*) */
        if (optopt == 'o')
          fprintf (stderr, "Option -%c requiert un argument.\n", optopt);
        else
-         fprintf (stderr, "Caractere d'option inconnu `\\x%x'.\n", optopt);
+         fprintf (stderr, "Caractère d'option inconnu `\\x%x'.\n", optopt);
        return -1;
     }
   }
   if (optind == argc) {
-        fprintf (stderr, "Il est necessaire de specifier au moins un argument.\n");
+        fprintf (stderr, "Il est nécessaire de spécifier au moins un argument.\n");
         return 1;
     }
 
@@ -139,7 +139,7 @@ seront pas d office des int ou char*) */
   printf("Nombre de threads: %ld \n", nthread);
   printf("Tri par consonne? %s \n", consonne ? "true" : "false");
   if (fichierout != NULL)
-    printf("Le fichier de sortie a ete specifie comme: %s \n", fichierout);
+    printf("Le fichier de sortie a été spécifié comme: %s \n", fichierout);
   printf("argc: %d, optind: %d \n", argc, optind);
   /* fin de la petite section de test des options */
 
@@ -174,7 +174,7 @@ seront pas d office des int ou char*) */
     perror("pthread_create");
     return EXIT_FAILURE ;
   }
-  printf("le thread de lecture basic a ete cree\n");
+  printf("Le thread de lecture basic a été créé\n");
 
   pthread_t thread_reverseHash;
   for(i = 0; i < nthread; i++)
