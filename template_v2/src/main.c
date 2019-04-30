@@ -13,6 +13,8 @@
 
 #include "reverse.h"
 #include "sha256.h"
+#include "init_var.h"
+#include "destroy_var.h"
 
 
 

@@ -19,10 +19,17 @@ uint8_t ** buf;
 int bufSize;
 char ** bufReverseHash;
 char * candidat[16];
-sem_t sephorestopLecture;
-sem_init(&semaphoreStopLecture, 0, 1);
-sem_t semaphoreStopReverseHash;
-sem_init(&semaphoreStopReverseHash, 0, 1);
+
+void *init_sem(char * name, int val)
+{
+  if(val < 0)
+  {
+    printf("le semaphore doit etre initialise avec une valeur >= 0");
+    exit(42);
+  }
+  sem_t = name;
+  sem_init(&name, 0, val);
+}
 
 
 void *lecture(void *fichiers)
