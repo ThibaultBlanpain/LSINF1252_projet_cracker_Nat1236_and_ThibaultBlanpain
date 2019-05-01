@@ -20,14 +20,14 @@ int bufSize;
 char ** bufReverseHash;
 char * candidat[16];
 
-void *init_sem(char * name, int val)
+void *init_sem(char * name, int val)  //pourquoi cette fonction ?
 {
   if(val < 0)
   {
-    printf("le semaphore doit etre initialise avec une valeur >= 0");
+    printf("Le semaphore doit etre initialise avec une valeur >= 0");
     exit(42);
   }
-  sem_t = name;
+  sem_t name;
   sem_init(&name, 0, val);
 }
 
@@ -49,6 +49,11 @@ void *lecture(void *fichiers)
     }
     printf("Reading file number %d\n", i);
     int size = sizeof(int);
+
+    sem_t name;
+    sem_init(&name,0,1);
+    sem_wait(&name); //entrée dans la section critique, on protège le buffer
+
     buf = malloc(bufSize);
     int rd = read(fd, &buf, size);
     printf("Fichier numéro %d lu\n", i);
@@ -69,7 +74,14 @@ void *lecture(void *fichiers)
   }
   printf("Tous les fichiers ont été lus, ouverts et fermés\n");
   pthread_exit(NULL);
+
+  sem_post(&name);
+  sem_destroy(&name); //libération du buffer pour un autre thread
+
+  //quand est-ce qu'on free la mémoire utilisée par le buffer ?
 }
+
+//ou alors, il vaut mieux initialiser les sémaphores dans la main ? 
 
 
 /*
@@ -86,6 +98,11 @@ void *reverseHashFunc()
   {
     char *res = malloc(sizeof(char)*16);
     size_t sizeReverseMdp = strlen("abcdabcdabcdabcd");
+
+    sem_t name;
+    sem_init(&name,0,1);
+    sem_wait(&name); //entrée dans la section critique, on protège le buffer
+
     if(buf[i] != NULL && reversehash(buf[i], res, sizeReverseMdp))
     {
       int j = 0;
@@ -98,4 +115,7 @@ void *reverseHashFunc()
     }
   }
   pthread_exit(NULL);
+
+  sem_post(&name);
+  sem_destroy(&name); //libération du buffer pour un autre thread
 }
