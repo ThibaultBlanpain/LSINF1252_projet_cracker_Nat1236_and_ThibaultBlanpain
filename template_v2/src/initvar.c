@@ -123,3 +123,85 @@ void *reverseHashFunc()
   sem_post(&name);
   sem_destroy(&name); //libération du buffer pour un autre thread
 }
+
+int trieur(*bufReverseHash)
+{
+  extern consonne;
+  /* tri par voyelle */
+  if(!consonne)
+  {
+    extern bufSize;
+    int voyelles[bufSize];
+    int i;
+    int j;
+    int nbrOccu = 0;
+    int nbrOccuMax = 0;
+    for(i = 0; i < bufSize; i++)
+    {
+      for(j = 0; j < strlen(bufReverseHash[i]); i++)
+      {
+        if(bufReverseHash[i] == NULL)
+        {
+          nbrOccu = 0;
+        }
+        else(bufReverseHash[j] == 'a' | bufReverseHash[j] == 'e' | bufReverseHash[j] == 'y' | bufReverseHash[j] == 'u' | bufReverseHash[j] == 'i' | bufReverseHash[j] == 'o')
+        {
+          nbrOccu = nbrOccu + 1;
+        }
+      }
+      voyelles[i] = nbrOccu;
+      if(voyelles[i] > nbrOccuMax)
+      {
+        nbrOccuMax = nbrOccu;
+      }
+    }
+    /* maintenant, on supprime les mauvais candidats */
+    for(i = 0; i < bufSize; i++)
+    {
+      if(voyelles[i] < nbrOccuMax)
+      {
+        bufReverseHash[i] = NULL;
+      }
+    }
+    printf("Le buffer des codes au clair a ete trie\n");
+    return 1;
+  }
+  else
+  {
+    extern bufSize;
+    int voyelles[bufSize];
+    int i;
+    int j;
+    int nbrOccu = 0;
+    int nbrOccuMax = 0;
+    for(i = 0; i < bufSize; i++)
+    {
+      for(j = 0; j < strlen(bufReverseHash[i]); i++)
+      {
+        if(bufReverseHash[i] == NULL)
+        {
+          nbrOccu = 0;
+        }
+        else(bufReverseHash[j] != 'a' && bufReverseHash[j] != 'e' && bufReverseHash[j] != 'y' && bufReverseHash[j] != 'u' && bufReverseHash[j] != 'i' && bufReverseHash[j] != 'o')
+        {
+          nbrOccu = nbrOccu + 1;
+        }
+      }
+      voyelles[i] = nbrOccu;
+      if(voyelles[i] > nbrOccuMax)
+      {
+        nbrOccuMax = nbrOccu;
+      }
+    }
+    /* maintenant, on supprime les mauvais candidats */
+    for(i = 0; i < bufSize; i++)
+    {
+      if(voyelles[i] < nbrOccuMax)
+      {
+        bufReverseHash[i] = NULL;
+      }
+    }
+    printf("Le buffer des codes au clair a ete trie\n");
+    return 1;
+  }
+}

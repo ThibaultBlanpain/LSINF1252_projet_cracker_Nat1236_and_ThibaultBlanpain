@@ -33,7 +33,7 @@ int main(int argc, char **argv){
 seront pas d office des int ou char*) */
   int TAILLEFICHIERLIRE;
   long int nthread = 1;
-  bool consonne = false;
+  extern bool consonne = false;
   char *fichierout = NULL;
   int opt;
   while ((opt = getopt(argc, argv, "t:co:")) != -1)

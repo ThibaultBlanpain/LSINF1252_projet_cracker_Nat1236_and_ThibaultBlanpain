@@ -28,4 +28,10 @@ fonction de reversehash associee au thread de reversehash
 
 void *reverseHashFunc();
 
+/*
+fonction triant les candidats en selon l'occurence des consonnes ou voyelles
+@return: 1 quand fini.
+*/
+int trieur(*bufReverseHash);
+
 #endif
