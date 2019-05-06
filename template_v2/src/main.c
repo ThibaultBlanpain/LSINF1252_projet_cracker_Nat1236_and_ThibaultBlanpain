@@ -16,6 +16,79 @@
 #include "initvar.h"
 #include "destroy_var.h"
 
+/*
+variables globales
+*/
+
+int TAILLEFICHIERLIRE;
+int HashBufSize;
+int index;
+pthread_mutex_t mutexIndex;
+sem_t semHashBuf;
+/*
+les threads:
+0- lecture
+1- ecriture
+2- thread
+*/
+
+/*
+0- thread de lecture: prend un tableau de noms de fichiers .bin en argument, lit
+ces fichiers et stocke les hashs lus dans un buffer nomme HashBuf.
+*/
+void *lecture(void *fichiers)
+{
+  int argc = TAILLEFICHIERLIRE;
+  char ** fichs = (char **) fichiers;
+  int i;
+  sem_init(&semHashBuf,0,1);
+  for(i = 0; i < argc && fichs[i] != NULL; i++)
+  {
+    printf("Préparation de l'ouverture du fichier %s\n", fichs[i]);
+    int fd = open(fichs[i], O_RDONLY);
+    if(fd == -1)
+    {
+      printf("Echec de l'ouverture du fichier %s\n", fichs[i]);
+      pthread_exit(NULL); //fails to open ok
+    }
+    printf("Lecture du fichier numero %d\n", i);
+    int size = sizeof(uint8_t)*32;
+    buf = (uint8_t) malloc(size);
+    int rd = read(fd, &buf, size);
+    printf("Fichier numéro %d lu\n", i);
+    while(rd > 0)
+    {
+      sem_wait(&semHashBuf);
+      if(index >= HashBufSize)
+      {
+        sem_wait(&semHashBuf);
+      }
+      pthread_mutex_lock(&mutexIndex);
+      HashBuf[index] = buf;
+      index += 1;
+      pthread_mutex_unlock(&mutexIndex);
+      sem_post(&semHashBuf);
+    }
+
+    if( rd < 0)
+    {
+      int err;
+      err = close(fd);
+      if(err==-1)
+      {
+        printf("Echec de la fermeture du fichier %s\n", fichs[i]);
+        pthread_exit(NULL);
+      }
+      printf("Echec de la lecture du fichier %s. Ce fichier a pu etre ferme\n", fichs[i]);
+      pthread_exit(NULL); //fails to read ok
+    }
+    printf("Le fichier %s a été ouvert, lu et fermé\n", fichs[i]);
+  }
+  printf("Tous les fichiers ont été lus, ouverts et fermés\n");
+  pthread_exit(NULL);
+
+  sem_destroy(&semHashBuf);
+}
 
 
 int main(int argc, char **argv){
@@ -31,7 +104,6 @@ int main(int argc, char **argv){
   /* etape 0: lecture des options */
   /* penser a implementer de la programmation defensive (sur les options, qui ne
 seront pas d office des int ou char*) */
-  int TAILLEFICHIERLIRE;
   long int nthread = 1;
   extern bool consonne = false;
   char *fichierout = NULL;
@@ -78,11 +150,12 @@ seront pas d office des int ou char*) */
   /* on cherche tous les fichier .bin (a lire) */
 
 
-  /* maintenant que les fichiers a lire (.bin) sont stockes dans un tableau, il
+  /* A faire : maintenant que les fichiers a lire (.bin) sont stockes dans un tableau, il
   faut les differencier, selon leur provenance et les lire */
 
   int i ;
   int placeFich = 0;
+  HashBufSize = sizeof(uint8_t)*32*nthread;
   TAILLEFICHIERLIRE = argc-optind;
   char *fichs[TAILLEFICHIERLIRE];
   for(i = optind; i < argc; i++)
@@ -96,8 +169,6 @@ seront pas d office des int ou char*) */
         placeFich = placeFich + 1;
       }
   }
-  extern int bufSize;
-  bufSize = sizeof(uint8_t)*32*nthread;
 
   pthread_t thread_lectureEasy;
   if (pthread_create(&thread_lectureEasy, NULL, lecture, (void*)&(*fichs)) == -1) {
@@ -105,6 +176,9 @@ seront pas d office des int ou char*) */
     return EXIT_FAILURE ;
   }
   printf("Le thread de lecture basic a été créé\n");
+
+  /* on lit les fichiers .bin */
+
 
   pthread_t thread_reverseHash;
   for(i = 0; i < nthread; i++)
