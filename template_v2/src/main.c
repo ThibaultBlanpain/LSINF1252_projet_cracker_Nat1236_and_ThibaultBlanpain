@@ -13,7 +13,7 @@
 
 #include "reverse.h"
 #include "sha256.h"
-#include "init_var.h"
+#include "initvar.h"
 #include "destroy_var.h"
 
 
@@ -31,6 +31,7 @@ int main(int argc, char **argv){
   /* etape 0: lecture des options */
   /* penser a implementer de la programmation defensive (sur les options, qui ne
 seront pas d office des int ou char*) */
+  int TAILLEFICHIERLIRE;
   long int nthread = 1;
   bool consonne = false;
   char *fichierout = NULL;
@@ -95,7 +96,7 @@ seront pas d office des int ou char*) */
         placeFich = placeFich + 1;
       }
   }
-
+  int bufSize;
   bufSize = sizeof(uint8_t)*nthread;
 
   pthread_t thread_lectureEasy;

@@ -14,12 +14,12 @@
 #include "reverse.h"
 #include "sha256.h"
 
-int TAILLEFICHIERLIRE;
+
 uint8_t ** buf;
-int bufSize;
 char ** bufReverseHash;
 char * candidat[16];
 
+/*
 void *init_sem(char * name, int val)  //pourquoi cette fonction ?
 {
   if(val < 0)
@@ -29,11 +29,12 @@ void *init_sem(char * name, int val)  //pourquoi cette fonction ?
   }
   sem_t name;
   sem_init(&name, 0, val);
-}
+}*/
 
 
 void *lecture(void *fichiers)
 { //fonction de lecture
+  extern int TAILLEFICHIERLIRE;
   int argc = TAILLEFICHIERLIRE;
   char ** fichs = (char **) fichiers;
   int i;
@@ -53,7 +54,7 @@ void *lecture(void *fichiers)
     sem_t name;
     sem_init(&name,0,1);
     sem_wait(&name); //entrée dans la section critique, on protège le buffer
-
+    extern int bufSize;
     buf = malloc(bufSize);
     int rd = read(fd, &buf, size);
     printf("Fichier numéro %d lu\n", i);
@@ -81,7 +82,7 @@ void *lecture(void *fichiers)
   //quand est-ce qu'on free la mémoire utilisée par le buffer ?
 }
 
-//ou alors, il vaut mieux initialiser les sémaphores dans la main ? 
+//ou alors, il vaut mieux initialiser les sémaphores dans la main ?
 
 
 /*
@@ -94,12 +95,13 @@ ATTENTION: il faut maintenir le thread en vie tout le long du programme
 void *reverseHashFunc()
 {
   int i;
+  extern int bufSize;
   for(i = 0; i < bufSize; i++)
   {
     char *res = malloc(sizeof(char)*16);
     size_t sizeReverseMdp = strlen("abcdabcdabcdabcd");
 
-    sem_t name;
+    sem_t *name;
     sem_init(&name,0,1);
     sem_wait(&name); //entrée dans la section critique, on protège le buffer
 

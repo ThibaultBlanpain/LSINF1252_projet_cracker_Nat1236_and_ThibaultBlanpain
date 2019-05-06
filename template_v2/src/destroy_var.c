@@ -22,9 +22,10 @@ char * candidat[16];
 
 //Il faut faire attention à détruire proprement les sémaphores utilisés dès qu'ils ne sont plus nécessaires
 
-
+/*
 void *dest_sem(char *name, int val) //peut-être inutile, puisque n'a pa sde condition
 {
-  sem_t name;
+  sem_t *name;
   sem_destroy(&name);
 }
+*/
