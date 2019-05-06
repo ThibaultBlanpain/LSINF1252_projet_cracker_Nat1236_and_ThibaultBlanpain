@@ -38,6 +38,8 @@ void *lecture(void *fichiers)
   int argc = TAILLEFICHIERLIRE;
   char ** fichs = (char **) fichiers;
   int i;
+  sem_t name;
+  sem_init(&name,0,1);
   for(i = 0; i < argc && fichs[i] != NULL; i++)
   {
     printf("Préparation de l'ouverture du fichier %s\n", fichs[i]);
@@ -51,8 +53,7 @@ void *lecture(void *fichiers)
     printf("Reading file number %d\n", i);
     int size = sizeof(int);
 
-    sem_t name;
-    sem_init(&name,0,1);
+
     sem_wait(&name); //entrée dans la section critique, on protège le buffer
     extern int bufSize;
     buf = malloc(bufSize);
@@ -96,13 +97,14 @@ void *reverseHashFunc()
 {
   int i;
   extern int bufSize;
+  sem_t name;
+  sem_init(&name,0,1);
   for(i = 0; i < bufSize; i++)
   {
     char *res = malloc(sizeof(char)*16);
     size_t sizeReverseMdp = strlen("abcdabcdabcdabcd");
 
-    sem_t *name;
-    sem_init(&name,0,1);
+
     sem_wait(&name); //entrée dans la section critique, on protège le buffer
 
     if(buf[i] != NULL && reversehash(buf[i], res, sizeReverseMdp))
