@@ -96,8 +96,8 @@ seront pas d office des int ou char*) */
         placeFich = placeFich + 1;
       }
   }
-  int bufSize;
-  bufSize = sizeof(uint8_t)*nthread;
+  extern int bufSize;
+  bufSize = sizeof(uint8_t)*32*nthread;
 
   pthread_t thread_lectureEasy;
   if (pthread_create(&thread_lectureEasy, NULL, lecture, (void*)&(*fichs)) == -1) {
