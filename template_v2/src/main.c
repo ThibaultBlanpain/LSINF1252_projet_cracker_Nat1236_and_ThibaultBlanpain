@@ -22,9 +22,17 @@ variables globales
 
 int TAILLEFICHIERLIRE;
 int HashBufSize;
+size_t sizeReverseMdp = strlen("abcdabcdabcdabcd");
 int index;
 pthread_mutex_t mutexIndex;
-sem_t semHashBuf;
+sem_t semHashBufEmpty;
+sem_t semHashBufFull;
+
+
+
+sem_init(&semHashBufEmpty,0,1);
+sem_init(&semHashBufFull, 0, 0);
+
 /*
 les threads:
 0- lecture
@@ -41,7 +49,6 @@ void *lecture(void *fichiers)
   int argc = TAILLEFICHIERLIRE;
   char ** fichs = (char **) fichiers;
   int i;
-  sem_init(&semHashBuf,0,1);
   for(i = 0; i < argc && fichs[i] != NULL; i++)
   {
     printf("Préparation de l'ouverture du fichier %s\n", fichs[i]);
@@ -58,16 +65,18 @@ void *lecture(void *fichiers)
     printf("Fichier numéro %d lu\n", i);
     while(rd > 0)
     {
-      sem_wait(&semHashBuf);
+      sem_wait(&semHashBufEmpty);
       if(index >= HashBufSize)
       {
-        sem_wait(&semHashBuf);
+        sem_wait(&semHashBufEmpty);
       }
       pthread_mutex_lock(&mutexIndex);
-      HashBuf[index] = buf;
+      *HashBuf[index] = buf;
       index += 1;
+      rd = read(fd, &buf, size);
+      sem_post(&semHashBufFull); /* et oui, on a ajoute un element au tableau */
+      sem_post(&semHashBufEmpty);
       pthread_mutex_unlock(&mutexIndex);
-      sem_post(&semHashBuf);
     }
 
     if( rd < 0)
@@ -85,9 +94,32 @@ void *lecture(void *fichiers)
     printf("Le fichier %s a été ouvert, lu et fermé\n", fichs[i]);
   }
   printf("Tous les fichiers ont été lus, ouverts et fermés\n");
+  sem_destroy(&semHashBufEmpty);
   pthread_exit(NULL);
+}
 
-  sem_destroy(&semHashBuf);
+/*
+1- thread d'ecriture: se nourrit directement dans le tableau HashBuf, reversehash
+ses elements un par un et stock les reversehash dans un tableau Reversed.
+*/
+void *reverseHashFunc()
+{
+  uint8_t *localHash;
+  while(true)
+  {
+    sem_wait(&semHashBufFull);
+    pthread_mutex_lock(&mutexIndex);
+    localHash = *HashBuf[index];
+    *HashBuf[index] = NULL;
+    sem_post(&semHashBufEmpty); /* et oui, une place vient de se liberer */
+    pthread_mutex_unlock(&mutexIndex);
+  }
+  /* si on trouve un reversehash, on remplit le tableau des candidats */
+  if(reversehash(buf[i], localHash, sizeReverseMdp))
+  {
+    //sem sem lock unlock 
+    *candidatsTab[indexCandide] = localHash;
+  }
 }
 
 
@@ -156,6 +188,7 @@ seront pas d office des int ou char*) */
   int i ;
   int placeFich = 0;
   HashBufSize = sizeof(uint8_t)*32*nthread;
+  **HashBuf = (char *) malloc(HashBufSize);
   TAILLEFICHIERLIRE = argc-optind;
   char *fichs[TAILLEFICHIERLIRE];
   for(i = optind; i < argc; i++)
