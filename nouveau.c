@@ -16,16 +16,18 @@
 #include "initvar.h"
 #include "destroy_var.h"
 
+/////////////////////////////////////////////////////////////////////////////////////////
 /*
 variables globales
 */
+/////////////////////////////////////////////////////////////////////////////////////////
 
 int TAILLEFICHIERLIRE;
 int HashBufSize;
 bool consonne = false;
 char**HashBuf;
 char**candidatsTab; /* ne pas utiliser un tableau mais plutot une chaine */
-struct Candidats
+typedef struct Candidats
 {
   struct Candidats *head;
   struct Candidats *next;
@@ -33,6 +35,10 @@ struct Candidats
   int nbrOccurence;
 } Candid_Node;
 
+typedef struct list {
+  struct node *head;
+  int nbrOccMax;
+} list_t;
 
 size_t sizeReverseMdp = strlen("abcdabcdabcdabcd");
 int index;
@@ -47,12 +53,14 @@ sem_init(&semHashBufFull, 0, 0);
 
 /* fonctions utilitaires */
 
+/////////////////////////////////////////////////////////////////////////////////////////
 /*
 fonction de comparaison
 retourne -1 si a < b,
 retourne 0 si a == b,
 retourne 1 si a > b;
 */
+/////////////////////////////////////////////////////////////////////////////////////////
 int compare(int a, int b)
 {
   if (a==b)
@@ -62,29 +70,91 @@ int compare(int a, int b)
   return 1;
 }
 
-Candidats ordre(Candidats **head)
+/////////////////////////////////////////////////////////////////////////////////////////
+/*
+calcule le nombre d occurence de voyelles/consonnes (selon le bool consonne)
+et modifie dans la struct Candidats le parametre nbrOccurence.
+*/
+/////////////////////////////////////////////////////////////////////////////////////////
+void calculNbrOccu(Candid_Node * Node)
 {
-  if(*head == NULL)
+  char *localString = Node->codeclair;
+  int i;
+  int nbrOccLocal;
+  for(i=0; i<strlen(localString);i++)
   {
-    return NULL;
+    if(candidatsTab[i][j] == NULL)
+    {
+      nbrOccLocal = 0;
+    }
+    else(localString[i] == 'a' | localString[i] == 'e' | localString[i] == 'y' | localString[i] == 'u' | localString[i] == 'i' | localString[i] == 'o')
+    {
+      nbrOccLocal += 1;
+    }
   }
-  struct Candidats * runner = *head;
-  struct Candidats * orderedList;
-  orderedList->head = runner;
+  /* si consonne, on doit trier selon le nombre de consonne */
+  if(consonne)
+  {
+    nbrOccLocal = (strlen(localString) - 1 - nbrOccu);
+  }
+  Node->nbrOccurence = nbrOccLocal;
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////
+/*
+fonction dont le but est d enlever les candidats dont le nombre nbrOccurence
+n est pas egal au nbrOccurence le plus grand
+retourne 1 en cas d execution correcte,
+retourne -1 en cas d echec.
+il faut encore gerer le cas ou on doit enlever le premier noeud
+*/
+/////////////////////////////////////////////////////////////////////////////////////////
+int *trieur(Candid_Node **head)
+{
+  /* le cas d une liste vide est considere comme une liste triee */
+  if(head == NULL)
+  {
+    return 1;
+  }
+  /* ce noeud parcourt la liste pour trouver les noeuds a supprimer */
+  struct Candid_Node * runner = *head;
+  while(runner != NULL)
+  {
+    /* il faut enlever le noeud suivant */
+    if(compare(runner->next->nbrOccurence, ListCandidat->nbrOccMax) == -1)
+    {
+      runner->next = runner->next->next;
+    }
+    /* ListCandidat->nbrOccMax n est pas le plus grand nombre d occurence*/
+    if(compare(runner->next->nbrOccurence, ListCandidat->nbrOccMax) == 1)
+    {
+      printf("La valeur de ListCandidat->nbrOccMax n est pas valide\n");
+      return -1;
+    }
+    runner = runner->next;
+  }
+  return 1;
 }
 
 
+
+
+
+/////////////////////////////////////////////////////////////////////////////////////////
 /*
 les threads:
 0- lecture
 1- ecriture
 2- thread
 */
+/////////////////////////////////////////////////////////////////////////////////////////
 
+/////////////////////////////////////////////////////////////////////////////////////////
 /*
 0- thread de lecture: prend un tableau de noms de fichiers .bin en argument, lit
 ces fichiers et stocke les hashs lus dans un buffer nomme HashBuf.
 */
+/////////////////////////////////////////////////////////////////////////////////////////
 void *lecture(void *fichiers)
 {
   int argc = TAILLEFICHIERLIRE;
@@ -138,10 +208,12 @@ void *lecture(void *fichiers)
   pthread_exit(NULL);
 }
 
+/////////////////////////////////////////////////////////////////////////////////////////
 /*
 1- thread d'ecriture: se nourrit directement dans le tableau HashBuf, reversehash
 ses elements un par un et stock les reversehash dans un tableau Reversed.
 */
+/////////////////////////////////////////////////////////////////////////////////////////
 void *reverseHashFunc()
 {
   uint8_t *localHash;
@@ -163,69 +235,10 @@ void *reverseHashFunc()
   }
 }
 
-/*
-calcule le nombre d occurence de voyelles/consonnes (selon le bool consonne)
-et modifie dans la struct Candidats le parametre nbrOccurence.
-*/
-void calculNbrOccu(Candid_Node * Node)
-{
-  char *localString = Node->codeclair;
-  int i;
-  int nbrOccLocal;
-  for(i=0; i<strlen(localString);i++)
-  {
-    if(candidatsTab[i][j] == NULL)
-    {
-      nbrOccLocal = 0;
-    }
-    else(localString[i] == 'a' | localString[i] == 'e' | localString[i] == 'y' | localString[i] == 'u' | localString[i] == 'i' | localString[i] == 'o')
-    {
-      nbrOccLocal += 1;
-    }
-  }
-  /* si consonne, on doit trier selon le nombre de consonne */
-  if(consonne)
-  {
-    nbrOccLocal = (strlen(localString) - 1 - nbrOccu);
-  }
-  Node->nbrOccurence = nbrOccLocal;
-}
-
-/*
-fonction dont le but est d enlever les candidats dont le nombre nbrOccurence
-n est pas egal au nbrOccurence le plus grand
-retourne 1 en cas d execution correcte,
-retourne -1 en cas d echec.
-il faut encore gerer le cas ou on doit enlever le premier noeud
-*/
-int *trieur(candid **head)
-{
-  /* le cas d une liste vide est considere comme une liste triee */
-  if(head == NULL)
-  {
-    return 1;
-  }
-  /* ce noeud parcourt la liste pour trouver les noeuds a supprimer */
-  struct node * runner = *head;
-  while(runner != NULL)
-  {
-    /* il faut enlever le noeud suivant */
-    if(compare(runner->next->nbrOccurence, ListCandidat->nbrOccMax) == -1)
-    {
-      runner->next = runner->next->next;
-    }
-    /* ListCandidat->nbrOccMax n est pas le plus grand nombre d occurence*/
-    if(compare(runner->next->nbrOccurence, ListCandidat->nbrOccMax) == 1)
-    {
-      printf("La valeur de ListCandidat->nbrOccMax n est pas valide\n");
-    }
-    runner = runner->next;
-  }
-
-}
 
 
-int main(int argc, char **argv){
+
+
   /*
   les etapes du programme:
   0- lire les arguments
@@ -235,9 +248,12 @@ int main(int argc, char **argv){
   4- display ligne par ligne
   */
 
+int main(int argc, char **argv){
+  /////////////////////////////////////////////////////////////////////////////////////////
   /* etape 0: lecture des options */
   /* penser a implementer de la programmation defensive (sur les options, qui ne
 seront pas d office des int ou char*) */
+/////////////////////////////////////////////////////////////////////////////////////////
   long int nthread = 1;
   char *fichierout = NULL;
   int opt;
@@ -277,14 +293,15 @@ seront pas d office des int ou char*) */
   printf("argc: %d, optind: %d \n", argc, optind);
   /* fin de la petite section de test des options */
 
+/////////////////////////////////////////////////////////////////////////////////////////
   /* etape 1: lecture des fichiers de hash
   il faut des threads (un par type d entree)
   */
   /* on cherche tous les fichier .bin (a lire) */
 
-
   /* A faire : maintenant que les fichiers a lire (.bin) sont stockes dans un tableau, il
   faut les differencier, selon leur provenance et les lire */
+  /////////////////////////////////////////////////////////////////////////////////////////
 
   int i ;
   int placeFich = 0;
@@ -304,7 +321,6 @@ seront pas d office des int ou char*) */
         placeFich = placeFich + 1;
       }
   }
-
   pthread_t thread_lectureEasy;
   if (pthread_create(&thread_lectureEasy, NULL, lecture, (void*)&(*fichs)) == -1) {
     perror("pthread_create");
@@ -312,9 +328,13 @@ seront pas d office des int ou char*) */
   }
   printf("Le thread de lecture basic a été créé\n");
 
-  /* on lit les fichiers .bin */
 
-
+/////////////////////////////////////////////////////////////////////////////////////////
+  /* etape 2: reversehash
+  creation de tous les thread de reversehash
+  ATTENTION: il faut leur dire quand s arreter!!!
+  */
+/////////////////////////////////////////////////////////////////////////////////////////
   pthread_t thread_reverseHash;
   for(i = 0; i < nthread; i++)
   {
