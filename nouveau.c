@@ -26,7 +26,7 @@ int TAILLEFICHIERLIRE;
 int HashBufSize;
 bool consonne = false;
 char**HashBuf;
-char**candidatsTab; /* ne pas utiliser un tableau mais plutot une chaine */
+char**candidatsTab; /* ne pas utiliser un tableau mais plutot une chaine   CE TAB REPRESENTE LE TAB AVEC LES CANDIDATS DEJA REVERSEHASH ?*/
 typedef struct Candidats
 {
   struct Candidats *head;
@@ -72,8 +72,8 @@ int compare(int a, int b)
 
 /////////////////////////////////////////////////////////////////////////////////////////
 /*
-calcule le nombre d occurence de voyelles/consonnes (selon le bool consonne)
-et modifie dans la struct Candidats le parametre nbrOccurence.
+calcule le nombre d occurence de voyelles/consonnes (selon le bool consonne)  ATTENTION, CE SERAIT DANS UNE PROPOSITION DE MDP ??
+et modifie dans la struct Candidats le parametre nbrOccurence (pour garder une trace du plus grand nombre de voyelles et update le meilleur candidat ??).
 */
 /////////////////////////////////////////////////////////////////////////////////////////
 void calculNbrOccu(Candid_Node * Node)
@@ -92,7 +92,7 @@ void calculNbrOccu(Candid_Node * Node)
       nbrOccLocal += 1;
     }
   }
-  /* si consonne, on doit trier selon le nombre de consonne */
+  /* si l'option consonne est activée, on doit trier selon le nombre de consonnes */
   if(consonne)
   {
     nbrOccLocal = (strlen(localString) - 1 - nbrOccu);
@@ -106,7 +106,7 @@ fonction dont le but est d enlever les candidats dont le nombre nbrOccurence
 n est pas egal au nbrOccurence le plus grand
 retourne 1 en cas d execution correcte,
 retourne -1 en cas d echec.
-il faut encore gerer le cas ou on doit enlever le premier noeud
+il faut encore gerer le cas ou on doit enlever le premier noeud : POURQUOI ??
 */
 /////////////////////////////////////////////////////////////////////////////////////////
 int *trieur(Candid_Node **head)
@@ -345,6 +345,7 @@ seront pas d office des int ou char*) */
     }
   }
 
-
+  /* rajouter phtread_join non ? */
+  
   return EXIT_SUCCESS;
 } //fin de la main()
