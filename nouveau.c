@@ -30,8 +30,8 @@ struct Candidats
   struct Candidats *head;
   struct Candidats *next;
   char * codeclair;
-  int nbrVoyelle;
-};
+  int nbrOccurence;
+} Candid_Node;
 
 
 size_t sizeReverseMdp = strlen("abcdabcdabcdabcd");
@@ -46,6 +46,13 @@ sem_init(&semHashBufEmpty,0,1);
 sem_init(&semHashBufFull, 0, 0);
 
 /* fonctions utilitaires */
+
+/*
+fonction de comparaison
+retourne -1 si a < b,
+retourne 0 si a == b,
+retourne 1 si a > b;
+*/
 int compare(int a, int b)
 {
   if (a==b)
@@ -142,11 +149,9 @@ void *reverseHashFunc()
   {
     char * candid;
     sem_wait(&semHashBufFull);
-    pthread_mutex_lock(&mutexIndex);
     localHash = *HashBuf[index];
     *HashBuf[index] = NULL;
     sem_post(&semHashBufEmpty); /* et oui, une place vient de se liberer */
-    pthread_mutex_unlock(&mutexIndex);
   }
   /* si on trouve un reversehash, on remplit le tableau des candidats */
 
@@ -158,38 +163,65 @@ void *reverseHashFunc()
   }
 }
 
-void *trieur()
+/*
+calcule le nombre d occurence de voyelles/consonnes (selon le bool consonne)
+et modifie dans la struct Candidats le parametre nbrOccurence.
+*/
+void calculNbrOccu(Candid_Node * Node)
 {
-  int nbrOccu;
-  int nbrOccuMax = 0;
-  int compteur[bufSize];
-  /* compter le nombre d occurence de voyelles. Si le bool consonne est a true,
-  enlever le nombre d occurence de voyelles de la longueur du string. */
-  for(i = 0; i < bufSize; i++)
+  char *localString = Node->codeclair;
+  int i;
+  int nbrOccLocal;
+  for(i=0; i<strlen(localString);i++)
   {
-    nbrOccu = 0;
-    for(j = 0; j < strlen(candidatsTab[i]); i++)
+    if(candidatsTab[i][j] == NULL)
     {
-      if(candidatsTab[i][j] == NULL)
-      {
-        nbrOccu = 0;
-      }
-      else(candidatsTab[i][j] == 'a' | candidatsTab[i][j] == 'e' | candidatsTab[i][j] == 'y' | candidatsTab[i][j] == 'u' | candidatsTab[i][j] == 'i' | candidatsTab[i][j] == 'o')
-      {
-        nbrOccu = nbrOccu + 1;
-      }
+      nbrOccLocal = 0;
     }
-    if(consonne)
+    else(localString[i] == 'a' | localString[i] == 'e' | localString[i] == 'y' | localString[i] == 'u' | localString[i] == 'i' | localString[i] == 'o')
     {
-      nbrOccu = (strlen(candidatsTab[i] - 1 - nbrOccu));
+      nbrOccLocal += 1;
     }
-    compteur[i] = nbrOccu;
-    if(nbrOccu >= nbrOccuMax)
-    {
-      nbrOccuMax = nbrOccu;
-    }
-    /* on a finit de compter le nombre d occurence de voyelles dans le mot i */
   }
+  /* si consonne, on doit trier selon le nombre de consonne */
+  if(consonne)
+  {
+    nbrOccLocal = (strlen(localString) - 1 - nbrOccu);
+  }
+  Node->nbrOccurence = nbrOccLocal;
+}
+
+/*
+fonction dont le but est d enlever les candidats dont le nombre nbrOccurence
+n est pas egal au nbrOccurence le plus grand
+retourne 1 en cas d execution correcte,
+retourne -1 en cas d echec.
+il faut encore gerer le cas ou on doit enlever le premier noeud
+*/
+int *trieur(candid **head)
+{
+  /* le cas d une liste vide est considere comme une liste triee */
+  if(head == NULL)
+  {
+    return 1;
+  }
+  /* ce noeud parcourt la liste pour trouver les noeuds a supprimer */
+  struct node * runner = *head;
+  while(runner != NULL)
+  {
+    /* il faut enlever le noeud suivant */
+    if(compare(runner->next->nbrOccurence, ListCandidat->nbrOccMax) == -1)
+    {
+      runner->next = runner->next->next;
+    }
+    /* ListCandidat->nbrOccMax n est pas le plus grand nombre d occurence*/
+    if(compare(runner->next->nbrOccurence, ListCandidat->nbrOccMax) == 1)
+    {
+      printf("La valeur de ListCandidat->nbrOccMax n est pas valide\n");
+    }
+    runner = runner->next;
+  }
+
 }
 
 
