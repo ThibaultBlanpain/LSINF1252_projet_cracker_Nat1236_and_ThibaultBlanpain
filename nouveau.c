@@ -158,7 +158,7 @@ retourne -1 en cas d echec.
 il faut encore gerer le cas ou on doit enlever le premier noeud : POURQUOI ??
 */
 /////////////////////////////////////////////////////////////////////////////////////////
-int *trieur(Candid_Node **head)
+int *trieur(list_t ListCandidat)
 {
   /* le cas d une liste vide est considere comme une liste triee */
   if(head == NULL)
@@ -166,7 +166,7 @@ int *trieur(Candid_Node **head)
     return 1;
   }
   /* ce noeud parcourt la liste pour trouver les noeuds a supprimer */
-  struct Candid_Node * runner = *head;
+  struct Candid_Node * runner = ListCandidat->head;
   while(runner != NULL)
   {
     /* il faut enlever le noeud suivant */
