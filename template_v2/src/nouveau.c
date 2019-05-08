@@ -344,7 +344,8 @@ retourne 0 si l execution a pu se terminer
 retourne -1 sinon.
 */
 
-int main(int argc, char **argv){
+int main(int argc, char **argv)
+{
   sem_init(&semHashBufEmpty,0,1);
   sem_init(&semHashBufFull, 0, 0);
 /////////////////////////////////////////////////////////////////////////////////////////
@@ -450,7 +451,7 @@ appel à la fonction trieur qui supprime tous les mauvais candidats de la liste 
   int retTri = trieur(ListCandidat);
   if (retTri == -1)
   {
-    printf("La liste de candidats n a pas pu etre triee\n");
+    printf("La liste de candidats n'a pas pu être triée\n");
   }
 
   /////////////////////////////////////////////////////////////////////////////////////////
@@ -465,7 +466,7 @@ appel à la fonction trieur qui supprime tous les mauvais candidats de la liste 
     int retDisp = displayStd(ListCandidat);
     if(retDisp == -1)
     {
-      printf("les candidats n'ont pas pu être affichés\n");
+      printf("Les candidats n'ont pas pu être affichés\n");
     }
     return 0;
   }
@@ -476,7 +477,7 @@ appel à la fonction trieur qui supprime tous les mauvais candidats de la liste 
     int retDispSpec = displaySpec(ListCandidat);
     if(retDispSpec == -1)
     {
-      printf("les candidats n'ont pas pu être affichés\n");
+      printf("Les candidats n'ont pas pu être affichés\n");
     }
     return 0;
   }
@@ -484,6 +485,7 @@ appel à la fonction trieur qui supprime tous les mauvais candidats de la liste 
 
   /* rajouter phtread_join non ? */
 
+  free(HashBuf);
 
   return EXIT_SUCCESS;
 } //fin de la main()
