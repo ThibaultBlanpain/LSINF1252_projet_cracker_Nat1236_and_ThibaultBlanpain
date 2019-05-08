@@ -229,6 +229,7 @@ void *lecture(void *fichiers)
     }
     printf("Lecture du fichier numero %d\n", i);
     int size = sizeof(uint8_t)*32;
+    uint8_t * buf;
     buf = (uint8_t *) malloc(size);
     int rd = read(fd, &buf, size);
     printf("Fichier numéro %d lu\n", i);
@@ -281,8 +282,11 @@ void *reverseHashFunc()
   {
     char * candid;
     sem_wait(&semHashBufFull);
+    pthread_mutex_lock(mutexIndex);
     localHash = *HashBuf[index];
     *HashBuf[index] = NULL;
+    index -= 1;
+    pthread_mutex_unlock(mutexIndex);
     sem_post(&semHashBufEmpty); /* et oui, une place vient de se liberer */
   }
   /* si on trouve un reversehash, on remplit le tableau des candidats */
