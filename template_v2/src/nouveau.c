@@ -23,23 +23,23 @@ Variables globales
 int TAILLEFICHIERLIRE;
 int HashBufSize;
 bool consonne = false;
-uint8_t **HashBuf;
+uint8_t ** HashBuf;
 typedef struct Candidats
 {
-  struct Candidats *next;
+  struct Candidats * next;
   char codeclair[16];  //représente le mot de passe reverse-hashed
   int nbrOccurence;
 } Candid_Node;
 
 typedef struct list {
-  struct Candidats *head;
-  struct Candidats *last;
+  struct Candidats * head;
+  struct Candidats * last;
   int nbrOccMax;
 } list_t;
 
 size_t sizeReverseMdp = strlen("abcdabcdabcdabcd");
 int indexG;
-list_t *ListCandidat;
+list_t * ListCandidat;
 /*variable indiquant que le thread de lecture continue à lire :
 vaut 1 si le thread est en train de lire
 vaut 0 si le thread de lecture a terminé*/
@@ -313,7 +313,7 @@ void *reverseHashFunc()
     sem_post(&semHashBufEmpty); /* et oui, une place vient de se liberer */
     if(reversehash(localHash, candid, sizeReverseMdp))
     {
-      int ret = add_node(*ListCandidat, localHash);
+      int ret = add_node(ListCandidat, localHash);
       if(ret == -1)
       {
         printf("Erreur dans l'ajout des noeuds à la liste des candidats");
@@ -447,7 +447,7 @@ seront pas d office des int ou char*) */
 appel à la fonction trieur qui supprime tous les mauvais candidats de la liste chaînée
 */
 /////////////////////////////////////////////////////////////////////////////////////////
-  int retTri = trieur(*ListCandidat);
+  int retTri = trieur(ListCandidat);
   if (retTri == -1)
   {
     printf("La liste de candidats n a pas pu etre triee\n");
@@ -462,7 +462,7 @@ appel à la fonction trieur qui supprime tous les mauvais candidats de la liste 
   //affichage sur la stortie standart
   if(fichierout == NULL)
   {
-    int retDisp = displayStd(*ListCandidat);
+    int retDisp = displayStd(ListCandidat);
     if(retDisp == -1)
     {
       printf("les candidats n'ont pas pu être affichés\n");
@@ -473,7 +473,7 @@ appel à la fonction trieur qui supprime tous les mauvais candidats de la liste 
   //doit encore etre implemente.
   else
   {
-    int retDispSpec = displaySpec(*ListCandidat);
+    int retDispSpec = displaySpec(ListCandidat);
     if(retDispSpec == -1)
     {
       printf("les candidats n'ont pas pu être affichés\n");
