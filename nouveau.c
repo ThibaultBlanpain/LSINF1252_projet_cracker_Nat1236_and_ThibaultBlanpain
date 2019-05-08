@@ -26,7 +26,6 @@ int TAILLEFICHIERLIRE;
 int HashBufSize;
 bool consonne = false;
 char**HashBuf;
-char**candidatsTab; /* ne pas utiliser un tableau mais plutot une chaine   CE TAB REPRESENTE LE TAB AVEC LES CANDIDATS DEJA REVERSEHASH ?*/
 typedef struct Candidats
 {
   struct Candidats *next;
@@ -82,9 +81,12 @@ void calculNbrOccu(Candid_Node * Node)
   int nbrOccLocal;
   for(i=0; i<strlen(localString);i++)
   {
-    if(candidatsTab[i][j] == NULL)
+    //
+    if(localString == NULL)
     {
       nbrOccLocal = 0;
+      Node->nbrOccurence = nbrOccLocal;
+      return;
     }
     else(localString[i] == 'a' | localString[i] == 'e' | localString[i] == 'y' | localString[i] == 'u' | localString[i] == 'i' | localString[i] == 'o')
     {
@@ -97,6 +99,7 @@ void calculNbrOccu(Candid_Node * Node)
     nbrOccLocal = (strlen(localString) - 1 - nbrOccu);
   }
   Node->nbrOccurence = nbrOccLocal;
+  return;
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////
@@ -230,6 +233,7 @@ void *reverseHashFunc()
   if(reversehash(localHash, candid, sizeReverseMdp))
   {
     //sem sem lock unlock
+    //il faut stocker (fonction add) dans la liste chainee
     *candidatsTab[indexCandide] = localHash;
   }
 }
@@ -306,7 +310,6 @@ seront pas d office des int ou char*) */
   int placeFich = 0;
   HashBufSize = sizeof(uint8_t)*32*nthread;
   **HashBuf = (char *) malloc(HashBufSize);
-  **candidatsTab = (char *) malloc(HashBufSize);
   TAILLEFICHIERLIRE = argc-optind;
   char *fichs[TAILLEFICHIERLIRE];
   for(i = optind; i < argc; i++)
