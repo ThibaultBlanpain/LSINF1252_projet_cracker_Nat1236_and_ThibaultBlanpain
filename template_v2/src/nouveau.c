@@ -23,7 +23,7 @@ Variables globales
 int TAILLEFICHIERLIRE;
 int HashBufSize;
 bool consonne = false;
-char**HashBuf;
+uint8_t **HashBuf;
 typedef struct Candidats
 {
   struct Candidats *next;
@@ -32,8 +32,8 @@ typedef struct Candidats
 } Candid_Node;
 
 typedef struct list {
-  struct node *head;
-  struct node *last;
+  struct Candidats *head;
+  struct Candidats *last;
   int nbrOccMax;
 } list_t;
 
@@ -52,8 +52,6 @@ sem_t semHashBufFull;
 
 
 
-sem_init(&semHashBufEmpty,0,1);
-sem_init(&semHashBufFull, 0, 0);
 
 /* fonctions utilitaires */
 
@@ -64,9 +62,9 @@ retourne 0 si les candidats ont été affichés
 retourne -1 sinon
 */
 /////////////////////////////////////////////////////////////////////////////////////////
-int display(*ListCandidat)
+int displayStd(list_t * ListCandidat)
 {
-  struct Candid_Node * runner = ListCandidat->head;
+  struct Candidats * runner = ListCandidat->head;
   while(runner != NULL)
   {
     char * tobeprinted = runner->codeclair;
@@ -75,6 +73,11 @@ int display(*ListCandidat)
   }
   return 0;
   return -1;
+}
+
+int displaySpec(list_t * ListCandidat)
+{
+  return 0;
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////
@@ -91,7 +94,8 @@ Candid_Node *init_node(char * codeClair)
   a = (Candid_Node *) malloc(sizeof(Candid_Node));
   if(!a)
     return NULL;
-  a->codeclair = codeClair;
+  strcpy(a->codeclair,codeClair);
+//  a->codeclair = codeClair;
   a->next = NULL;
   return a;
 }
@@ -103,7 +107,7 @@ retourne 0 si le noeud a été ajouté
 retourne -1 sinon
 */
 /////////////////////////////////////////////////////////////////////////////////////////
-int add_node(list_t *list, char *codeClair)
+int add_node(struct list *list, char *codeClair)
 {
   if(!list)
     return -1;
@@ -167,7 +171,7 @@ void calculNbrOccu(Candid_Node * Node)
   /* si l'option consonne est activée, on doit trier selon le nombre de consonnes */
   if(consonne)
   {
-    nbrOccLocal = (strlen(localString) - 1 - nbrOccu);
+    nbrOccLocal = (strlen(localString) - 1 - nbrOccLocal);
   }
   Node->nbrOccurence = nbrOccLocal;
   return;
@@ -185,12 +189,12 @@ il faut encore gérer le cas ou on doit enlever le premier noeud
 int trieur(list_t *ListCandidat)
 {
   /* le cas d'une liste vide est considéré comme une liste triée */
-  if(head == NULL)
+  if(ListCandidat->head == NULL)
   {
     return 1;
   }
   /* ce noeud parcourt la liste pour trouver les noeuds à supprimer */
-  struct Candid_Node * runner = ListCandidat->head;
+  struct Candidats * runner = ListCandidat->head;
   while(runner != NULL)
   {
     /* il faut enlever le noeud suivant */
@@ -231,11 +235,12 @@ ces fichiers et stocke les hashs lus dans un buffer nomme HashBuf.
 void *lecture(void *fichiers)
 {
   //structure de preference...
-  pthread_mutex_lock(mutexTAILLEFICHIERLIRE);
+  pthread_mutex_lock(&mutexTAILLEFICHIERLIRE);
   int argc = TAILLEFICHIERLIRE;
-  pthread_mutex_unlock(mutexTAILLEFICHIERLIRE);
+  pthread_mutex_unlock(&mutexTAILLEFICHIERLIRE);
   char ** fichs = (char **) fichiers;
   int i;
+  uint8_t * buf;
   for(i = 0; i < argc && fichs[i] != NULL; i++)
   {
     printf("Préparation de l'ouverture du fichier %s\n", fichs[i]);
@@ -247,7 +252,6 @@ void *lecture(void *fichiers)
     }
     printf("Lecture du fichier numero %d\n", i);
     int size = sizeof(uint8_t)*32;
-    uint8_t * buf;
     buf = (uint8_t *) malloc(size);
     int rd = read(fd, &buf, size);
     printf("Fichier numéro %d lu\n", i);
@@ -301,24 +305,24 @@ void *reverseHashFunc()
   {
     char * candid;
     sem_wait(&semHashBufFull);
-    pthread_mutex_lock(mutexIndex);
+    pthread_mutex_lock(&mutexIndex);
     localHash = *HashBuf[indexG];
     *HashBuf[indexG] = NULL;
     indexG -= 1;
-    pthread_mutex_unlock(mutexIndex);
+    pthread_mutex_unlock(&mutexIndex);
     sem_post(&semHashBufEmpty); /* et oui, une place vient de se liberer */
     if(reversehash(localHash, candid, sizeReverseMdp))
     {
       int ret = add_node(*ListCandidat, localHash);
       if(ret == -1)
       {
-        printf("erreur dans l ajout des noeuds a la liste des candidats"):
+        printf("Erreur dans l'ajout des noeuds à la liste des candidats");
       }
-      return;
+      return (void *) 0;
     }
     else
     {
-      printf("Aucun candidat n a pu etre trouve pour au moins un hash");
+      printf("Aucun candidat n'a pu être trouvé pour au moins un hash");
     }
   }
   pthread_exit(NULL);
@@ -341,6 +345,8 @@ retourne -1 sinon.
 */
 
 int main(int argc, char **argv){
+  sem_init(&semHashBufEmpty,0,1);
+  sem_init(&semHashBufFull, 0, 0);
 /////////////////////////////////////////////////////////////////////////////////////////
   /* etape 0: lecture des options */
   /* penser a implementer de la programmation defensive (sur les options, qui ne
@@ -399,10 +405,10 @@ seront pas d office des int ou char*) */
   int placeFich = 0;
   HashBufSize = sizeof(uint8_t)*32*nthread;
   **HashBuf = (char *) malloc(HashBufSize);
-  pthread_mutex_lock(mutexTAILLEFICHIERLIRE);
+  pthread_mutex_lock(&mutexTAILLEFICHIERLIRE);
   TAILLEFICHIERLIRE = argc-optind;
   char *fichs[TAILLEFICHIERLIRE];
-  pthread_mutex_unlock(mutexTAILLEFICHIERLIRE);
+  pthread_mutex_unlock(&mutexTAILLEFICHIERLIRE);
   for(i = optind; i < argc; i++)
   {
     char *argTestBin = argv[i];
@@ -424,7 +430,7 @@ seront pas d office des int ou char*) */
 
 /////////////////////////////////////////////////////////////////////////////////////////
   /* etape 2: reversehash
-  creation de tous les thread de reversehash
+  création de tous les thread de reversehash
   */
 /////////////////////////////////////////////////////////////////////////////////////////
   pthread_t thread_reverseHash;
@@ -438,7 +444,7 @@ seront pas d office des int ou char*) */
   }
 /////////////////////////////////////////////////////////////////////////////////////////
 /* etape 3: trieur
-appel a la fonction trieur qui supprime tous les mauvais candidats de la liste chainee
+appel à la fonction trieur qui supprime tous les mauvais candidats de la liste chaînée
 */
 /////////////////////////////////////////////////////////////////////////////////////////
   int retTri = trieur(*ListCandidat);
@@ -449,8 +455,8 @@ appel a la fonction trieur qui supprime tous les mauvais candidats de la liste c
 
   /////////////////////////////////////////////////////////////////////////////////////////
   /* etape 4: display ligne par ligne
-  appel a la fonction display qui ecrit sur soit la sortie standart, soit dans un fichier
-  precise, les bons candidats, un par ligne
+  appel à la fonction display qui écrit sur soit la sortie standard, soit dans un fichier
+  précisé, les bons candidats, un par ligne
   */
   /////////////////////////////////////////////////////////////////////////////////////////
   //affichage sur la stortie standart
@@ -459,18 +465,18 @@ appel a la fonction trieur qui supprime tous les mauvais candidats de la liste c
     int retDisp = displayStd(*ListCandidat);
     if(retDisp == -1)
     {
-      printf("les candidats n ont pas pus etre affiches\n");
+      printf("les candidats n'ont pas pu être affichés\n");
     }
     return 0;
   }
-  //remplit le fichier "fichierout" qui a ete specifie.
+  //remplit le fichier "fichierout" qui a été spécifié.
   //doit encore etre implemente.
   else
   {
-    int retDispSpec = dsiplaySpec(*ListCandidat);
+    int retDispSpec = displaySpec(*ListCandidat);
     if(retDispSpec == -1)
     {
-      printf("les candidats n ont pas pus etre affiches\n");
+      printf("les candidats n'ont pas pu être affichés\n");
     }
     return 0;
   }
