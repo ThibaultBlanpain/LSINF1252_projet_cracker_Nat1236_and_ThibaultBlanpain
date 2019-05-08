@@ -29,7 +29,6 @@ char**HashBuf;
 char**candidatsTab; /* ne pas utiliser un tableau mais plutot une chaine   CE TAB REPRESENTE LE TAB AVEC LES CANDIDATS DEJA REVERSEHASH ?*/
 typedef struct Candidats
 {
-  struct Candidats *head;
   struct Candidats *next;
   char * codeclair;  //représente le mot de passe reverse-hashed
   int nbrOccurence;
