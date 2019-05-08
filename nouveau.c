@@ -41,8 +41,14 @@ typedef struct list {
 
 size_t sizeReverseMdp = strlen("abcdabcdabcdabcd");
 int index;
-list_t ListCandidat;
+list_t *ListCandidat;
+/*variable indiquant que le thread de lecture continue a lire:
+vaut 1 si le thread lit
+vaut 0 si le thread de lecture a termine*/
+int varProd = 1;
 pthread_mutex_t mutexIndex;
+pthread_mutex_t mutexTAILLEFICHIERLIRE;
+
 sem_t semHashBufEmpty;
 sem_t semHashBufFull;
 
@@ -74,7 +80,7 @@ Candid_Node *init_node(char * codeClair)
 
 /////////////////////////////////////////////////////////////////////////////////////////
 /*
-fonction ajoutant un noeud a la suite d une liste
+fonction creant et puis ajoutant un noeud a la suite d une liste
 retourne 0 si le noeud a ete ajoute
 retourne -1 sinon
 */
@@ -92,8 +98,8 @@ int add_node(list_t *list, char *codeClair)
     list->last = a;
     return 0;
   }
-  list->head->next = a;
-  list->head = a;
+  list->last->next = a;
+  list->last = a;
   return 0;
 }
 
@@ -117,8 +123,8 @@ int compare(int a, int b)
 
 /////////////////////////////////////////////////////////////////////////////////////////
 /*
-calcule le nombre d occurence de voyelles/consonnes (selon le bool consonne)  ATTENTION, CE SERAIT DANS UNE PROPOSITION DE MDP ??
-et modifie dans la struct Candidats le parametre nbrOccurence (pour garder une trace du plus grand nombre de voyelles et update le meilleur candidat ??).
+calcule le nombre d occurence de voyelles/consonnes (selon le bool consonne) d'un candidat
+et modifie dans la struct Candidats le parametre nbrOccurence .
 */
 /////////////////////////////////////////////////////////////////////////////////////////
 void calculNbrOccu(Candid_Node * Node)
@@ -158,7 +164,7 @@ retourne -1 en cas d echec.
 il faut encore gerer le cas ou on doit enlever le premier noeud : POURQUOI ??
 */
 /////////////////////////////////////////////////////////////////////////////////////////
-int *trieur(list_t ListCandidat)
+int trieur(list_t *ListCandidat)
 {
   /* le cas d une liste vide est considere comme une liste triee */
   if(head == NULL)
@@ -206,7 +212,10 @@ ces fichiers et stocke les hashs lus dans un buffer nomme HashBuf.
 /////////////////////////////////////////////////////////////////////////////////////////
 void *lecture(void *fichiers)
 {
+  //structure de preference...
+  pthread_mutex_lock(mutexTAILLEFICHIERLIRE);
   int argc = TAILLEFICHIERLIRE;
+  pthread_mutex_unlock(mutexTAILLEFICHIERLIRE);
   char ** fichs = (char **) fichiers;
   int i;
   for(i = 0; i < argc && fichs[i] != NULL; i++)
@@ -220,7 +229,7 @@ void *lecture(void *fichiers)
     }
     printf("Lecture du fichier numero %d\n", i);
     int size = sizeof(uint8_t)*32;
-    buf = (uint8_t) malloc(size);
+    buf = (uint8_t *) malloc(size);
     int rd = read(fd, &buf, size);
     printf("Fichier numéro %d lu\n", i);
     while(rd > 0)
@@ -252,6 +261,8 @@ void *lecture(void *fichiers)
     }
     printf("Le fichier %s a été ouvert, lu et fermé\n", fichs[i]);
   }
+  //la thread de lecture se finit.
+  varProd = 0;
   printf("Tous les fichiers ont été lus, ouverts et fermés\n");
   sem_destroy(&semHashBufEmpty);
   pthread_exit(NULL);
@@ -266,7 +277,7 @@ ses elements un par un et stock les reversehash dans un tableau Reversed.
 void *reverseHashFunc()
 {
   uint8_t *localHash;
-  while(index >= 0)
+  while(index >= 0 && varProd)
   {
     char * candid;
     sem_wait(&semHashBufFull);
@@ -279,15 +290,16 @@ void *reverseHashFunc()
   /* il faut ajouter un semaphore */
   if(reversehash(localHash, candid, sizeReverseMdp))
   {
-    //sem sem lock unlock
-    //il faut stocker (fonction add) dans la liste chainee
-  //  NewNode;
-//    add();
     int ret = add_node(*ListCandidat, localHash);
     if(ret == -1)
     {
       printf("erreur dans l ajout des noeuds a la liste des candidats"):
     }
+    return;
+  }
+  else
+  {
+    printf("Aucun candidat n a pu etre trouve pour au moins un hash");
   }
 }
 
@@ -363,8 +375,10 @@ seront pas d office des int ou char*) */
   int placeFich = 0;
   HashBufSize = sizeof(uint8_t)*32*nthread;
   **HashBuf = (char *) malloc(HashBufSize);
+  pthread_mutex_lock(mutexTAILLEFICHIERLIRE);
   TAILLEFICHIERLIRE = argc-optind;
   char *fichs[TAILLEFICHIERLIRE];
+  pthread_mutex_unlock(mutexTAILLEFICHIERLIRE);
   for(i = optind; i < argc; i++)
   {
     char *argTestBin = argv[i];
@@ -398,6 +412,12 @@ seront pas d office des int ou char*) */
       perror("pthread_create");
       return EXIT_FAILURE;
     }
+  }
+
+  int retTri = trieur(*ListCandidat);
+  if (retTri == -1)
+  {
+    printf("La liste de candidats n a pas pu etre triee\n");
   }
 
   /* rajouter phtread_join non ? */
