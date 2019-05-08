@@ -16,11 +16,9 @@
 #include "initvar.h"
 #include "destroy_var.h"
 
-/* zyiefbeabucbuezbcuze */
-
 /////////////////////////////////////////////////////////////////////////////////////////
 /*
-variables globales
+Variables globales
 */
 /////////////////////////////////////////////////////////////////////////////////////////
 
@@ -44,9 +42,9 @@ typedef struct list {
 size_t sizeReverseMdp = strlen("abcdabcdabcdabcd");
 int index;
 list_t *ListCandidat;
-/*variable indiquant que le thread de lecture continue a lire:
-vaut 1 si le thread lit
-vaut 0 si le thread de lecture a termine*/
+/*variable indiquant que le thread de lecture continue à lire :
+vaut 1 si le thread est en train de lire
+vaut 0 si le thread de lecture a terminé*/
 int varProd = 1;
 pthread_mutex_t mutexIndex;
 pthread_mutex_t mutexTAILLEFICHIERLIRE;
@@ -63,8 +61,8 @@ sem_init(&semHashBufFull, 0, 0);
 
 /////////////////////////////////////////////////////////////////////////////////////////
 /*
-fonction qui affiche sur la sortie standart les codes clairs de la liste: ListCandidat
-retourne 0 si les candidats ont ete affiches
+fonction qui affiche sur la sortie standard les codes clairs de la liste : ListCandidat
+retourne 0 si les candidats ont été affichés
 retourne -1 sinon
 */
 /////////////////////////////////////////////////////////////////////////////////////////
@@ -83,10 +81,10 @@ int display(*ListCandidat)
 
 /////////////////////////////////////////////////////////////////////////////////////////
 /*
-fonction creant un noeud
-@pre: prend un code clair (reversehash) en entree
-retourne un pointeur vers le noeud cree
-retourne NULL si le noeud n a pas pu etre cree
+fonction créant un noeud
+@pre: prend un code clair (reversehash) en entrée
+retourne un pointeur vers le noeud créé
+retourne NULL si le noeud n'a pas pu etre créé
 */
 /////////////////////////////////////////////////////////////////////////////////////////
 Candid_Node *init_node(char * codeClair)
@@ -102,8 +100,8 @@ Candid_Node *init_node(char * codeClair)
 
 /////////////////////////////////////////////////////////////////////////////////////////
 /*
-fonction creant et puis ajoutant un noeud a la suite d une liste
-retourne 0 si le noeud a ete ajoute
+fonction créant et puis ajoutant un noeud à la suite d'une liste
+retourne 0 si le noeud a été ajouté
 retourne -1 sinon
 */
 /////////////////////////////////////////////////////////////////////////////////////////
@@ -145,8 +143,8 @@ int compare(int a, int b)
 
 /////////////////////////////////////////////////////////////////////////////////////////
 /*
-calcule le nombre d occurence de voyelles/consonnes (selon le bool consonne) d'un candidat
-et modifie dans la struct Candidats le parametre nbrOccurence .
+calcule le nombre d'occurence de voyelles/consonnes (selon le bool consonne) d'un candidat
+et modifie dans la struct Candidats le paramètre nbrOccurence .
 */
 /////////////////////////////////////////////////////////////////////////////////////////
 void calculNbrOccu(Candid_Node * Node)
@@ -179,21 +177,21 @@ void calculNbrOccu(Candid_Node * Node)
 
 /////////////////////////////////////////////////////////////////////////////////////////
 /*
-fonction dont le but est d enlever les candidats dont le nombre nbrOccurence
-n est pas egal au nbrOccurence le plus grand
-retourne 1 en cas d execution correcte,
-retourne -1 en cas d echec.
-il faut encore gerer le cas ou on doit enlever le premier noeud : POURQUOI ??
+fonction dont le but est d'enlever les candidats dont le nombre nbrOccurence
+n'est pas egal au nbrOccurence le plus grand
+retourne 1 en cas d'exécution correcte,
+retourne -1 en cas d'échec.
+il faut encore gérer le cas ou on doit enlever le premier noeud
 */
 /////////////////////////////////////////////////////////////////////////////////////////
 int trieur(list_t *ListCandidat)
 {
-  /* le cas d une liste vide est considere comme une liste triee */
+  /* le cas d'une liste vide est considéré comme une liste triée */
   if(head == NULL)
   {
     return 1;
   }
-  /* ce noeud parcourt la liste pour trouver les noeuds a supprimer */
+  /* ce noeud parcourt la liste pour trouver les noeuds à supprimer */
   struct Candid_Node * runner = ListCandidat->head;
   while(runner != NULL)
   {
@@ -205,7 +203,7 @@ int trieur(list_t *ListCandidat)
     /* ListCandidat->nbrOccMax n est pas le plus grand nombre d occurence*/
     if(compare(runner->next->nbrOccurence, ListCandidat->nbrOccMax) == 1)
     {
-      printf("La valeur de ListCandidat->nbrOccMax n est pas valide\n");
+      printf("La valeur de ListCandidat->nbrOccMax n'est pas valide\n");
       return -1;
     }
     runner = runner->next;
@@ -288,6 +286,7 @@ void *lecture(void *fichiers)
   varProd = 0;
   printf("Tous les fichiers ont été lus, ouverts et fermés\n");
   sem_destroy(&semHashBufEmpty);
+  free(buf); //on free la mémoire allouée précédemment
   pthread_exit(NULL);
 }
 
