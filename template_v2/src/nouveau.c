@@ -38,7 +38,7 @@ typedef struct list {
 } list_t;
 
 size_t sizeReverseMdp = strlen("abcdabcdabcdabcd");
-int index;
+int indexG;
 list_t *ListCandidat;
 /*variable indiquant que le thread de lecture continue à lire :
 vaut 1 si le thread est en train de lire
@@ -88,7 +88,7 @@ retourne NULL si le noeud n'a pas pu etre créé
 Candid_Node *init_node(char * codeClair)
 {
   Candid_Node *a=NULL;
-  a = (Candid_Node *) malloc(sizeof(node_t));
+  a = (Candid_Node *) malloc(sizeof(Candid_Node));
   if(!a)
     return NULL;
   a->codeclair = codeClair;
@@ -159,7 +159,7 @@ void calculNbrOccu(Candid_Node * Node)
       Node->nbrOccurence = nbrOccLocal;
       return;
     }
-    else(localString[i] == 'a' || localString[i] == 'e' || localString[i] == 'y' || localString[i] == 'u' || localString[i] == 'i' || localString[i] == 'o')
+    if(localString[i] == 'a' || localString[i] == 'e' || localString[i] == 'y' || localString[i] == 'u' || localString[i] == 'i' || localString[i] == 'o')
     {
       nbrOccLocal += 1;
     }
@@ -254,13 +254,13 @@ void *lecture(void *fichiers)
     while(rd > 0)
     {
       sem_wait(&semHashBufEmpty);
-      if(index >= HashBufSize)
+      if(indexG >= HashBufSize)
       {
         sem_wait(&semHashBufEmpty);
       }
       pthread_mutex_lock(&mutexIndex);
-      *HashBuf[index] = buf;
-      index += 1;
+      *HashBuf[indexG] = buf;
+      indexG += 1;
       rd = read(fd, &buf, size);
       sem_post(&semHashBufFull); /* et oui, on a ajoute un element au tableau */
       sem_post(&semHashBufEmpty);
@@ -297,14 +297,14 @@ ses elements un par un et stock les reversehash dans un tableau Reversed.
 void *reverseHashFunc()
 {
   uint8_t *localHash;
-  while(index >= 0 && varProd)
+  while(indexG >= 0 && varProd)
   {
     char * candid;
     sem_wait(&semHashBufFull);
     pthread_mutex_lock(mutexIndex);
-    localHash = *HashBuf[index];
-    *HashBuf[index] = NULL;
-    index -= 1;
+    localHash = *HashBuf[indexG];
+    *HashBuf[indexG] = NULL;
+    indexG -= 1;
     pthread_mutex_unlock(mutexIndex);
     sem_post(&semHashBufEmpty); /* et oui, une place vient de se liberer */
     if(reversehash(localHash, candid, sizeReverseMdp))
