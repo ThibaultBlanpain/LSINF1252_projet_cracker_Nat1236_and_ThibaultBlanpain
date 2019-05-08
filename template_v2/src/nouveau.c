@@ -41,7 +41,7 @@ typedef struct list {
 
 size_t sizeReverseMdp = strlen("abcdabcdabcdabcd");
 int index;
-list_t *ListCandidat;
+list_t *ListCandidatG;
 /*variable indiquant que le thread de lecture continue a lire:
 vaut 1 si le thread lit
 vaut 0 si le thread de lecture a termine*/
@@ -310,7 +310,7 @@ void *reverseHashFunc()
     sem_post(&semHashBufEmpty); /* et oui, une place vient de se liberer */
     if(reversehash(localHash, candid, sizeReverseMdp))
     {
-      int ret = add_node(*ListCandidat, localHash);
+      int ret = add_node(*ListCandidatG, localHash);
       if(ret == -1)
       {
         printf("erreur dans l ajout des noeuds a la liste des candidats"):
@@ -442,7 +442,7 @@ seront pas d office des int ou char*) */
 appel a la fonction trieur qui supprime tous les mauvais candidats de la liste chainee
 */
 /////////////////////////////////////////////////////////////////////////////////////////
-  int retTri = trieur(*ListCandidat);
+  int retTri = trieur(*ListCandidatG);
   if (retTri == -1)
   {
     printf("La liste de candidats n a pas pu etre triee\n");
@@ -457,7 +457,7 @@ appel a la fonction trieur qui supprime tous les mauvais candidats de la liste c
   //affichage sur la stortie standart
   if(fichierout == NULL)
   {
-    int retDisp = displayStd(*ListCandidat);
+    int retDisp = displayStd(*ListCandidatG);
     if(retDisp == -1)
     {
       printf("les candidats n ont pas pus etre affiches\n");
@@ -468,7 +468,7 @@ appel a la fonction trieur qui supprime tous les mauvais candidats de la liste c
   //doit encore etre implemente.
   else
   {
-    int retDispSpec = dsiplaySpec(*ListCandidat);
+    int retDispSpec = dsiplaySpec(*ListCandidatG);
     if(retDispSpec == -1)
     {
       printf("les candidats n ont pas pus etre affiches\n");
