@@ -61,6 +61,26 @@ sem_init(&semHashBufFull, 0, 0);
 
 /////////////////////////////////////////////////////////////////////////////////////////
 /*
+fonction qui affiche sur la sortie standart les codes clairs de la liste: ListCandidat
+retourne 0 si les candidats ont ete affiches
+retourne -1 sinon
+*/
+/////////////////////////////////////////////////////////////////////////////////////////
+int display(*ListCandidat)
+{
+  struct Candid_Node * runner = ListCandidat->head;
+  while(runner != NULL)
+  {
+    char * tobeprinted = runner->codeclair;
+    printf("%s\n", tobeprinted);
+    runner = runner->next;
+  }
+  return 0;
+  return -1;
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////
+/*
 fonction creant un noeud
 @pre: prend un code clair (reversehash) en entree
 retourne un pointeur vers le noeud cree
@@ -288,40 +308,41 @@ void *reverseHashFunc()
     index -= 1;
     pthread_mutex_unlock(mutexIndex);
     sem_post(&semHashBufEmpty); /* et oui, une place vient de se liberer */
-  }
-  /* si on trouve un reversehash, on remplit le tableau des candidats */
-
-  /* il faut ajouter un semaphore */
-  if(reversehash(localHash, candid, sizeReverseMdp))
-  {
-    int ret = add_node(*ListCandidat, localHash);
-    if(ret == -1)
+    if(reversehash(localHash, candid, sizeReverseMdp))
     {
-      printf("erreur dans l ajout des noeuds a la liste des candidats"):
+      int ret = add_node(*ListCandidat, localHash);
+      if(ret == -1)
+      {
+        printf("erreur dans l ajout des noeuds a la liste des candidats"):
+      }
+      return;
     }
-    return;
+    else
+    {
+      printf("Aucun candidat n a pu etre trouve pour au moins un hash");
+    }
   }
-  else
-  {
-    printf("Aucun candidat n a pu etre trouve pour au moins un hash");
-  }
+  return;
 }
 
 
 
 
 
-  /*
-  les etapes du programme:
-  0- lire les arguments
-  1- lire les fichiers
-  2- utiliser la fonction reversehash(const uint8_t *hash, char *res, size_t len);
-  3- trier
-  4- display ligne par ligne
-  */
+/*
+les etapes du programme:
+0- lire les arguments
+1- lire les fichiers
+2- utiliser la fonction reversehash(const uint8_t *hash, char *res, size_t len);
+3- trier
+4- display ligne par ligne
+
+retourne 0 si l execution a pu se terminer
+retourne -1 sinon.
+*/
 
 int main(int argc, char **argv){
-  /////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////
   /* etape 0: lecture des options */
   /* penser a implementer de la programmation defensive (sur les options, qui ne
 seront pas d office des int ou char*) */
@@ -354,7 +375,7 @@ seront pas d office des int ou char*) */
   }
   if (optind == argc) {
         fprintf (stderr, "Il est nécessaire de spécifier au moins un argument.\n");
-        return 1;
+        return -1;
     }
 
   /* petite section de test de verification des options */
@@ -373,7 +394,7 @@ seront pas d office des int ou char*) */
 
   /* A faire : maintenant que les fichiers a lire (.bin) sont stockes dans un tableau, il
   faut les differencier, selon leur provenance et les lire */
-  /////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////
 
   int i ;
   int placeFich = 0;
@@ -405,7 +426,6 @@ seront pas d office des int ou char*) */
 /////////////////////////////////////////////////////////////////////////////////////////
   /* etape 2: reversehash
   creation de tous les thread de reversehash
-  ATTENTION: il faut leur dire quand s arreter!!!
   */
 /////////////////////////////////////////////////////////////////////////////////////////
   pthread_t thread_reverseHash;
@@ -417,14 +437,48 @@ seront pas d office des int ou char*) */
       return EXIT_FAILURE;
     }
   }
-
+/////////////////////////////////////////////////////////////////////////////////////////
+/* etape 3: trieur
+appel a la fonction trieur qui supprime tous les mauvais candidats de la liste chainee
+*/
+/////////////////////////////////////////////////////////////////////////////////////////
   int retTri = trieur(*ListCandidat);
   if (retTri == -1)
   {
     printf("La liste de candidats n a pas pu etre triee\n");
   }
 
+  /////////////////////////////////////////////////////////////////////////////////////////
+  /* etape 4: display ligne par ligne
+  appel a la fonction display qui ecrit sur soit la sortie standart, soit dans un fichier
+  precise, les bons candidats, un par ligne
+  */
+  /////////////////////////////////////////////////////////////////////////////////////////
+  //affichage sur la stortie standart
+  if(fichierout == NULL)
+  {
+    int retDisp displayStd(*ListCandidat);
+    if(retDisp == -1)
+    {
+      printf("les candidats n ont pas pus etre affiches\n");
+    }
+    return 0;
+  }
+  //remplit le fichier "fichierout" qui a ete specifie.
+  //doit encore etre implemente.
+  else
+  {
+    int retDispSpec = dsiplaySpec(*ListCandidat);
+    if(retDispSpec == -1)
+    {
+      printf("les candidats n ont pas pus etre affiches\n");
+    }
+    return 0;
+  }
+
+
   /* rajouter phtread_join non ? */
+
 
   return EXIT_SUCCESS;
 } //fin de la main()
