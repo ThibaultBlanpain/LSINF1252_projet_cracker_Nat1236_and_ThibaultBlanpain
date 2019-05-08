@@ -458,7 +458,7 @@ appel a la fonction trieur qui supprime tous les mauvais candidats de la liste c
   //affichage sur la stortie standart
   if(fichierout == NULL)
   {
-    int retDisp displayStd(*ListCandidat);
+    int retDisp = displayStd(*ListCandidat);
     if(retDisp == -1)
     {
       printf("les candidats n ont pas pus etre affiches\n");
