@@ -35,11 +35,13 @@ typedef struct Candidats
 
 typedef struct list {
   struct node *head;
+  struct node *last;
   int nbrOccMax;
 } list_t;
 
 size_t sizeReverseMdp = strlen("abcdabcdabcdabcd");
 int index;
+list_t ListCandidat;
 pthread_mutex_t mutexIndex;
 sem_t semHashBufEmpty;
 sem_t semHashBufFull;
@@ -50,6 +52,51 @@ sem_init(&semHashBufEmpty,0,1);
 sem_init(&semHashBufFull, 0, 0);
 
 /* fonctions utilitaires */
+
+/////////////////////////////////////////////////////////////////////////////////////////
+/*
+fonction creant un noeud
+@pre: prend un code clair (reversehash) en entree
+retourne un pointeur vers le noeud cree
+retourne NULL si le noeud n a pas pu etre cree
+*/
+/////////////////////////////////////////////////////////////////////////////////////////
+Candid_Node *init_node(char * codeClair)
+{
+  Candid_Node *a=NULL;
+  a = (Candid_Node *) malloc(sizeof(node_t));
+  if(!a)
+    return NULL;
+  a->codeclair = codeClair;
+  a->next = NULL;
+  return a;
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////
+/*
+fonction ajoutant un noeud a la suite d une liste
+retourne 0 si le noeud a ete ajoute
+retourne -1 sinon
+*/
+/////////////////////////////////////////////////////////////////////////////////////////
+int add_node(list_t *list, char *codeClair)
+{
+  if(!list)
+    return -1;
+  Candid_Node *a = init_node(codeClair);
+  if(!a)
+    return -1;
+  if(list->head == NULL)
+  {
+    list->head = a;
+    list->last = a;
+    return 0;
+  }
+  list->head->next = a;
+  list->head = a;
+  return 0;
+}
+
 
 /////////////////////////////////////////////////////////////////////////////////////////
 /*
@@ -234,7 +281,13 @@ void *reverseHashFunc()
   {
     //sem sem lock unlock
     //il faut stocker (fonction add) dans la liste chainee
-    *candidatsTab[indexCandide] = localHash;
+  //  NewNode;
+//    add();
+    int ret = add_node(*ListCandidat, localHash);
+    if(ret == -1)
+    {
+      printf("erreur dans l ajout des noeuds a la liste des candidats"):
+    }
   }
 }
 
