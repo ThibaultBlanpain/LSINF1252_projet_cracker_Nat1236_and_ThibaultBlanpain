@@ -31,7 +31,7 @@ typedef struct Candidats
 {
   struct Candidats *head;
   struct Candidats *next;
-  char * codeclair;
+  char * codeclair;  //représente le mot de passe reverse-hashed
   int nbrOccurence;
 } Candid_Node;
 
@@ -346,6 +346,6 @@ seront pas d office des int ou char*) */
   }
 
   /* rajouter phtread_join non ? */
-  
+
   return EXIT_SUCCESS;
 } //fin de la main()
