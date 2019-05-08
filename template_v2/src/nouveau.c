@@ -29,7 +29,7 @@ char**HashBuf;
 typedef struct Candidats
 {
   struct Candidats *next;
-  char * codeclair;  //représente le mot de passe reverse-hashed
+  char codeclair[16];  //représente le mot de passe reverse-hashed
   int nbrOccurence;
 } Candid_Node;
 
