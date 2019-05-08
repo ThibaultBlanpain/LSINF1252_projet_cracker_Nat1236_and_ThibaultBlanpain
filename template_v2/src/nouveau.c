@@ -159,7 +159,7 @@ void calculNbrOccu(Candid_Node * Node)
       Node->nbrOccurence = nbrOccLocal;
       return;
     }
-    else(localString[i] == 'a' | localString[i] == 'e' | localString[i] == 'y' | localString[i] == 'u' | localString[i] == 'i' | localString[i] == 'o')
+    else(localString[i] == 'a' || localString[i] == 'e' || localString[i] == 'y' || localString[i] == 'u' || localString[i] == 'i' || localString[i] == 'o')
     {
       nbrOccLocal += 1;
     }
