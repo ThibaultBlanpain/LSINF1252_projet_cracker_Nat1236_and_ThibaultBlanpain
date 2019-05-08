@@ -322,7 +322,7 @@ void *reverseHashFunc()
       printf("Aucun candidat n a pu etre trouve pour au moins un hash");
     }
   }
-  return;
+  pthread_exit(NULL);
 }
 
 
