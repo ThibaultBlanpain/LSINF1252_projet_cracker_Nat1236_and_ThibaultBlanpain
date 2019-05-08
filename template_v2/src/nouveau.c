@@ -107,7 +107,7 @@ retourne 0 si le noeud a été ajouté
 retourne -1 sinon
 */
 /////////////////////////////////////////////////////////////////////////////////////////
-int add_node(struct list *list, char *codeClair)
+int add_node(struct list * list, char * codeClair)
 {
   if(!list)
     return -1;
@@ -263,7 +263,7 @@ void *lecture(void *fichiers)
         sem_wait(&semHashBufEmpty);
       }
       pthread_mutex_lock(&mutexIndex);
-      *HashBuf[indexG] = buf;
+      HashBuf[indexG] = buf;
       indexG += 1;
       rd = read(fd, &buf, size);
       sem_post(&semHashBufFull); /* et oui, on a ajoute un element au tableau */
@@ -303,17 +303,17 @@ void *reverseHashFunc()
   uint8_t *localHash;
   while(indexG >= 0 && varProd)
   {
-    char * candid;
+    char candid[16];
     sem_wait(&semHashBufFull);
     pthread_mutex_lock(&mutexIndex);
-    localHash = *HashBuf[indexG];
-    *HashBuf[indexG] = NULL;
+    localHash = HashBuf[indexG];
+    HashBuf[indexG] = NULL;
     indexG -= 1;
     pthread_mutex_unlock(&mutexIndex);
     sem_post(&semHashBufEmpty); /* et oui, une place vient de se liberer */
     if(reversehash(localHash, candid, sizeReverseMdp))
     {
-      int ret = add_node(ListCandidat, localHash);
+      int ret = add_node(ListCandidat, candid);
       if(ret == -1)
       {
         printf("Erreur dans l'ajout des noeuds à la liste des candidats");
@@ -403,8 +403,8 @@ seront pas d office des int ou char*) */
 
   int i ;
   int placeFich = 0;
-  HashBufSize = sizeof(uint8_t)*32*nthread;
-  **HashBuf = (char *) malloc(HashBufSize);
+  HashBufSize = sizeof(uint8_t *)*32*nthread;
+  HashBuf = malloc(HashBufSize);
   pthread_mutex_lock(&mutexTAILLEFICHIERLIRE);
   TAILLEFICHIERLIRE = argc-optind;
   char *fichs[TAILLEFICHIERLIRE];
