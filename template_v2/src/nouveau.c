@@ -11,7 +11,7 @@
 #include <errno.h>
 #include <getopt.h>
 #include <semaphore.h>
-#include <getopt.h>
+
 
 #include "reverse.h"
 #include "sha256.h"
