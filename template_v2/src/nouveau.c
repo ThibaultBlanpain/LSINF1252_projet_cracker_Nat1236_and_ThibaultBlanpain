@@ -9,8 +9,9 @@
 #include <sys/stat.h>
 #include <fcntl.h>
 #include <errno.h>
-#include <semaphore.h>
 #include <getopt.h>
+#include <semaphore.h>
+
 
 #include "reverse.h"
 #include "sha256.h"
