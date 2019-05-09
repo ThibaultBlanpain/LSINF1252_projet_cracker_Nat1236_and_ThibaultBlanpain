@@ -201,7 +201,10 @@ int trieur(list_t *ListCandidat)
     /* il faut enlever le noeud suivant */
     if(compare(runner->next->nbrOccurence, ListCandidat->nbrOccMax) == -1)
     {
+      //ajouter un struct Candidats tmp * et puis free()
+      struct Candidats * tmp = runner->next;
       runner->next = runner->next->next;
+      free(tmp);
     }
     /* ListCandidat->nbrOccMax n est pas le plus grand nombre d occurence*/
     if(compare(runner->next->nbrOccurence, ListCandidat->nbrOccMax) == 1)
