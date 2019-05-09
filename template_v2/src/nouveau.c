@@ -312,7 +312,7 @@ void *reverseHashFunc()
   uint8_t *localHash;
   while(indexG >= 0 && varProd)
   {
-    char candid[16] = (char *) malloc(16);
+    char *candid = (char *) malloc(16);
     sem_wait(&semHashBufFull);
     pthread_mutex_lock(&mutexIndex);
     indexG -= 1;
@@ -420,7 +420,7 @@ seront pas d office des int ou char*) */
   {
     for (i=0; i < nthread; i++)
     {
-      HashBuf[i] = malloc(32 * sizeof(uint8_t *));
+      HashBuf[i] = (uint8_t *) malloc(32 * sizeof(uint8_t *));
     }
   }
 
