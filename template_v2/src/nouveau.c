@@ -70,7 +70,9 @@ int displayStd(list_t * ListCandidat)
   {
     char * tobeprinted = runner->codeclair;
     printf("%s\n", tobeprinted);
+    struct Candidats *tmp = runner;
     runner = runner->next;
+    free(tmp);
   }
   return 0;
   return -1;
