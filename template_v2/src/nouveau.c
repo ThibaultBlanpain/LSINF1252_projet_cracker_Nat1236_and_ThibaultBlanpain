@@ -335,16 +335,9 @@ void *reverseHashFunc()
     pthread_mutex_unlock(&mutexIndex);
     sem_post(&semHashBufEmpty); /* et oui, une place vient de se liberer */
     int nul = (localHash==NULL);
-<<<<<<< HEAD
     printf("avant le reversehash\n");
     bool err = reversehash(localHash, candid, 16);
     printf("apres le reversehash");
-=======
-    printf("%d", nul);
-    printf("%s   neinn\n", candid);
-    bool err = false;
-    err = reversehash(localHash, candid, 16);
->>>>>>> dc35d7d0ac4a5e67b64dff1055de8251bf16708c
     if(!err)
     {
       printf("aucun inverse n a ete trouve\n");
