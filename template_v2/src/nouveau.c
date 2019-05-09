@@ -294,7 +294,7 @@ void *lecture(void *fichiers)
       err = close(fd);
       if(err==-1)
       {
-        printf("Echec de la fermeture du fichier %s\n", fichs[i]);
+        printf("Echec de la fermeture du fichier\n");
         pthread_exit(NULL);
       }
     }
@@ -305,13 +305,13 @@ void *lecture(void *fichiers)
       err = close(fd);
       if(err==-1)
       {
-        printf("Echec de la fermeture du fichier %s\n", fichs[i]);
+        printf("Echec de la fermeture du fichier\n");
         pthread_exit(NULL);
       }
-      printf("Echec de la lecture du fichier %s. Ce fichier a pu etre ferme\n", fichs[i]);
+      printf("Echec de la lecture du fichier. Ce fichier a pu etre ferme\n");
       pthread_exit(NULL); //fails to read ok
     }
-    printf("Le fichier %s a été ouvert, lu et fermé\n", fichs[i]);
+    printf("Le fichier a été ouvert, lu et fermé\n");
   }
   //la thread de lecture se finit.
   varProd = 0;
