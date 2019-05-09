@@ -10,6 +10,7 @@
 #include <fcntl.h>
 #include <errno.h>
 #include <semaphore.h>
+#include <getopt.h>
 
 #include "reverse.h"
 #include "sha256.h"
