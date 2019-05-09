@@ -274,8 +274,8 @@ void *lecture(void *fichiers)
       pthread_mutex_lock(&mutexIndex);
       printf("après le lock\n");
       //strcpy((char *) HashBuf[indexG],(char *) buf);
-      HashBuf[indexG] = (uint8_t *) malloc(32 * sizeof(uint8_t *));
       HashBuf[indexG] = buf ;
+      buf = (uint8_t *) malloc(size);
       printf("strcpy de hashbuf\n");
       indexG += 1;
       rd = read(fd, &buf, size);
