@@ -403,7 +403,7 @@ seront pas d office des int ou char*) */
 /////////////////////////////////////////////////////////////////////////////////////////
 
   int i ;
-  int placeFich = 0;
+  int placeFich = 0 ;
   HashBufSize = sizeof(uint8_t *)*32*nthread;
   HashBuf = malloc(HashBufSize);
   pthread_mutex_lock(&mutexTAILLEFICHIERLIRE);
