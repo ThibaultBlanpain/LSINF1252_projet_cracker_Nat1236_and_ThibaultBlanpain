@@ -312,15 +312,15 @@ void *reverseHashFunc()
   uint8_t *localHash;
   while(indexG >= 0 && varProd)
   {
-    char candid[16];
+    char candid[16] = (char *) malloc(16);
     sem_wait(&semHashBufFull);
     pthread_mutex_lock(&mutexIndex);
+    indexG -= 1;
     localHash = HashBuf[indexG];
     HashBuf[indexG] = NULL;
-    indexG -= 1;
     pthread_mutex_unlock(&mutexIndex);
     sem_post(&semHashBufEmpty); /* et oui, une place vient de se liberer */
-    if(reversehash(localHash, candid, sizeReverseMdp))
+    if(reversehash(localHash, candid, 16))
     {
       int ret = add_node(ListCandidat, candid);
       if(ret == -1)
