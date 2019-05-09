@@ -1,6 +1,6 @@
 file = src/main.c
 cracker:$(file)
-	gcc -Wall -Werror -o cracker.o src/*.c
+	gcc -Wall -Werror -lpthread -o cracker.o src/*.c
 clean:
 	rm -rf *.o *.bin
 test:
@@ -12,6 +12,5 @@ test:
 	./cracker.o -c tests/01_4c_1k.bin
 	./cracker.o -t 4 -c test/01_4c_1k.bin test/02_6c_5.bin
 all:
-	make cracker 
+	make cracker
 	make test
-	

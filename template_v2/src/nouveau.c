@@ -53,7 +53,8 @@ pthread_mutex_t mutexTAILLEFICHIERLIRE;
 sem_t semHashBufEmpty;
 sem_t semHashBufFull;
 
-
+/* sem_t semmdpempty ;
+sem_t semmpdfull ; */
 
 
 /* fonctions utilitaires */
@@ -259,7 +260,7 @@ void *lecture(void *fichiers)
       pthread_exit(NULL); //fails to open ok
     }
     printf("Lecture du fichier numero %d\n", i);
-    int size = sizeof(uint8_t);
+    int size = 32 * sizeof(uint8_t);
     buf = (uint8_t *) malloc(size);
     int rd = read(fd, &buf, size);
     while(rd > 0)
@@ -323,19 +324,23 @@ ses elements un par un et stock les reversehash dans un tableau Reversed.
 /////////////////////////////////////////////////////////////////////////////////////////
 void *reverseHashFunc()
 {
-  uint8_t *localHash;
+//  uint8_t *localHash;
   while(indexG >= 0 && varProd)
   {
-    char *candid = (char *) malloc(16);
+    //char *candid = (char *) malloc(16);
+    char * candid = malloc(16*sizeof(char));
     sem_wait(&semHashBufFull);
     pthread_mutex_lock(&mutexIndex);
     indexG -= 1;
-    localHash = HashBuf[indexG];
-    free(HashBuf[indexG]) ;
+    uint8_t * localHash = HashBuf[indexG];
+    HashBuf[indexG] = NULL;
+//    free(HashBuf[indexG]) ;
     pthread_mutex_unlock(&mutexIndex);
     sem_post(&semHashBufEmpty); /* et oui, une place vient de se liberer */
     printf("avant le reversehash\n");
     bool err = reversehash(localHash, candid, 16);
+
+    /*est-ce qu'on rajouterait pas deux autres semaphores pour si le tab de mdp est full ou pas ??*/
     printf("apres le reversehash\n");
     if(!err)
     {
@@ -379,6 +384,8 @@ int main(int argc, char **argv)
 {
   sem_init(&semHashBufEmpty,0,1);
   sem_init(&semHashBufFull, 0, 0);
+  sem_init(&semmpdfull,0,0);
+  sem_init(&semmdpempty,0,1);
 /////////////////////////////////////////////////////////////////////////////////////////
   /* etape 0: lecture des options */
   /* penser a implementer de la programmation defensive (sur les options, qui ne
