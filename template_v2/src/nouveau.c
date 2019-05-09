@@ -258,7 +258,9 @@ void *lecture(void *fichiers)
     printf("Fichier numéro %d lu\n", i);
     while(rd > 0)
     {
+      printf("entrée dans le fichier");
       sem_wait(&semHashBufEmpty);
+      printf("après semwait");
       if(indexG >= HashBufSize)
       {
         sem_wait(&semHashBufEmpty);
@@ -273,6 +275,7 @@ void *lecture(void *fichiers)
     }
     if( rd < 0)
     {
+      printf("aie rd neg");
       int err;
       err = close(fd);
       if(err==-1)
