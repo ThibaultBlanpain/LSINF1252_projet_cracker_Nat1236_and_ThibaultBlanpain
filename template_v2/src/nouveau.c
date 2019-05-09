@@ -273,6 +273,7 @@ void *lecture(void *fichiers)
       pthread_mutex_lock(&mutexIndex);
       printf("après le lock\n");
       //strcpy((char *) HashBuf[indexG],(char *) buf);
+      HashBuf[indexG] = (uint8_t *) malloc(32 * sizeof(uint8_t *));
       HashBuf[indexG] = buf ;
       printf("strcpy de hashbuf\n");
       indexG += 1;
@@ -426,13 +427,13 @@ seront pas d office des int ou char*) */
   int placeFich = 0 ;
   HashBufSize = sizeof(uint8_t *)*32*nthread;
   HashBuf = (uint8_t **) malloc(nthread*sizeof(uint8_t *));
-  if (HashBuf)
+  /* if (HashBuf)
   {
     for (i=0; i < nthread; i++)
     {
-      HashBuf[i] = malloc(32 * sizeof(uint8_t *));
+      HashBuf[i] = (uint8_t *) malloc(32 * sizeof(uint8_t *));
     }
-  }
+  }*/
 
   pthread_mutex_lock(&mutexTAILLEFICHIERLIRE);
   TAILLEFICHIERLIRE = argc-optind;
