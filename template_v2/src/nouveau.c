@@ -263,7 +263,7 @@ void *lecture(void *fichiers)
     printf("Fichier numéro %d lu\n", i);
     while(rd > 0)
     {
-      printf("entrée dans le fichier");
+      printf("entrée dans le fichier\n");
       sem_wait(&semHashBufEmpty);
       printf("après semwait");
       if(indexG >= HashBufSize)
