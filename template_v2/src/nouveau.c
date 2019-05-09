@@ -37,7 +37,7 @@ typedef struct list {
   int nbrOccMax;
 } list_t;
 
-size_t sizeReverseMdp = strlen("abcdabcdabcdabcd");
+size_t sizeReverseMdp = 16;
 int indexG;
 list_t * ListCandidat;
 /*variable indiquant que le thread de lecture continue à lire :
@@ -320,11 +320,7 @@ void *reverseHashFunc()
   uint8_t *localHash;
   while(indexG >= 0 && varProd)
   {
-<<<<<<< HEAD
     char *candid = (char *) malloc(16);
-=======
-    char * candid = (char *) malloc(16);
->>>>>>> 11af634e340dadd2a832f4d4031d3fdd33627195
     sem_wait(&semHashBufFull);
     pthread_mutex_lock(&mutexIndex);
     indexG -= 1;
