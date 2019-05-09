@@ -44,6 +44,7 @@ list_t * ListCandidat;
 vaut 1 si le thread est en train de lire
 vaut 0 si le thread de lecture a terminé*/
 int varProd = 1;
+int varFinito = 0;
 pthread_mutex_t mutexIndex;
 pthread_mutex_t mutexTAILLEFICHIERLIRE;
 
@@ -325,6 +326,7 @@ void *reverseHashFunc()
       printf("Aucun candidat n'a pu être trouvé pour au moins un hash");
     }
   }
+  varFinito += 1;
   pthread_exit(NULL);
 }
 
@@ -448,6 +450,10 @@ seront pas d office des int ou char*) */
 appel à la fonction trieur qui supprime tous les mauvais candidats de la liste chaînée
 */
 /////////////////////////////////////////////////////////////////////////////////////////
+  while(varFinito != nthread)
+  {
+    continue;
+  }
   int retTri = trieur(ListCandidat);
   if (retTri == -1)
   {
