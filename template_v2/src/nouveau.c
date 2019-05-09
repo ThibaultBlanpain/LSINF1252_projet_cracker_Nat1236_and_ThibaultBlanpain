@@ -11,6 +11,7 @@
 #include <errno.h>
 #include <getopt.h>
 #include <semaphore.h>
+#include <getopt.h>
 
 #include "reverse.h"
 #include "sha256.h"
@@ -38,7 +39,7 @@ typedef struct list {
   int nbrOccMax;
 } list_t;
 
-size_t sizeReverseMdp = strlen("abcdabcdabcdabcd");
+size_t sizeReverseMdp = 16;
 int indexG;
 list_t * ListCandidat;
 /*variable indiquant que le thread de lecture continue à lire :
@@ -274,8 +275,8 @@ void *lecture(void *fichiers)
       pthread_mutex_lock(&mutexIndex);
       printf("après le lock\n");
       //strcpy((char *) HashBuf[indexG],(char *) buf);
-      HashBuf[indexG] = (uint8_t *) malloc(32 * sizeof(uint8_t *));
       HashBuf[indexG] = buf ;
+      buf = (uint8_t *) malloc(size);
       printf("strcpy de hashbuf\n");
       indexG += 1;
       rd = read(fd, &buf, size);
@@ -287,6 +288,17 @@ void *lecture(void *fichiers)
       printf("mutex unlock\n");
     }
     printf("après la while\n");
+    if(rd == 0)
+    {
+      printf("aie rd neg\n");
+      int err;
+      err = close(fd);
+      if(err==-1)
+      {
+        printf("Echec de la fermeture du fichier %s\n", fichs[i]);
+        pthread_exit(NULL);
+      }
+    }
     if( rd < 0)
     {
       printf("aie rd neg\n");
@@ -321,7 +333,7 @@ void *reverseHashFunc()
   uint8_t *localHash;
   while(indexG >= 0 && varProd)
   {
-    char * candid = (char *) malloc(16);
+    char *candid = (char *) malloc(16);
     sem_wait(&semHashBufFull);
     pthread_mutex_lock(&mutexIndex);
     indexG -= 1;
@@ -332,7 +344,12 @@ void *reverseHashFunc()
     int nul = (localHash==NULL);
     printf("%d", nul);
     printf("%s   neinn\n", candid);
-    if(reversehash(localHash, candid, 16))
+    bool err = reversehash(localHash, candid, 16);
+    if(!err)
+    {
+      printf("aucun inverse n a ete trouve\n");
+    }
+    if(err)
     {
       int ret = add_node(ListCandidat, candid);
       if(ret == -1)
