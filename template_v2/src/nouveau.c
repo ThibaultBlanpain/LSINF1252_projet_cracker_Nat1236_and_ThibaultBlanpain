@@ -40,7 +40,7 @@ typedef struct list {
 } list_t;
 
 size_t sizeReverseMdp = 16;
-int indexG;
+int indexG = 0;
 list_t * ListCandidat;
 /*variable indiquant que le thread de lecture continue à lire :
 vaut 1 si le thread est en train de lire
@@ -259,7 +259,7 @@ void *lecture(void *fichiers)
       pthread_exit(NULL); //fails to open ok
     }
     printf("Lecture du fichier numero %d\n", i);
-    int size = sizeof(uint8_t)*32;
+    int size = sizeof(uint8_t);
     buf = (uint8_t *) malloc(size);
     int rd = read(fd, &buf, size);
     while(rd > 0)
@@ -331,13 +331,12 @@ void *reverseHashFunc()
     pthread_mutex_lock(&mutexIndex);
     indexG -= 1;
     localHash = HashBuf[indexG];
-    HashBuf[indexG] = NULL;
+    free(HashBuf[indexG]) ;
     pthread_mutex_unlock(&mutexIndex);
     sem_post(&semHashBufEmpty); /* et oui, une place vient de se liberer */
-    int nul = (localHash==NULL);
     printf("avant le reversehash\n");
     bool err = reversehash(localHash, candid, 16);
-    printf("apres le reversehash");
+    printf("apres le reversehash\n");
     if(!err)
     {
       printf("aucun inverse n a ete trouve\n");
@@ -437,14 +436,14 @@ seront pas d office des int ou char*) */
   int i ;
   int placeFich = 0 ;
   HashBufSize = sizeof(uint8_t *)*32*nthread;
-  HashBuf = (uint8_t **) malloc(nthread*sizeof(uint8_t *));
-  /* if (HashBuf)
+  HashBuf = (uint8_t **) malloc(nthread*sizeof(uint8_t **));
+  if (HashBuf)
   {
     for (i=0; i < nthread; i++)
     {
-      HashBuf[i] = (uint8_t *) malloc(32 * sizeof(uint8_t *));
+      HashBuf[i] = NULL;
     }
-  }*/
+  }
 
   pthread_mutex_lock(&mutexTAILLEFICHIERLIRE);
   TAILLEFICHIERLIRE = argc-optind;
