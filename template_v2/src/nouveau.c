@@ -319,18 +319,17 @@ void *reverseHashFunc()
   uint8_t *localHash;
   while(indexG >= 0 && varProd)
   {
-    char candid[16] = (char *) malloc(16);
+    char * candid = (char *) malloc(16);
     sem_wait(&semHashBufFull);
     pthread_mutex_lock(&mutexIndex);
     indexG -= 1;
     localHash = HashBuf[indexG];
     HashBuf[indexG] = NULL;
-<<<<<<< HEAD
-
-=======
->>>>>>> 834664f8d39aef3227247007ca45ecceefac56b4
     pthread_mutex_unlock(&mutexIndex);
     sem_post(&semHashBufEmpty); /* et oui, une place vient de se liberer */
+    int nul = (localHash==NULL);
+    printf("%d", nul);
+    printf("%s   neinn\n", candid);
     if(reversehash(localHash, candid, 16))
     {
       int ret = add_node(ListCandidat, candid);
