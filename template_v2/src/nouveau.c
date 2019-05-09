@@ -344,7 +344,8 @@ void *reverseHashFunc()
     int nul = (localHash==NULL);
     printf("%d", nul);
     printf("%s   neinn\n", candid);
-    bool err = reversehash(localHash, candid, 16);
+    bool err = false;
+    err = reversehash(localHash, candid, 16);
     if(!err)
     {
       printf("aucun inverse n a ete trouve\n");
