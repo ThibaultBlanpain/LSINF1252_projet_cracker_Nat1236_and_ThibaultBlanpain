@@ -287,6 +287,17 @@ void *lecture(void *fichiers)
       printf("mutex unlock\n");
     }
     printf("après la while\n");
+    if(rd == 0)
+    {
+      printf("aie rd neg\n");
+      int err;
+      err = close(fd);
+      if(err==-1)
+      {
+        printf("Echec de la fermeture du fichier %s\n", fichs[i]);
+        pthread_exit(NULL);
+      }
+    }
     if( rd < 0)
     {
       printf("aie rd neg\n");
