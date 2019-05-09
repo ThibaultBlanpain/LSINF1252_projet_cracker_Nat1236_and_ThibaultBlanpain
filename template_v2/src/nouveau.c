@@ -262,12 +262,9 @@ void *lecture(void *fichiers)
     int size = sizeof(uint8_t)*32;
     buf = (uint8_t *) malloc(size);
     int rd = read(fd, &buf, size);
-    printf("Fichier numéro %d lu\n", i);
     while(rd > 0)
     {
-      printf("entrée dans le fichier\n");
       sem_wait(&semHashBufEmpty);
-      printf("après semwait\n");
       if(indexG >= HashBufSize)
       {
         sem_wait(&semHashBufEmpty);
@@ -277,20 +274,17 @@ void *lecture(void *fichiers)
       //strcpy((char *) HashBuf[indexG],(char *) buf);
       HashBuf[indexG] = buf ;
       buf = (uint8_t *) malloc(size);
-      printf("strcpy de hashbuf\n");
       indexG += 1;
       rd = read(fd, &buf, size);
-      printf("après le read\n");
       sem_post(&semHashBufFull); /* et oui, on a ajoute un element au tableau */
       sem_post(&semHashBufEmpty);
-      printf("après les posts\n");
       pthread_mutex_unlock(&mutexIndex);
       printf("mutex unlock\n");
     }
     printf("après la while\n");
     if(rd == 0)
     {
-      printf("aie rd neg\n");
+      printf("fermeture du fichier\n");
       int err;
       err = close(fd);
       if(err==-1)
@@ -301,7 +295,6 @@ void *lecture(void *fichiers)
     }
     if( rd < 0)
     {
-      printf("aie rd neg\n");
       int err;
       err = close(fd);
       if(err==-1)
@@ -342,9 +335,9 @@ void *reverseHashFunc()
     pthread_mutex_unlock(&mutexIndex);
     sem_post(&semHashBufEmpty); /* et oui, une place vient de se liberer */
     int nul = (localHash==NULL);
-    printf("%d", nul);
-    printf("%s   neinn\n", candid);
+    printf("avant le reversehash\n");
     bool err = reversehash(localHash, candid, 16);
+    printf("apres le reversehash");
     if(!err)
     {
       printf("aucun inverse n a ete trouve\n");
