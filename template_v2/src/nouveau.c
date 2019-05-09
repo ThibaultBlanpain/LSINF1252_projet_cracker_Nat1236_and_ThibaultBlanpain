@@ -331,7 +331,12 @@ void *reverseHashFunc()
     int nul = (localHash==NULL);
     printf("%d", nul);
     printf("%s   neinn\n", candid);
-    if(reversehash(localHash, candid, 16))
+    bool err = reversehash(localHash, candid, 16);
+    if(!err)
+    {
+      printf("aucun inverse n a ete trouve\n");
+    }
+    if(err)
     {
       int ret = add_node(ListCandidat, candid);
       if(ret == -1)
