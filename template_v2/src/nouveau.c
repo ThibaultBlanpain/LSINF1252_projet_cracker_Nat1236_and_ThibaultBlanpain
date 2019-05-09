@@ -247,7 +247,7 @@ void *lecture(void *fichiers)
   char ** fichs = (char **) fichiers;
   int i;
   uint8_t * buf;
-  for(i = 0; i < argc && fichs[i] != NULL; i++)
+  for(i = 0; i < argc ; i++) //&& fichs[i] != NULL
   {
     printf("Préparation de l'ouverture du fichier %s\n", fichs[i]);
     int fd = open(fichs[i], O_RDONLY);
@@ -271,13 +271,20 @@ void *lecture(void *fichiers)
         sem_wait(&semHashBufEmpty);
       }
       pthread_mutex_lock(&mutexIndex);
-      HashBuf[indexG] = buf;
+      printf("après le lock\n");
+      //strcpy((char *) HashBuf[indexG],(char *) buf);
+      HashBuf[indexG] = buf ;
+      printf("strcpy de hashbuf\n");
       indexG += 1;
       rd = read(fd, &buf, size);
+      printf("après le read\n");
       sem_post(&semHashBufFull); /* et oui, on a ajoute un element au tableau */
       sem_post(&semHashBufEmpty);
+      printf("après les posts\n");
       pthread_mutex_unlock(&mutexIndex);
+      printf("mutex unlock\n");
     }
+    printf("après la while\n");
     if( rd < 0)
     {
       printf("aie rd neg\n");
@@ -315,12 +322,13 @@ void *reverseHashFunc()
     char candid[16];
     sem_wait(&semHashBufFull);
     pthread_mutex_lock(&mutexIndex);
+    indexG -= 1;
     localHash = HashBuf[indexG];
     HashBuf[indexG] = NULL;
-    indexG -= 1;
+
     pthread_mutex_unlock(&mutexIndex);
     sem_post(&semHashBufEmpty); /* et oui, une place vient de se liberer */
-    if(reversehash(localHash, candid, sizeReverseMdp))
+    if(reversehash(localHash, candid, 16))
     {
       int ret = add_node(ListCandidat, candid);
       if(ret == -1)
