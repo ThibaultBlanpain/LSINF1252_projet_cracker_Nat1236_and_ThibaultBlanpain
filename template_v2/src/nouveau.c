@@ -303,7 +303,7 @@ void *lecture(void *fichiers)
       if(err==-1)
       {
         printf("Echec de la fermeture du fichier\n");
-        pthread_exit(NULL);
+        pthread_exit(NULL); 
       }
     }
     if( rd < 0)
