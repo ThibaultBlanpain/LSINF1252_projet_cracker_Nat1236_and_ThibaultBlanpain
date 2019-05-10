@@ -1,9 +1,0 @@
-Undefined symbols for architecture x86_64:
-  "_bufSize", referenced from:
-      _main in main-9c7f98.o
-  "_lecture", referenced from:
-      _main in main-9c7f98.o
-  "_reverseHashFunc", referenced from:
-      _main in main-9c7f98.o
-ld: symbol(s) not found for architecture x86_64
-clang: error: linker command failed with exit code 1 (use -v to see invocation)

@@ -1,0 +1,1294 @@
+commit a151138790a2d3c9d124527aad2fb2f954b8e33d
+Author: nat1236 <natacha.goux@uclouvain.be>
+Date:   Fri May 10 09:18:03 2019 +0200
+
+    occmax
+
+ template_v2/src/nouveau.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
+
+commit 3eafd2feadcfc18208d381fb1878629bec1a49ec
+Author: nat1236 <natacha.goux@uclouvain.be>
+Date:   Fri May 10 09:15:51 2019 +0200
+
+    tu reprends celui-là
+
+ template_v2/src/nouveau.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+commit c96cd17e5d2f30e610c04bea430a3a5d5c69f277
+Author: nat1236 <natacha.goux@uclouvain.be>
+Date:   Fri May 10 09:08:41 2019 +0200
+
+    on a un mdp !!!
+
+ template_v2/src/4hash.bin | Bin 129 -> 128 bytes
+ template_v2/src/cracker.o | Bin 52744 -> 52888 bytes
+ template_v2/src/nouveau.c |  36 ++++++++++++++++++++++++++++--------
+ 3 files changed, 28 insertions(+), 8 deletions(-)
+
+commit fb566a12d9c7e1fd7ed81ebeafcb7312f07f86dc
+Author: nat1236 <natacha.goux@uclouvain.be>
+Date:   Thu May 9 23:39:20 2019 +0200
+
+    essai
+
+ template_v2/Makefile      |   5 ++---
+ template_v2/src/cracker.o | Bin 52752 -> 52744 bytes
+ template_v2/src/nouveau.c |  19 +++++++++++++------
+ 3 files changed, 15 insertions(+), 9 deletions(-)
+
+commit 5abf1258b2bc6b04cef11a63a055d35db3e02b5c
+Author: nat1236 <natacha.goux@uclouvain.be>
+Date:   Thu May 9 19:11:59 2019 +0200
+
+    essai
+
+ template_v2/src/cracker.o | Bin 52760 -> 52752 bytes
+ template_v2/src/nouveau.c |  17 ++++++++---------
+ 2 files changed, 8 insertions(+), 9 deletions(-)
+
+commit 717c0a037221af55fde1882f099278b3a1f7df17
+Author: Blanpain_Thibault <thibault.blanpain@student.uclouvain.be>
+Date:   Thu May 9 17:29:22 2019 +0200
+
+    top
+
+ template_v2/src/nouveau.c | 7 -------
+ 1 file changed, 7 deletions(-)
+
+commit a7210a632ee71bf3cfaa13dc2e24f79a7889983d
+Merge: 10773d3 dc35d7d
+Author: Blanpain_Thibault <thibault.blanpain@student.uclouvain.be>
+Date:   Thu May 9 17:28:04 2019 +0200
+
+    Merge branch 'master' of https://github.com/ThibaultBlanpain/LSINF1252_projet_cracker_Nat1236_and_ThibaultBlanpain
+
+commit 10773d3f7018698c29df92095c3821a82cdfdac0
+Author: Blanpain_Thibault <thibault.blanpain@student.uclouvain.be>
+Date:   Thu May 9 17:27:16 2019 +0200
+
+    printf
+
+ template_v2/src/nouveau.c | 13 +++----------
+ 1 file changed, 3 insertions(+), 10 deletions(-)
+
+commit dc35d7d0ac4a5e67b64dff1055de8251bf16708c
+Author: nat1236 <natacha.goux@uclouvain.be>
+Date:   Thu May 9 17:26:33 2019 +0200
+
+    yas
+
+ template_v2/src/cracker.o | Bin 52768 -> 52760 bytes
+ template_v2/src/nouveau.c |   3 ++-
+ 2 files changed, 2 insertions(+), 1 deletion(-)
+
+commit 8ca73b03a8bd23eca7f757d7f1545a3a6c7e92fc
+Merge: 241fd67 90fcafb
+Author: Blanpain_Thibault <thibault.blanpain@student.uclouvain.be>
+Date:   Thu May 9 17:11:49 2019 +0200
+
+    Merge branch 'master' of https://github.com/ThibaultBlanpain/LSINF1252_projet_cracker_Nat1236_and_ThibaultBlanpain
+
+commit 241fd6708563b93e7de71e4cf49052d611b324ab
+Author: Blanpain_Thibault <thibault.blanpain@student.uclouvain.be>
+Date:   Thu May 9 17:10:42 2019 +0200
+
+    sans fichs[i]
+
+ template_v2/src/nouveau.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
+
+commit 90fcafbaf0905965189ae8f01193d39dcff4b6b9
+Author: nat1236 <natacha.goux@uclouvain.be>
+Date:   Thu May 9 17:10:39 2019 +0200
+
+    opy
+
+ template_v2/src/cracker.o | Bin 52704 -> 52768 bytes
+ template_v2/src/nouveau.c |   2 +-
+ 2 files changed, 1 insertion(+), 1 deletion(-)
+
+commit 3fc76f3d0900f88b02cec08d47c6cd52a9c7cccd
+Merge: 9d40569 df9529e
+Author: nat1236 <natacha.goux@uclouvain.be>
+Date:   Thu May 9 17:03:42 2019 +0200
+
+    Merge branch 'master' of https://github.com/ThibaultBlanpain/LSINF1252_projet_cracker_Nat1236_and_ThibaultBlanpain
+
+commit df9529e5966bdd0b8eb3c953028793d12d40d98b
+Author: Blanpain_Thibault <thibault.blanpain@student.uclouvain.be>
+Date:   Thu May 9 17:03:15 2019 +0200
+
+    essaye nat
+
+ template_v2/src/nouveau.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+commit f44ed6f8b546b43a10e35f61cbca8175c214ad54
+Author: Blanpain_Thibault <thibault.blanpain@student.uclouvain.be>
+Date:   Thu May 9 16:53:27 2019 +0200
+
+    close
+
+ template_v2/src/nouveau.c | 11 +++++++++++
+ 1 file changed, 11 insertions(+)
+
+commit f37ac7ec55242821cbf445ed04885ebd7d12a615
+Author: Blanpain_Thibault <thibault.blanpain@student.uclouvain.be>
+Date:   Thu May 9 16:39:44 2019 +0200
+
+    include getopt.h
+
+ template_v2/src/nouveau.c | 1 +
+ 1 file changed, 1 insertion(+)
+
+commit 8edfcc247bf9d2faed699e9d1f29542ad8dafb66
+Author: Blanpain_Thibault <thibault.blanpain@student.uclouvain.be>
+Date:   Thu May 9 16:36:01 2019 +0200
+
+    reversehash
+
+ template_v2/src/nouveau.c | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
+
+commit 131f858bd9cefc30a57d956a54387a291d897eaf
+Author: Blanpain_Thibault <thibault.blanpain@student.uclouvain.be>
+Date:   Thu May 9 16:32:58 2019 +0200
+
+    strlen bug
+
+ template_v2/src/nouveau.c | 6 +-----
+ 1 file changed, 1 insertion(+), 5 deletions(-)
+
+commit 9d40569a00295dd15f6c781b0a7c57f8fb214034
+Author: nat1236 <natacha.goux@uclouvain.be>
+Date:   Thu May 9 16:26:39 2019 +0200
+
+    getopt
+
+ template_v2/src/cracker.o | Bin 53048 -> 52704 bytes
+ template_v2/src/nouveau.c |   1 +
+ 2 files changed, 1 insertion(+)
+
+commit 74aab33ca91f92805cf9eefa08ba7c95acf5abb9
+Merge: d7678c8 11af634
+Author: Blanpain_Thibault <thibault.blanpain@student.uclouvain.be>
+Date:   Thu May 9 16:21:34 2019 +0200
+
+    Merge branch 'master' of https://github.com/ThibaultBlanpain/LSINF1252_projet_cracker_Nat1236_and_ThibaultBlanpain
+
+commit d7678c83de6541f038c32a6c7f2abf7643c0cbc2
+Author: Blanpain_Thibault <thibault.blanpain@student.uclouvain.be>
+Date:   Thu May 9 16:20:45 2019 +0200
+
+    mkfile
+
+ template_v2/Makefile      | 10 +++++-----
+ template_v2/src/nouveau.c |  4 ++--
+ 2 files changed, 7 insertions(+), 7 deletions(-)
+
+commit 11af634e340dadd2a832f4d4031d3fdd33627195
+Author: nat1236 <natacha.goux@uclouvain.be>
+Date:   Thu May 9 14:00:39 2019 +0200
+
+    gdzg
+
+ template_v2/src/cracker.o | Bin 53064 -> 53048 bytes
+ template_v2/src/nouveau.c |   7 ++++---
+ 2 files changed, 4 insertions(+), 3 deletions(-)
+
+commit ff90f5fc172e4b0ba27f8b1f20cb7f65e710b3b9
+Author: nat1236 <natacha.goux@uclouvain.be>
+Date:   Thu May 9 13:52:48 2019 +0200
+
+    tests
+
+ template_v2/src/cracker.o | Bin 53080 -> 53064 bytes
+ template_v2/src/nouveau.c |   9 ++++-----
+ 2 files changed, 4 insertions(+), 5 deletions(-)
+
+commit 641606bb2d87f16389fb4d257b2213bc9f00f392
+Merge: 36a1239 834664f
+Author: nat1236 <natacha.goux@uclouvain.be>
+Date:   Thu May 9 13:26:06 2019 +0200
+
+    Merge branch 'master' of https://github.com/ThibaultBlanpain/LSINF1252_projet_cracker_Nat1236_and_ThibaultBlanpain
+
+commit 834664f8d39aef3227247007ca45ecceefac56b4
+Merge: 1bcdde7 f194b98
+Author: Blanpain_Thibault <thibault.blanpain@student.uclouvain.be>
+Date:   Thu May 9 13:25:09 2019 +0200
+
+    Merge branch 'master' of https://github.com/ThibaultBlanpain/LSINF1252_projet_cracker_Nat1236_and_ThibaultBlanpain
+
+commit 36a1239e60218278b769138360aac3c03278ac8d
+Author: nat1236 <natacha.goux@uclouvain.be>
+Date:   Thu May 9 13:25:08 2019 +0200
+
+    chmts
+
+ template_v2/src/cracker.o | Bin 39944 -> 53080 bytes
+ template_v2/src/nouveau.c |  16 ++++++++++++----
+ 2 files changed, 12 insertions(+), 4 deletions(-)
+
+commit 1bcdde7535b6eac9b0041a0e2ea0c2d1a2e2da67
+Author: Blanpain_Thibault <thibault.blanpain@student.uclouvain.be>
+Date:   Thu May 9 13:25:07 2019 +0200
+
+    zdcyvt
+
+ template_v2/src/nouveau.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
+
+commit f194b9809eb14d2333bd20d7c2bc58396e57b35c
+Author: nat1236 <natacha.goux@uclouvain.be>
+Date:   Thu May 9 12:29:12 2019 +0200
+
+    \n
+
+ template_v2/src/cracker.o | Bin 39944 -> 39944 bytes
+ template_v2/src/nouveau.c |   4 ++--
+ 2 files changed, 2 insertions(+), 2 deletions(-)
+
+commit 83159cec0a6f498903623150f1c46a1ca206db80
+Author: Blanpain_Thibault <thibault.blanpain@student.uclouvain.be>
+Date:   Thu May 9 12:24:24 2019 +0200
+
+    \n
+
+ template_v2/src/nouveau.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+commit ee976ec99464cd71915ec0f4fea06255ced1733a
+Author: Blanpain_Thibault <thibault.blanpain@student.uclouvain.be>
+Date:   Thu May 9 12:22:28 2019 +0200
+
+    free display
+
+ template_v2/src/nouveau.c | 2 ++
+ 1 file changed, 2 insertions(+)
+
+commit 76f7e4f0cc6db371903c479812a2ad731f8af4d0
+Merge: 73953e1 7cf4d36
+Author: nat1236 <natacha.goux@uclouvain.be>
+Date:   Thu May 9 10:36:04 2019 +0200
+
+    Merge branch 'master' of https://github.com/ThibaultBlanpain/LSINF1252_projet_cracker_Nat1236_and_ThibaultBlanpain
+
+commit 7cf4d363532cc92190aee94acf88cad61c452a4a
+Author: Blanpain_Thibault <thibault.blanpain@student.uclouvain.be>
+Date:   Thu May 9 10:36:25 2019 +0200
+
+    free (a faire en plus dpispaly)
+
+ template_v2/src/nouveau.c | 3 +++
+ 1 file changed, 3 insertions(+)
+
+commit 73953e1a8c418fbb7ec974c0fdc2f221d9a3ac8b
+Author: nat1236 <natacha.goux@uclouvain.be>
+Date:   Thu May 9 10:33:16 2019 +0200
+
+    print
+
+ template_v2/src/cracker.o | Bin 39912 -> 39944 bytes
+ template_v2/src/nouveau.c |   3 +++
+ 2 files changed, 3 insertions(+)
+
+commit 206edefeb0ef3486eb302b7a86bac36e749d8685
+Merge: e42a942 7c89004
+Author: nat1236 <natacha.goux@uclouvain.be>
+Date:   Thu May 9 10:21:20 2019 +0200
+
+    Merge branch 'master' of https://github.com/ThibaultBlanpain/LSINF1252_projet_cracker_Nat1236_and_ThibaultBlanpain
+
+commit 7c89004a3118d2d9feb889ae353518de9be096ee
+Author: Blanpain_Thibault <thibault.blanpain@student.uclouvain.be>
+Date:   Thu May 9 10:21:18 2019 +0200
+
+    while blabla
+
+ template_v2/src/nouveau.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
+
+commit e42a942e1caadc6fd6da805778247ae588868360
+Author: nat1236 <natacha.goux@uclouvain.be>
+Date:   Thu May 9 10:14:25 2019 +0200
+
+    wait
+
+ template_v2/src/cracker.o | Bin 39912 -> 39912 bytes
+ template_v2/src/nouveau.c |  10 +++++++++-
+ 2 files changed, 9 insertions(+), 1 deletion(-)
+
+commit 00212a0ce42f749feed8939fadb7d0745ab73748
+Merge: 4356589 6077a9a
+Author: Blanpain_Thibault <thibault.blanpain@student.uclouvain.be>
+Date:   Thu May 9 09:51:16 2019 +0200
+
+    Merge branch 'master' of https://github.com/ThibaultBlanpain/LSINF1252_projet_cracker_Nat1236_and_ThibaultBlanpain
+
+commit 6077a9aeffa098b369e796826ea4f157bf923d23
+Author: nat1236 <natacha.goux@uclouvain.be>
+Date:   Thu May 9 09:50:00 2019 +0200
+
+    ye
+
+ template_v2/src/nouveau.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+commit 4356589f427d9fe28ee94d3ea1b386762aaa7db3
+Author: Blanpain_Thibault <thibault.blanpain@student.uclouvain.be>
+Date:   Thu May 9 09:48:29 2019 +0200
+
+    +mk test
+
+ template_v2/Makefile | 10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
+
+commit 9c6cacee82d0c6ebc90f72e0f6e206f6257fa0f9
+Merge: 31845df 5b1c920
+Author: Blanpain_Thibault <thibault.blanpain@student.uclouvain.be>
+Date:   Thu May 9 09:46:19 2019 +0200
+
+    Merge branch 'master' of https://github.com/ThibaultBlanpain/LSINF1252_projet_cracker_Nat1236_and_ThibaultBlanpain
+
+commit 31845dfad3e194bfa9a124cd63bcdcc2beba00ad
+Author: Blanpain_Thibault <thibault.blanpain@student.uclouvain.be>
+Date:   Thu May 9 09:45:48 2019 +0200
+
+    makefile test
+
+ template_v2/Makefile | 8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
+
+commit 5b1c920f53f32cd309544db975edcc99736b7044
+Author: nat1236 <natacha.goux@uclouvain.be>
+Date:   Thu May 9 00:39:01 2019 +0200
+
+    prob de free
+
+ template_v2/src/cracker.o | Bin 0 -> 39912 bytes
+ template_v2/src/nouveau.c |  10 ++++++----
+ 2 files changed, 6 insertions(+), 4 deletions(-)
+
+commit fe06681a3e3e44e28165ed68a4f7cc0b8084bd6e
+Author: nat1236 <natacha.goux@uclouvain.be>
+Date:   Wed May 8 18:13:42 2019 +0200
+
+    debugg
+
+ template_v2/src/nouveau.c | 16 ++++++++--------
+ 1 file changed, 8 insertions(+), 8 deletions(-)
+
+commit 9b8e27febf619e184fc9843dd080053746d36154
+Author: nat1236 <natacha.goux@uclouvain.be>
+Date:   Wed May 8 18:04:17 2019 +0200
+
+    deb
+
+ template_v2/src/nouveau.c | 18 +++++++++---------
+ 1 file changed, 9 insertions(+), 9 deletions(-)
+
+commit ba1f951a115ef3554fb46c89f121648190f7a59b
+Author: nat1236 <natacha.goux@uclouvain.be>
+Date:   Wed May 8 17:43:02 2019 +0200
+
+    suite debug
+
+ template_v2/src/nouveau.c | 66 ++++++++++++++++++++++++++---------------------
+ 1 file changed, 36 insertions(+), 30 deletions(-)
+
+commit 4815b3fa1545def664ceca0e6e25baf5dfb67755
+Author: nat1236 <natacha.goux@uclouvain.be>
+Date:   Wed May 8 17:00:00 2019 +0200
+
+    debut debug
+
+ template_v2/src/nouveau.c | 20 ++++++++++----------
+ 1 file changed, 10 insertions(+), 10 deletions(-)
+
+commit 544b8009ea169f48fecde5e261c326d4fc1b64f9
+Merge: 8349d08 89ede8f
+Author: Blanpain_Thibault <thibault.blanpain@student.uclouvain.be>
+Date:   Wed May 8 16:55:46 2019 +0200
+
+    Merge branch 'master' of https://github.com/ThibaultBlanpain/LSINF1252_projet_cracker_Nat1236_and_ThibaultBlanpain
+
+commit 8349d08768321f8aa74db32b23449b2ca843dde0
+Author: Blanpain_Thibault <thibault.blanpain@student.uclouvain.be>
+Date:   Wed May 8 16:54:09 2019 +0200
+
+    ListCandid ok
+
+ template_v2/src/nouveau.c | 10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
+
+commit 89ede8fb357418e5b48964caf5637526d10a92ba
+Author: nat1236 <natacha.goux@uclouvain.be>
+Date:   Wed May 8 16:43:49 2019 +0200
+
+    ||
+
+ template_v2/src/nouveau.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+commit cf2d6ae06b50d6f909013206d38245c7e86616a3
+Author: Blanpain_Thibault <thibault.blanpain@student.uclouvain.be>
+Date:   Wed May 8 16:40:35 2019 +0200
+
+    ca degage
+
+ template_v2/src/nouveau.c | 2 --
+ 1 file changed, 2 deletions(-)
+
+commit d0c2908060c49d7201842287d7e9fa79a6e75dc8
+Merge: d4dd79f cf2d6ae
+Author: nat1236 <natacha.goux@uclouvain.be>
+Date:   Wed May 8 16:40:26 2019 +0200
+
+    Merge branch 'master' of https://github.com/ThibaultBlanpain/LSINF1252_projet_cracker_Nat1236_and_ThibaultBlanpain
+
+commit d4dd79f64335c536d0f28454f921ec25adb517c1
+Merge: ca101a3 daa9d5e
+Author: nat1236 <natacha.goux@uclouvain.be>
+Date:   Wed May 8 16:29:02 2019 +0200
+
+    Merge branch 'master' of https://github.com/ThibaultBlanpain/LSINF1252_projet_cracker_Nat1236_and_ThibaultBlanpain
+
+commit daa9d5efa4c256a03be73e3e82178ed8a6e22c25
+Author: Blanpain_Thibault <thibault.blanpain@student.uclouvain.be>
+Date:   Wed May 8 16:29:01 2019 +0200
+
+    =
+
+ template_v2/src/nouveau.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+commit ca101a37d477b20219ff9684b0c78ae39ceccdb3
+Author: nat1236 <natacha.goux@uclouvain.be>
+Date:   Wed May 8 16:26:49 2019 +0200
+
+    corr
+
+ template_v2/src/nouveau.c | 47 +++++++++++++++++++++++------------------------
+ 1 file changed, 23 insertions(+), 24 deletions(-)
+
+commit b8521d053450985ede1262f2527b4bd01600c838
+Author: Blanpain_Thibault <thibault.blanpain@student.uclouvain.be>
+Date:   Wed May 8 16:16:57 2019 +0200
+
+    bibi
+
+ template_v2/src/nouveau.c | 2 ++
+ 1 file changed, 2 insertions(+)
+
+commit 43396b03685b6d2a0689d76b61b2d3e669a63e5b
+Author: Blanpain_Thibault <thibault.blanpain@student.uclouvain.be>
+Date:   Wed May 8 15:48:17 2019 +0200
+
+    vhj
+
+ template_v2/src/nouveau.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+commit a9f3838d452d78b2f9f61200724c8ad2aa88594d
+Author: Blanpain_Thibault <thibault.blanpain@student.uclouvain.be>
+Date:   Wed May 8 15:46:34 2019 +0200
+
+    fichier binaire contenant 4 hash
+
+ template_v2/src/4hash.bin | Bin 0 -> 129 bytes
+ template_v2/src/nouveau.c |   2 +-
+ 2 files changed, 1 insertion(+), 1 deletion(-)
+
+commit 399238707ffaea60c2f3fb4cd0b256e8e1e220ab
+Author: Blanpain_Thibault <thibault.blanpain@student.uclouvain.be>
+Date:   Wed May 8 15:42:12 2019 +0200
+
+    !!!! ListCandidat!!!!
+
+ template_v2/src/nouveau.c | 108 ++++++++++++++++++++++++++++++++++------------
+ 1 file changed, 81 insertions(+), 27 deletions(-)
+
+commit c0e451bd60f9b2a5b83f1e8b9ded063be4e11b3a
+Author: Blanpain_Thibault <thibault.blanpain@student.uclouvain.be>
+Date:   Wed May 8 15:05:39 2019 +0200
+
+    hohoho
+
+ nouveau.c => template_v2/src/nouveau.c | 0
+ 1 file changed, 0 insertions(+), 0 deletions(-)
+
+commit 2608f50dcca98c7bbab8b09d540bd6897d85551d
+Author: Blanpain_Thibault <thibault.blanpain@student.uclouvain.be>
+Date:   Wed May 8 15:01:27 2019 +0200
+
+    mutexIndex
+
+ nouveau.c | 4 ++++
+ 1 file changed, 4 insertions(+)
+
+commit 8185f98cd0f63e06908e8e05eef5c6e90911a838
+Author: Blanpain_Thibault <thibault.blanpain@student.uclouvain.be>
+Date:   Wed May 8 14:58:38 2019 +0200
+
+    bazar
+
+ nouveau.c | 46 +++++++++++++++++++++++++++++++++-------------
+ 1 file changed, 33 insertions(+), 13 deletions(-)
+
+commit 79063a329ddf60db30f6e640013893e422ce2be8
+Author: Blanpain_Thibault <thibault.blanpain@student.uclouvain.be>
+Date:   Wed May 8 14:26:10 2019 +0200
+
+    svf
+
+ nouveau.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+commit d1b7e1b0a9cb28628f7217e6d5507352c6e4ffd9
+Author: Blanpain_Thibault <thibault.blanpain@student.uclouvain.be>
+Date:   Wed May 8 14:24:02 2019 +0200
+
+    list
+
+ nouveau.c | 55 ++++++++++++++++++++++++++++++++++++++++++++++++++++++-
+ 1 file changed, 54 insertions(+), 1 deletion(-)
+
+commit 6ae824936e7454b3e34f20456d182d539e517de8
+Author: Blanpain_Thibault <thibault.blanpain@student.uclouvain.be>
+Date:   Wed May 8 13:12:45 2019 +0200
+
+    yisvcuzjeahbcuyzbf
+
+ nouveau.c | 9 ++++++---
+ 1 file changed, 6 insertions(+), 3 deletions(-)
+
+commit 202b99e1f42a1359b642baccd44a54c8c68df161
+Author: Blanpain_Thibault <thibault.blanpain@student.uclouvain.be>
+Date:   Wed May 8 12:59:51 2019 +0200
+
+    trn
+
+ nouveau.c | 1 -
+ 1 file changed, 1 deletion(-)
+
+commit d5e6087792b0f6fadfdb9f952c8371ff95bb8044
+Author: nat1236 <natacha.goux@uclouvain.be>
+Date:   Wed May 8 12:56:35 2019 +0200
+
+    et là
+
+ nouveau.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+commit 49b5fb6709a8c130ab8049eb12fc8e19112d66e8
+Author: nat1236 <natacha.goux@uclouvain.be>
+Date:   Wed May 8 00:43:02 2019 +0200
+
+    commentaires
+
+ nouveau.c | 13 +++++++------
+ 1 file changed, 7 insertions(+), 6 deletions(-)
+
+commit 16723b4febdbf2c13a7598ce2d6506d085629853
+Author: Blanpain_Thibault <thibault.blanpain@student.uclouvain.be>
+Date:   Tue May 7 22:00:48 2019 +0200
+
+    un peu de clarté
+
+ nouveau.c | 160 +++++++++++++++++++++++++++++++++++---------------------------
+ 1 file changed, 90 insertions(+), 70 deletions(-)
+
+commit 3650daddfb905be9cf57c6e7c4aa07d175e5c240
+Author: Blanpain_Thibault <thibault.blanpain@student.uclouvain.be>
+Date:   Tue May 7 21:50:36 2019 +0200
+
+    utilitaire
+
+ nouveau.c | 86 +++++++++++++++++++++++++++++++++++++++++++--------------------
+ 1 file changed, 59 insertions(+), 27 deletions(-)
+
+commit d3e9c6d5a19a46846b068f18ac1d9146f8191bfb
+Author: nat1236 <natacha.goux@uclouvain.be>
+Date:   Tue May 7 18:51:48 2019 +0200
+
+    changements (new doc)
+
+ nouveau.c                  | 298 +++++++++++++++++++++++++++++++++++++++++++++
+ template_v2/src/init_var.c | 121 ++++++++++++++++++
+ 2 files changed, 419 insertions(+)
+
+commit 7052b9cfd265e59b1a5efedc5c2b1f0f005d134e
+Author: Blanpain_Thibault <thibault.blanpain@student.uclouvain.be>
+Date:   Mon May 6 15:52:34 2019 +0200
+
+    makefile
+
+ template_v2/Makefile | 11 ++++++++++-
+ 1 file changed, 10 insertions(+), 1 deletion(-)
+
+commit fef011ccdf2e0a92e21984c90e3e1a29cf968069
+Author: Blanpain_Thibault <thibault.blanpain@student.uclouvain.be>
+Date:   Mon May 6 13:53:40 2019 +0200
+
+    tri
+
+ template_v2/src/initvar.c | 82 +++++++++++++++++++++++++++++++++++++++++++++++
+ template_v2/src/initvar.h |  6 ++++
+ template_v2/src/main.c    |  2 +-
+ 3 files changed, 89 insertions(+), 1 deletion(-)
+
+commit f94cbb3b5c96ab64d42b3d5815ac3635654fff2d
+Author: Blanpain_Thibault <thibault.blanpain@student.uclouvain.be>
+Date:   Mon May 6 12:54:56 2019 +0200
+
+    good
+
+ template_v2/src/compiling_error.txt | 6 ++++--
+ template_v2/src/main.c              | 4 ++--
+ 2 files changed, 6 insertions(+), 4 deletions(-)
+
+commit 990960d3a113f615b5a84d5b91627389d9ba0196
+Author: Blanpain_Thibault <thibault.blanpain@student.uclouvain.be>
+Date:   Mon May 6 11:16:47 2019 +0200
+
+    sem corrected
+
+ template_v2/src/a.out     | Bin 39580 -> 0 bytes
+ template_v2/src/initvar.c |  10 ++++++----
+ 2 files changed, 6 insertions(+), 4 deletions(-)
+
+commit ca31a314bf58b2689d175ba4d92c82c51d6189c2
+Author: Blanpain_Thibault <thibault.blanpain@student.uclouvain.be>
+Date:   Mon May 6 09:23:37 2019 +0200
+
+    extern var
+
+ template_v2/src/compiling_error.txt       |  7 +++++++
+ template_v2/src/destroy_var.c             |  5 +++--
+ template_v2/src/{init_var.c => initvar.c} | 14 ++++++++------
+ template_v2/src/{init_var.h => initvar.h} |  7 ++++---
+ template_v2/src/main.c                    |  5 +++--
+ 5 files changed, 25 insertions(+), 13 deletions(-)
+
+commit a48e138c8efe5da09bba1e287f474527bf9ad086
+Author: nat1236 <natacha.goux@uclouvain.be>
+Date:   Wed May 1 21:25:11 2019 +0200
+
+    essai semaphores
+
+ template_v2/src/destroy_var.c | 30 ++++++++++++++++++++++++++++++
+ template_v2/src/init_var.c    | 26 +++++++++++++++++++++++---
+ 2 files changed, 53 insertions(+), 3 deletions(-)
+
+commit 2005c7a00c6c8995f66a2e7361b31b1f01f811f6
+Merge: f4dc868 05624c5
+Author: Blanpain_Thibault <thibault.blanpain@student.uclouvain.be>
+Date:   Tue Apr 30 17:49:52 2019 +0200
+
+    Merge branch 'master' of https://github.com/ThibaultBlanpain/LSINF1252_projet_cracker_Nat1236_and_ThibaultBlanpain
+
+commit f4dc868124ea61fbd8500844d142027f79bc709c
+Author: Blanpain_Thibault <thibault.blanpain@student.uclouvain.be>
+Date:   Tue Apr 30 17:49:48 2019 +0200
+
+    42
+
+ template_v2/src/compiling_error.txt |  5 -----
+ template_v2/src/init_var.c          | 15 +++++++++++----
+ template_v2/src/init_var.h          |  9 +++++++++
+ template_v2/src/main.c              |  2 ++
+ 4 files changed, 22 insertions(+), 9 deletions(-)
+
+commit 36e3d2665d9aa65748ffe36ab55bd00667c50fe3
+Author: Blanpain_Thibault <thibault.blanpain@student.uclouvain.be>
+Date:   Tue Apr 30 17:29:37 2019 +0200
+
+    h.H
+
+ template_v2/src/init_var.h | 21 +++++++++++++++++++++
+ 1 file changed, 21 insertions(+)
+
+commit 05624c5f43efea524b14eedaa87fb1b3bdc150bd
+Author: nat1236 <natacha.goux@uclouvain.be>
+Date:   Tue Apr 30 17:28:57 2019 +0200
+
+    des
+
+ template_v2/src/destroy_var.h | 8 ++++++++
+ 1 file changed, 8 insertions(+)
+
+commit 0a094b1107c31ee101f3f8be867eeb212ba2bb69
+Author: Blanpain_Thibault <thibault.blanpain@student.uclouvain.be>
+Date:   Tue Apr 30 17:21:21 2019 +0200
+
+    vjaecj
+
+ template_v2/src/a.out               | Bin 9452 -> 39580 bytes
+ template_v2/src/compiling_error.txt |   2 +-
+ template_v2/src/destroy_var.c       |   0
+ template_v2/src/destroy_var.h       |   0
+ template_v2/src/init_var.c          |  94 ++++++++++++++++++++++++++++++++++++
+ template_v2/src/init_var.h          |   0
+ template_v2/src/main                | Bin 9364 -> 0 bytes
+ template_v2/src/main.c              |  77 +----------------------------
+ 8 files changed, 97 insertions(+), 76 deletions(-)
+
+commit f2551d1d0a6aaba9607cfab29fd220f37269bc09
+Author: nat1236 <natacha.goux@uclouvain.be>
+Date:   Tue Apr 30 16:26:34 2019 +0200
+
+    yes
+
+ template_v2/src/main.c  |  24 ++++++++++++------------
+ test-input/01_4c_1k.bin | Bin 0 -> 32000 bytes
+ test-input/02_6c_5.bin  |   5 +++++
+ 3 files changed, 17 insertions(+), 12 deletions(-)
+
+commit 95b4a165ac2b619f1d088c23b7b1925fb6571927
+Merge: e11f1fb 7a18cf7
+Author: Blanpain_Thibault <thibault.blanpain@student.uclouvain.be>
+Date:   Mon Apr 29 14:57:27 2019 +0200
+
+    Merge branch 'master' of https://github.com/ThibaultBlanpain/LSINF1252_projet_cracker_Nat1236_and_ThibaultBlanpain
+
+commit e11f1fb74a1d304e133c901575360d53decab783
+Author: Blanpain_Thibault <thibault.blanpain@student.uclouvain.be>
+Date:   Mon Apr 29 14:57:22 2019 +0200
+
+    le changement, c est maintenant
+
+ template_v2/src/a.out               | Bin 9364 -> 9452 bytes
+ template_v2/src/compiling_error.txt |   5 ++++
+ template_v2/src/main.c              |  52 +++++++++++++++++++++++++++++++++---
+ 3 files changed, 54 insertions(+), 3 deletions(-)
+
+commit 7a18cf7731e9b8f598a0e043050d4451fb875927
+Author: nat1236 <natacha.goux@uclouvain.be>
+Date:   Mon Apr 29 11:31:55 2019 +0200
+
+    essai
+
+ template_v2/src/main.c | 10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
+
+commit 571f58a23f986bfef13c7d19f3fca3c52b0eaff5
+Author: Blanpain_Thibault <thibault.blanpain@student.uclouvain.be>
+Date:   Mon Apr 29 10:48:37 2019 +0200
+
+    bis
+
+ template_v2/src/main.c | 7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
+
+commit 6827e94ce29614ec7e3a35c7c850890cb7eaa8d7
+Author: Blanpain_Thibault <thibault.blanpain@student.uclouvain.be>
+Date:   Mon Apr 29 09:01:08 2019 +0200
+
+    lecture ok
+
+ {test-input => template_v2/src}/01_4c_1k.bin | Bin
+ {test-input => template_v2/src}/02_6c_5.bin  |   0
+ template_v2/src/a.out                        | Bin 0 -> 9364 bytes
+ template_v2/src/main.c                       |  33 +++++++++++++++------------
+ 4 files changed, 18 insertions(+), 15 deletions(-)
+
+commit 877d636ccb34f94f2590a34ef9f375741ed8090a
+Author: Blanpain_Thibault <thibault.blanpain@student.uclouvain.be>
+Date:   Sat Apr 27 15:35:55 2019 +0200
+
+    udgftydududfcdkdf
+
+ template_v2/src/main.c | 12 +++++++++++-
+ 1 file changed, 11 insertions(+), 1 deletion(-)
+
+commit e0c7077c9a03064777581ca2ed7cc595d45aa87c
+Author: Blanpain_Thibault <thibault.blanpain@student.uclouvain.be>
+Date:   Sat Apr 27 13:59:58 2019 +0200
+
+    uv
+
+ template_v2/src/compiling_error.txt | 4 ----
+ template_v2/src/main.c              | 2 +-
+ 2 files changed, 1 insertion(+), 5 deletions(-)
+
+commit 2476545a8ac50907475e1290fc0238ae93ede055
+Author: nat1236 <natacha.goux@uclouvain.be>
+Date:   Sat Apr 27 13:58:29 2019 +0200
+
+    make clean
+
+ template_v2/Makefile                | 3 ++-
+ template_v2/src/compiling_error.txt | 4 ++++
+ template_v2/src/main.c              | 2 +-
+ 3 files changed, 7 insertions(+), 2 deletions(-)
+
+commit 54e25a1d251be3685be8fec5705d4f7a4f297e6e
+Author: Blanpain_Thibault <thibault.blanpain@student.uclouvain.be>
+Date:   Sat Apr 27 13:31:55 2019 +0200
+
+    compile sans erreur
+
+ template_v2/src/compiling_error.txt | 35 -----------------------------------
+ 1 file changed, 35 deletions(-)
+
+commit 13b68a1264998528ddf8f2785fffa3b2a8cef83a
+Merge: c2b0cf3 45ee2b8
+Author: Blanpain_Thibault <thibault.blanpain@student.uclouvain.be>
+Date:   Sat Apr 27 13:30:20 2019 +0200
+
+    Merge branch 'master' of https://github.com/ThibaultBlanpain/LSINF1252_projet_cracker_Nat1236_and_ThibaultBlanpain
+
+commit c2b0cf39d05d603ac0ca2983739f35742895dc9b
+Author: Blanpain_Thibault <thibault.blanpain@student.uclouvain.be>
+Date:   Sat Apr 27 13:30:18 2019 +0200
+
+    compile
+
+ template_v2/src/main   | Bin 8660 -> 9364 bytes
+ template_v2/src/main.c |  21 ++++++++++++---------
+ 2 files changed, 12 insertions(+), 9 deletions(-)
+
+commit 45ee2b832776ddcc1a8b69e83285bd0870d5489f
+Author: nat1236 <natacha.goux@uclouvain.be>
+Date:   Sat Apr 27 12:16:53 2019 +0200
+
+    error
+
+ template_v2/src/compiling_error.txt | 35 +++++++++++++++++++++++++++++++++++
+ 1 file changed, 35 insertions(+)
+
+commit 22b5a790792330090841558e2b21dfe41f18209f
+Author: Blanpain_Thibault <thibault.blanpain@student.uclouvain.be>
+Date:   Sat Apr 27 12:11:14 2019 +0200
+
+    ca compile ta daronne
+
+ template_v2/src/compiling_error.txt | 29 -----------------------------
+ template_v2/src/main.c              | 15 ++++++++++-----
+ 2 files changed, 10 insertions(+), 34 deletions(-)
+
+commit fadf21876a252a1f3a5b9115388204ccf6cb9efa
+Author: nat1236 <natacha.goux@uclouvain.be>
+Date:   Sat Apr 27 11:10:10 2019 +0200
+
+    uç
+
+ template_v2/src/main.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+commit fc5a3b24dcfc0cbf2594ee62beecf9da1a231771
+Author: nat1236 <natacha.goux@uclouvain.be>
+Date:   Sat Apr 27 11:06:48 2019 +0200
+
+    yf
+
+ template_v2/src/main.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
+
+commit 00f220eb3d3cff08d4701dfee727b2682b6496df
+Author: Blanpain_Thibault <thibault.blanpain@student.uclouvain.be>
+Date:   Sat Apr 27 10:59:24 2019 +0200
+
+    skqhdfvuq
+
+ template_v2/src/compiling_error.txt | 29 +++++++++++++++++++++
+ template_v2/src/main.c              | 50 +++++++++++++++++++------------------
+ 2 files changed, 55 insertions(+), 24 deletions(-)
+
+commit 7d3ac0be2624b9006787e538a944d49865e34f04
+Author: nat1236 <natacha.goux@uclouvain.be>
+Date:   Sat Apr 27 10:41:05 2019 +0200
+
+    join
+
+ template_v2/src/main.c | 7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
+
+commit 6e8c6e364c499331d9ec8bd69b6b3fcc80710657
+Author: Blanpain_Thibault <thibault.blanpain@student.uclouvain.be>
+Date:   Sat Apr 27 10:36:13 2019 +0200
+
+    usvf
+
+ template_v2/src/main.c | 4 ++++
+ 1 file changed, 4 insertions(+)
+
+commit 63b36665bfd44e9969a41015cc1a1bb1f247adbc
+Merge: 290cd05 f9b15e6
+Author: nat1236 <natacha.goux@uclouvain.be>
+Date:   Sat Apr 27 10:33:55 2019 +0200
+
+    Merge branch 'master' of https://github.com/ThibaultBlanpain/LSINF1252_projet_cracker_Nat1236_and_ThibaultBlanpain
+
+commit f9b15e61dd9d443b9f5d81cd75f061b3243d0e2e
+Author: Blanpain_Thibault <thibault.blanpain@student.uclouvain.be>
+Date:   Sat Apr 27 10:34:17 2019 +0200
+
+    yatvefuiy
+
+ template_v2/src/main.c | 19 +++----------------
+ 1 file changed, 3 insertions(+), 16 deletions(-)
+
+commit 63f67b97a8279a8b6fa6128b5f7710b5e40f714b
+Merge: 7aef23c 8ee6472
+Author: Blanpain_Thibault <thibault.blanpain@student.uclouvain.be>
+Date:   Sat Apr 27 10:31:48 2019 +0200
+
+    Merge branch 'master' of https://github.com/ThibaultBlanpain/LSINF1252_projet_cracker_Nat1236_and_ThibaultBlanpain
+
+commit 290cd0544b0c17a0784ea9ac5cfaea7731876e63
+Author: nat1236 <natacha.goux@uclouvain.be>
+Date:   Sat Apr 27 10:30:41 2019 +0200
+
+    jbj
+
+ template_v2/src/main.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
+
+commit 7aef23c7cd7aeb8e2d6f2249da2f4787dd36b43d
+Author: Blanpain_Thibault <thibault.blanpain@student.uclouvain.be>
+Date:   Sat Apr 27 10:28:37 2019 +0200
+
+    kkj
+
+ template_v2/src/main.c | 39 ++++++++++++---------------------------
+ 1 file changed, 12 insertions(+), 27 deletions(-)
+
+commit 8ee64720e816674b1974cab676b01554cba93fb3
+Author: nat1236 <natacha.goux@uclouvain.be>
+Date:   Sat Apr 27 10:26:35 2019 +0200
+
+    uas
+
+ template_v2/src/main.c | 2 ++
+ 1 file changed, 2 insertions(+)
+
+commit 4abe5669714c0fbad84a0f7d71ded225003d8d8d
+Author: nat1236 <natacha.goux@uclouvain.be>
+Date:   Sat Apr 27 10:22:53 2019 +0200
+
+    ok
+
+ template_v2/src/main.c | 36 +++++++++++++++++++++++++++---------
+ 1 file changed, 27 insertions(+), 9 deletions(-)
+
+commit 54a17dc38c06dbcda6a08f28f0ab1a9c2e44561a
+Author: nat1236 <natacha.goux@uclouvain.be>
+Date:   Sat Apr 27 10:19:28 2019 +0200
+
+    lect
+
+ template_v2/src/main.c | 9 ++++++---
+ 1 file changed, 6 insertions(+), 3 deletions(-)
+
+commit d1c00a296ce5ae5a1323e2754f12148d810bd17b
+Author: nat1236 <natacha.goux@uclouvain.be>
+Date:   Sat Apr 27 10:14:28 2019 +0200
+
+    jik
+
+ template_v2/src/main.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+commit 763ed4b8984d4fb33a08a2a4a5229eac184278ea
+Author: nat1236 <natacha.goux@uclouvain.be>
+Date:   Sat Apr 27 10:13:14 2019 +0200
+
+    lecture
+
+ template_v2/src/main.c | 44 ++++++++++++--------------------------------
+ 1 file changed, 12 insertions(+), 32 deletions(-)
+
+commit 8a13412a121d81d3254624b26024e6812703a8b5
+Author: Blanpain_Thibault <thibault.blanpain@student.uclouvain.be>
+Date:   Sat Apr 27 10:12:59 2019 +0200
+
+    bkqevnibzevizvb
+
+ template_v2/src/main.c | 25 +++++++++++++++++++++++++
+ 1 file changed, 25 insertions(+)
+
+commit cec0b6fb3873dbb479e5b466b35df803d681b0f9
+Author: Blanpain_Thibault <thibault.blanpain@student.uclouvain.be>
+Date:   Sun Apr 21 12:07:38 2019 +0200
+
+    trucs peu utiles mais utiles un peu quand meme
+
+ template_v2/src/main.c | 15 +++++++++++----
+ 1 file changed, 11 insertions(+), 4 deletions(-)
+
+commit f9901079ed13eb71fdbeb5d3e1244e058d98b3dd
+Author: Blanpain_Thibault <thibault.blanpain@student.uclouvain.be>
+Date:   Sun Apr 21 10:39:43 2019 +0200
+
+    commentaire
+
+ template_v2/src/main.c | 3 +++
+ 1 file changed, 3 insertions(+)
+
+commit 1f324ceaf36c2c89b11a8352ac5c1eb024f98f4e
+Author: Blanpain_Thibault <thibault.blanpain@student.uclouvain.be>
+Date:   Sat Apr 20 15:08:50 2019 +0200
+
+    s
+
+ template_v2/src/main.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+commit 6d5a022ac62554a180c141af1e33518c6da74cb9
+Author: Blanpain_Thibault <thibault.blanpain@student.uclouvain.be>
+Date:   Sat Apr 20 15:07:01 2019 +0200
+
+    fvs
+
+ template_v2/src/main.c | 8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
+
+commit ccaa7bc449fb56b332e0adc92a3460a95a7ac51c
+Author: Natacha Goux <natacha@goux.be>
+Date:   Sat Apr 20 14:59:38 2019 +0200
+
+    fe
+
+ template_v2/src/main.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
+
+commit 271d37dc38201d6f124aa8cfed4d2a9b5848bf4e
+Author: Blanpain_Thibault <thibault.blanpain@student.uclouvain.be>
+Date:   Sat Apr 20 14:53:08 2019 +0200
+
+    blabla
+
+ template_v2/src/main.c | 17 ++++++++++++++---
+ 1 file changed, 14 insertions(+), 3 deletions(-)
+
+commit 1efb988332cf7513b82086fcbfc07d247972eba5
+Merge: a01165d b075409
+Author: Natacha Goux <natacha@goux.be>
+Date:   Sat Apr 20 14:35:09 2019 +0200
+
+    Merge branch 'master' of https://github.com/ThibaultBlanpain/LSINF1252_projet_cracker_Nat1236_and_ThibaultBlanpain
+
+commit a01165d085528d23b59b4f97143a7f8432bf4de4
+Author: Natacha Goux <natacha@goux.be>
+Date:   Sat Apr 20 14:34:49 2019 +0200
+
+    etap
+
+ template_v2/src/main.c | 3 +++
+ 1 file changed, 3 insertions(+)
+
+commit b07540956aa19d542e53b687782ac3cf8f24b250
+Author: Blanpain_Thibault <thibault.blanpain@student.uclouvain.be>
+Date:   Sat Apr 20 14:32:50 2019 +0200
+
+    gdf
+
+ template_v2/src/main.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
+
+commit 33cbb3728b5cad5ea760e38c65600fdd2cab2495
+Author: Blanpain_Thibault <thibault.blanpain@student.uclouvain.be>
+Date:   Sat Apr 20 14:28:42 2019 +0200
+
+    edc
+
+ template_v2/src/main   | Bin 8620 -> 8660 bytes
+ template_v2/src/main.c |   1 +
+ 2 files changed, 1 insertion(+)
+
+commit ba8c64363000714f24c10429847b6777ea3ffb03
+Merge: 680a297 9189ce2
+Author: Natacha Goux <natacha@goux.be>
+Date:   Sat Apr 20 14:26:08 2019 +0200
+
+    Merge branch 'master' of https://github.com/ThibaultBlanpain/LSINF1252_projet_cracker_Nat1236_and_ThibaultBlanpain
+
+commit 9189ce2b469d2f736bf8c63765102b78a260674d
+Author: Blanpain_Thibault <thibault.blanpain@student.uclouvain.be>
+Date:   Sat Apr 20 14:23:37 2019 +0200
+
+    holééé
+
+ template_v2/src/main   | Bin 0 -> 8620 bytes
+ template_v2/src/main.c |   7 ++++---
+ 2 files changed, 4 insertions(+), 3 deletions(-)
+
+commit 680a29743b514137143f2c78c0fa6ffa92ca3012
+Author: Natacha Goux <natacha@goux.be>
+Date:   Sat Apr 20 14:16:45 2019 +0200
+
+    indent
+
+ template_v2/src/main.c | 4 +---
+ 1 file changed, 1 insertion(+), 3 deletions(-)
+
+commit a454cf525172fafdae196848adc6d5959f59ff96
+Author: Blanpain_Thibault <thibault.blanpain@student.uclouvain.be>
+Date:   Sat Apr 20 14:13:01 2019 +0200
+
+    compilééééééé
+
+ template_v2/src/main.c | 18 ++++++++++--------
+ 1 file changed, 10 insertions(+), 8 deletions(-)
+
+commit e2520ff80d1cd7c85c7c6edaf64c6cda4f5ac750
+Author: Blanpain_Thibault <thibault.blanpain@student.uclouvain.be>
+Date:   Sat Apr 20 14:00:23 2019 +0200
+
+    include
+
+ template_v2/src/main.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+commit 76d68d716af1f0a7facb4fe5db2cdefdca28600b
+Author: Blanpain_Thibault <thibault.blanpain@student.uclouvain.be>
+Date:   Sat Apr 20 13:57:12 2019 +0200
+
+    etape 0
+
+ template_v2/src/main.c | 32 +++++++++++++++++++++++++++++++-
+ 1 file changed, 31 insertions(+), 1 deletion(-)
+
+commit f85ec219b2f32ba8673f9c287f7fa6d0c7858818
+Author: Blanpain_Thibault <thibault.blanpain@student.uclouvain.be>
+Date:   Sat Apr 20 13:31:06 2019 +0200
+
+    fv
+
+ template_v2/src/main.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
+
+commit b40163edaac2f0ecc13bb4ab245e652a955f4dab
+Merge: 76f66fa 193416f
+Author: Blanpain_Thibault <thibault.blanpain@student.uclouvain.be>
+Date:   Sat Apr 20 13:29:38 2019 +0200
+
+    Merge branch 'master' of https://github.com/ThibaultBlanpain/LSINF1252_projet_cracker_Nat1236_and_ThibaultBlanpain
+
+commit 76f66fa735ad5327b0bbd3c0b6249fab8fee1b89
+Author: Blanpain_Thibault <thibault.blanpain@student.uclouvain.be>
+Date:   Sat Apr 20 12:58:29 2019 +0200
+
+    ueva
+
+ template_v2/src/main.c | 8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
+
+commit 193416f950070b00027a7236d8c9fbbcda8a2f4f
+Author: Natacha Goux <natacha@goux.be>
+Date:   Sat Apr 20 12:46:08 2019 +0200
+
+    ajout
+
+ template_v2/src/main.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+commit 5da66fe5a3021f4d92e1902f272c5e695e07e670
+Author: Blanpain_Thibault <thibault.blanpain@student.uclouvain.be>
+Date:   Sat Apr 20 12:35:50 2019 +0200
+
+    etapes
+
+ template_v2/src/main.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
+
+commit 55e43c92ed4af5d661dd3c16da617d439f3645d3
+Author: Blanpain_Thibault <thibault.blanpain@student.uclouvain.be>
+Date:   Sat Apr 20 12:32:21 2019 +0200
+
+    include
+
+ template_v2/src/main.c | 2 ++
+ 1 file changed, 2 insertions(+)
+
+commit e89df0671ed77e9fb54cc3be540bb272b1454074
+Merge: 1bfd9d0 39aefbe
+Author: Blanpain_Thibault <thibault.blanpain@student.uclouvain.be>
+Date:   Sat Apr 20 12:22:31 2019 +0200
+
+    Merge branch 'master' of https://github.com/ThibaultBlanpain/LSINF1252_projet_cracker_Nat1236_and_ThibaultBlanpain
+
+commit 1bfd9d05849a79917718f785ea69cc1e34cce2a4
+Author: Blanpain_Thibault <thibault.blanpain@student.uclouvain.be>
+Date:   Sat Apr 20 12:22:17 2019 +0200
+
+    main
+
+ template_v2/src/compiling_error.txt | 7 -------
+ template_v2/src/main.c              | 6 ++++++
+ 2 files changed, 6 insertions(+), 7 deletions(-)
+
+commit 39aefbe1838a3bfb43e5f2a7e2e2e258b71777a2
+Author: Natacha Goux <natacha@goux.be>
+Date:   Sat Apr 20 12:00:38 2019 +0200
+
+    hello vide
+
+ hello.c | 1 -
+ 1 file changed, 1 deletion(-)
+
+commit d2145e98b1879a26aae66de0aacca6617255319b
+Author: Blanpain_Thibault <thibault.blanpain@student.uclouvain.be>
+Date:   Sat Apr 20 12:00:31 2019 +0200
+
+    bye bye commentaire inutile
+
+ hello.c | 1 -
+ 1 file changed, 1 deletion(-)
+
+commit 25fb703538051631420ebdcfd0b82c418f61638f
+Author: Blanpain_Thibault <thibault.blanpain@student.uclouvain.be>
+Date:   Sat Apr 20 11:59:34 2019 +0200
+
+    erreur compilation reverse
+
+ template_v2/src/compiling_error.txt | 7 +++++++
+ 1 file changed, 7 insertions(+)
+
+commit df31abebc43ffd409dba119afb24765984341a28
+Author: Blanpain_Thibault <thibault.blanpain@student.uclouvain.be>
+Date:   Sat Apr 20 11:38:30 2019 +0200
+
+    Tous fichiers
+
+ template_v2/Makefile      |    1 +
+ template_v2/src/reverse.c |   50 +++
+ template_v2/src/reverse.h |   18 +
+ template_v2/src/sha256.c  |  563 +++++++++++++++++++++++++
+ template_v2/src/sha256.h  |   91 +++++
+ test-input/01_4c_1k.bin   |  Bin 0 -> 32000 bytes
+ test-input/01_4c_1k.txt   | 1000 +++++++++++++++++++++++++++++++++++++++++++++
+ test-input/02_6c_5.bin    |    5 +
+ test-input/02_6c_5.txt    |    5 +
+ 9 files changed, 1733 insertions(+)
+
+commit 970ea24de094df4ae81c9832f3a07b5d4ef6f20c
+Author: Natacha Goux <natacha@goux.be>
+Date:   Sat Apr 20 11:19:25 2019 +0200
+
+    commentaire inutile
+
+ hello.c | 1 +
+ 1 file changed, 1 insertion(+)
+
+commit c44ebf12c6ee78af2a0f15610b334c9d721c9aba
+Author: ThibaultBlanpain <43477828+ThibaultBlanpain@users.noreply.github.com>
+Date:   Sat Apr 20 10:39:57 2019 +0200
+
+    Add files via upload
+
+ hello.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
+
+commit c1497e376c670a72c8eb255ade0e87f8cff23884
+Author: ThibaultBlanpain <43477828+ThibaultBlanpain@users.noreply.github.com>
+Date:   Sat Apr 20 10:39:18 2019 +0200
+
+    Initial commit
+
+ README.md | 1 +
+ 1 file changed, 1 insertion(+)
