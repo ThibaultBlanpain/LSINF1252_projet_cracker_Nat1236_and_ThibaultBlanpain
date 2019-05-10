@@ -120,7 +120,7 @@ Candid_Node *init_node(char * codeClair)
   Candid_Node *a=NULL;
   a = (Candid_Node *) malloc(sizeof(Candid_Node));
   if(!a)
-    return NULL
+    return NULL;
 
   strcpy(a->codeclair,codeClair);
   a->next = NULL;
