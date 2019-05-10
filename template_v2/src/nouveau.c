@@ -262,7 +262,13 @@ void *lecture(void *fichiers)
     printf("Lecture du fichier numero %d\n", i);
     int size = 32 * sizeof(uint8_t);
     buf = (uint8_t *) malloc(size);
-    int rd = read(fd, &buf, size);
+    int rd = read(fd, (void *) buf, size);
+    int j;
+    printf("Premier Hash (producer) =");
+    for(j=0; j<32;j++){
+      printf("%d",buf[j]);
+    }
+    printf("\n");
     while(rd > 0)
     {
       sem_wait(&semHashBufEmpty);
@@ -271,16 +277,22 @@ void *lecture(void *fichiers)
         sem_wait(&semHashBufEmpty);
       }
       pthread_mutex_lock(&mutexIndex);
-      printf("après le lock\n");
+      printf("L après le lock\n");
       //strcpy((char *) HashBuf[indexG],(char *) buf);
       HashBuf[indexG] = buf ;
       buf = (uint8_t *) malloc(size);
       indexG += 1;
-      rd = read(fd, &buf, size);
+      rd = read(fd,(void *) buf, size);
+      printf("Readvalue = %d \n", rd);
+      printf("Hash (producer) =");
+      for(j=0; j<32;j++){
+        printf("%d",buf[j]);
+      }
+      printf("\n");
       sem_post(&semHashBufFull); /* et oui, on a ajoute un element au tableau */
       sem_post(&semHashBufEmpty);
       pthread_mutex_unlock(&mutexIndex);
-      printf("mutex unlock\n");
+      printf("L mutex unlock\n");
     }
     printf("après la while\n");
     if(rd == 0)
@@ -328,17 +340,25 @@ void *reverseHashFunc()
   while(indexG >= 0 && varProd)
   {
     //char *candid = (char *) malloc(16);
-    char * candid = malloc(16*sizeof(char));
+    char * candid = malloc(17*sizeof(char));
     sem_wait(&semHashBufFull);
     pthread_mutex_lock(&mutexIndex);
+    printf("R après le lock \n");
     indexG -= 1;
     uint8_t * localHash = HashBuf[indexG];
     HashBuf[indexG] = NULL;
 //    free(HashBuf[indexG]) ;
     pthread_mutex_unlock(&mutexIndex);
     sem_post(&semHashBufEmpty); /* et oui, une place vient de se liberer */
+    int j;
+    printf("Hash (reverse) =");
+    for(j=0; j<32;j++){
+      printf("%d",localHash[j]);
+    }
+    printf("\n");
     printf("avant le reversehash\n");
     bool err = reversehash(localHash, candid, 16);
+    printf("MDP trouvé : %s \n", candid);
 
     /*est-ce qu'on rajouterait pas deux autres semaphores pour si le tab de mdp est full ou pas ??*/
     printf("apres le reversehash\n");
@@ -384,8 +404,8 @@ int main(int argc, char **argv)
 {
   sem_init(&semHashBufEmpty,0,1);
   sem_init(&semHashBufFull, 0, 0);
-  sem_init(&semmpdfull,0,0);
-  sem_init(&semmdpempty,0,1);
+//  sem_init(&semmpdfull,0,0);
+//  sem_init(&semmdpempty,0,1);
 /////////////////////////////////////////////////////////////////////////////////////////
   /* etape 0: lecture des options */
   /* penser a implementer de la programmation defensive (sur les options, qui ne
@@ -443,7 +463,7 @@ seront pas d office des int ou char*) */
   int i ;
   int placeFich = 0 ;
   HashBufSize = sizeof(uint8_t *)*32*nthread;
-  HashBuf = (uint8_t **) malloc(nthread*sizeof(uint8_t **));
+  HashBuf = (uint8_t **) malloc(nthread*sizeof(uint8_t*));
   if (HashBuf)
   {
     for (i=0; i < nthread; i++)
