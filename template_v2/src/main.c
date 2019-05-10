@@ -25,6 +25,7 @@ Variables globales du programme
 int TAILLEFICHIERLIRE;
 int HashBufSize;
 bool consonne = false;
+long int nthread = 1;
 uint8_t ** HashBuf;
 typedef struct Candidats
 {
@@ -293,7 +294,10 @@ void *lecture(void *fichiers)
       }
       printf("\n");
       sem_post(&semHashBufFull); /* et oui, on a ajoute un element au tableau */
-      sem_post(&semHashBufEmpty);
+      if(indexG < nthread-1)
+      {
+        sem_post(&semHashBufEmpty);
+      }
       pthread_mutex_unlock(&mutexIndex);
       printf("L mutex unlock\n");
     }
@@ -414,7 +418,7 @@ int main(int argc, char **argv)
   /* penser a implementer de la programmation defensive (sur les options, qui ne
 seront pas d office des int ou char*) */
 /////////////////////////////////////////////////////////////////////////////////////////
-  long int nthread = 1;
+
   char *fichierout = NULL;
   int opt;
   while ((opt = getopt(argc, argv, "t:co:")) != -1)
@@ -440,10 +444,11 @@ seront pas d office des int ou char*) */
        return -1;
     }
   }
-  if (optind == argc) {
+  if (optind == argc)
+  {
         fprintf (stderr, "Il est nécessaire de spécifier au moins un argument.\n");
         return -1;
-    }
+  }
 
   /* petite section de test de vérification des options */
   printf("Nombre de threads: %ld \n", nthread);
@@ -467,6 +472,10 @@ seront pas d office des int ou char*) */
   int placeFich = 0 ;
   HashBufSize = nthread;
   HashBuf = (uint8_t **) malloc(nthread*sizeof(uint8_t*));
+  if(!HashBuf)
+  {
+    printf("not hashbuf due to malloc\n");
+  }
   if (HashBuf)
   {
     for (i=0; i < nthread; i++)
