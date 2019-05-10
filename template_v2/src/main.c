@@ -18,7 +18,7 @@
 
 /////////////////////////////////////////////////////////////////////////////////////////
 /*
-Variables globales
+Variables globales du programme
 */
 /////////////////////////////////////////////////////////////////////////////////////////
 
@@ -42,7 +42,8 @@ typedef struct list {
 size_t sizeReverseMdp = 16;
 int indexG = 0;
 list_t * ListCandidat;
-/*variable indiquant que le thread de lecture continue à lire :
+
+/* varProd = variable indiquant que le thread de lecture continue à lire :
 vaut 1 si le thread est en train de lire
 vaut 0 si le thread de lecture a terminé*/
 int varProd = 1;
@@ -53,15 +54,13 @@ pthread_mutex_t mutexTAILLEFICHIERLIRE;
 sem_t semHashBufEmpty;
 sem_t semHashBufFull;
 
-/* sem_t semmdpempty ;
-sem_t semmpdfull ; */
 
 
-/* fonctions utilitaires */
+/* Fonctions utilitaires */
 
 /////////////////////////////////////////////////////////////////////////////////////////
 /*
-fonction qui affiche sur la sortie standard les codes clairs de la liste : ListCandidat
+Fonction qui affiche sur la sortie standard les codes clairs de la liste : ListCandidat
 retourne 0 si les candidats ont été affichés
 retourne -1 sinon
 */
@@ -88,7 +87,7 @@ int displaySpec(list_t * ListCandidat)
 
 /////////////////////////////////////////////////////////////////////////////////////////
 /*
-fonction créant un noeud
+Fonction créant un noeud
 @pre: prend un code clair (reversehash) en entrée
 retourne un pointeur vers le noeud créé
 retourne NULL si le noeud n'a pas pu etre créé
@@ -108,7 +107,7 @@ Candid_Node *init_node(char * codeClair)
 
 /////////////////////////////////////////////////////////////////////////////////////////
 /*
-fonction créant et puis ajoutant un noeud à la suite d'une liste
+Fonction créant et puis ajoutant un noeud à la suite d'une liste
 retourne 0 si le noeud a été ajouté
 retourne -1 sinon
 */
@@ -134,7 +133,7 @@ int add_node(struct list * list, char * codeClair)
 
 /////////////////////////////////////////////////////////////////////////////////////////
 /*
-fonction de comparaison
+Fonction de comparaison
 retourne -1 si a < b,
 retourne 0 si a == b,
 retourne 1 si a > b;
@@ -189,8 +188,8 @@ void calculNbrOccu(Candid_Node * Node)
 
 /////////////////////////////////////////////////////////////////////////////////////////
 /*
-fonction dont le but est d'enlever les candidats dont le nombre nbrOccurence
-n'est pas egal au nbrOccurence le plus grand
+Fonction dont le but est d'enlever les candidats dont le nombre nbrOccurence
+n'est pas égal au nbrOccurence le plus grand
 retourne 1 en cas d'exécution correcte,
 retourne -1 en cas d'échec.
 il faut encore gérer le cas ou on doit enlever le premier noeud
@@ -241,7 +240,7 @@ les threads:
 
 /////////////////////////////////////////////////////////////////////////////////////////
 /*
-0- thread de lecture: prend un tableau de noms de fichiers .bin en argument, lit
+0- Thread de lecture : prend un tableau de noms de fichiers .bin en argument, lit
 ces fichiers et stocke les hashs lus dans un buffer nomme HashBuf.
 */
 /////////////////////////////////////////////////////////////////////////////////////////
@@ -334,7 +333,7 @@ void *lecture(void *fichiers)
 
 /////////////////////////////////////////////////////////////////////////////////////////
 /*
-1- thread d'ecriture: se nourrit directement dans le tableau HashBuf, reversehash
+1- Thread d'écriture : se nourrit directement dans le tableau HashBuf, reversehash
 ses elements un par un et stock les reversehash dans un tableau Reversed.
 */
 /////////////////////////////////////////////////////////////////////////////////////////
@@ -411,7 +410,7 @@ int main(int argc, char **argv)
 //  sem_init(&semmpdfull,0,0);
 //  sem_init(&semmdpempty,0,1);
 /////////////////////////////////////////////////////////////////////////////////////////
-  /* etape 0: lecture des options */
+  /* Etape 0: lecture des options */
   /* penser a implementer de la programmation defensive (sur les options, qui ne
 seront pas d office des int ou char*) */
 /////////////////////////////////////////////////////////////////////////////////////////
@@ -446,7 +445,7 @@ seront pas d office des int ou char*) */
         return -1;
     }
 
-  /* petite section de test de verification des options */
+  /* petite section de test de vérification des options */
   printf("Nombre de threads: %ld \n", nthread);
   printf("Tri par consonne? %s \n", consonne ? "true" : "false");
   if (fichierout != NULL)
@@ -455,7 +454,7 @@ seront pas d office des int ou char*) */
   /* fin de la petite section de test des options */
 
 /////////////////////////////////////////////////////////////////////////////////////////
-  /* etape 1: lecture des fichiers de hash
+  /* Etape 1: lecture des fichiers de hash
   il faut des threads (un par type d entree)
   */
   /* on cherche tous les fichier .bin (a lire) */
@@ -466,7 +465,7 @@ seront pas d office des int ou char*) */
 
   int i ;
   int placeFich = 0 ;
-  HashBufSize = sizeof(uint8_t *)*32*nthread;
+  HashBufSize = nthread;
   HashBuf = (uint8_t **) malloc(nthread*sizeof(uint8_t*));
   if (HashBuf)
   {
@@ -500,7 +499,7 @@ seront pas d office des int ou char*) */
 
 
 /////////////////////////////////////////////////////////////////////////////////////////
-  /* etape 2: reversehash
+  /* Etape 2: reversehash
   création de tous les thread de reversehash
   */
 /////////////////////////////////////////////////////////////////////////////////////////
@@ -514,7 +513,7 @@ seront pas d office des int ou char*) */
     }
   }
 /////////////////////////////////////////////////////////////////////////////////////////
-/* etape 3: trieur
+/* Etape 3: trieur
 appel à la fonction trieur qui supprime tous les mauvais candidats de la liste chaînée
 */
 /////////////////////////////////////////////////////////////////////////////////////////
@@ -529,12 +528,12 @@ appel à la fonction trieur qui supprime tous les mauvais candidats de la liste 
   }
 
   /////////////////////////////////////////////////////////////////////////////////////////
-  /* etape 4: display ligne par ligne
+  /* Etape 4: display ligne par ligne
   appel à la fonction display qui écrit sur soit la sortie standard, soit dans un fichier
   précisé, les bons candidats, un par ligne
   */
   /////////////////////////////////////////////////////////////////////////////////////////
-  //affichage sur la stortie standart
+  //affichage sur la stortie standard
   if(fichierout == NULL)
   {
     int retDisp = displayStd(ListCandidat);

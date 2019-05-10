@@ -1,6 +1,6 @@
 file = src/main.c src/reverse.c src/sha256.c src/reverse.h src/sha256.h
 cracker:$(file)
-	gcc -Wall -Werror -o cracker src/main.c src/reverse.c src/sha256.c -lpthread
+	gcc -Wall -Werror -o cracker src/main.c src/reverse.c src/sha256.c -g -lpthread -std=c99
 tests:
 	make cracker
 	./cracker tests/4hash.bin
