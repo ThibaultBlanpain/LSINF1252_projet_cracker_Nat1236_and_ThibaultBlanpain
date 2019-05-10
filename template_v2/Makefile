@@ -3,6 +3,7 @@ cracker:$(file)
 	gcc -Wall -Werror -o cracker src/main.c src/reverse.c src/sha256.c -g -lpthread -std=c99
 tests:
 	make cracker
+    valgrind --leak-check=full ./cracker tests/4hash.bin
 	./cracker tests/4hash.bin
 	./cracker tests/01_4c_1k.bin
 	./cracker -t 6 tests/01_4c_1k.bin

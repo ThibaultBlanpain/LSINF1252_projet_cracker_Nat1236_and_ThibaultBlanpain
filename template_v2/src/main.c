@@ -12,7 +12,6 @@
 #include <getopt.h>
 #include <semaphore.h>
 
-
 #include "reverse.h"
 #include "sha256.h"
 
@@ -27,6 +26,7 @@ int HashBufSize;
 bool consonne = false;
 long int nthread = 1;
 uint8_t ** HashBuf;
+
 typedef struct Candidats
 {
   struct Candidats * next;
@@ -41,20 +41,21 @@ typedef struct list {
 } list_t;
 
 size_t sizeReverseMdp = 16;
-int indexG = 0;
+uint8_t indexG = 0;
 list_t * ListCandidat;
 
 /* varProd = variable indiquant que le thread de lecture continue à lire :
 vaut 1 si le thread est en train de lire
 vaut 0 si le thread de lecture a terminé*/
 int varProd = 1;
+/* quand les threads consommateurs ont fini de predre les hashs*/
 int varFinito = 0;
+
 pthread_mutex_t mutexIndex;
 pthread_mutex_t mutexTAILLEFICHIERLIRE;
 
 sem_t semHashBufEmpty;
 sem_t semHashBufFull;
-
 
 
 /* Fonctions utilitaires */
@@ -267,44 +268,28 @@ void *lecture(void *fichiers)
     int size = 32 * sizeof(uint8_t);
     buf = (uint8_t *) malloc(size);
     int rd = read(fd, (void *) buf, size);
-    int j;
-    printf("Premier Hash (producer) =");
-    for(j=0; j<32;j++){
-      printf("%d",buf[j]);
-    }
-    printf("\n");
     while(rd > 0)
     {
       sem_wait(&semHashBufEmpty);
-      if(indexG >= HashBufSize)
+  /*    if(indexG >= HashBufSize)
       {
         sem_wait(&semHashBufEmpty);
-      }
+      } */
       pthread_mutex_lock(&mutexIndex);
-      printf("L après le lock\n");
-      //strcpy((char *) HashBuf[indexG],(char *) buf);
       HashBuf[indexG] = buf ;
       buf = (uint8_t *) malloc(size);
       indexG += 1;
       rd = read(fd,(void *) buf, size);
-      printf("Readvalue = %d \n", rd);
-      printf("Hash (producer) =");
-      for(j=0; j<32;j++){
-        printf("%d",buf[j]);
-      }
-      printf("\n");
       sem_post(&semHashBufFull); /* et oui, on a ajoute un element au tableau */
       if(indexG < nthread-1)
       {
         sem_post(&semHashBufEmpty);
       }
       pthread_mutex_unlock(&mutexIndex);
-      printf("L mutex unlock\n");
     }
-    printf("après la while\n");
     if(rd == 0)
     {
-      printf("fermeture du fichier\n");
+      printf("Fermeture du fichier\n");
       int err;
       err = close(fd);
       if(err==-1)
@@ -325,15 +310,16 @@ void *lecture(void *fichiers)
       printf("Echec de la lecture du fichier. Ce fichier a pu etre ferme\n");
       pthread_exit(NULL); //fails to read ok
     }
-    printf("Le fichier a été ouvert, lu et fermé\n");
+    printf("Le fichier a ete ouvert, lu et ferme\n");
   }
   //la thread de lecture se finit.
   varProd = 0;
-  printf("Tous les fichiers ont été lus, ouverts et fermés\n");
+  printf("Tous les fichiers ont ete lus, ouverts et fermes\n");
   sem_destroy(&semHashBufEmpty);
   free(buf); //on free la mémoire allouée précédemment
   pthread_exit(NULL);
 }
+
 
 /////////////////////////////////////////////////////////////////////////////////////////
 /*
@@ -350,49 +336,34 @@ void *reverseHashFunc()
     char * candid = malloc(17*sizeof(char));
     sem_wait(&semHashBufFull);
     pthread_mutex_lock(&mutexIndex);
-    printf("R après le lock \n");
     indexG -= 1;
     uint8_t * localHash = HashBuf[indexG];
     HashBuf[indexG] = NULL;
-//    free(HashBuf[indexG]) ;
     pthread_mutex_unlock(&mutexIndex);
     sem_post(&semHashBufEmpty); /* et oui, une place vient de se liberer */
-    int j;
-    printf("Hash (reverse) =");
-    for(j=0; j<32;j++){
-      printf("%d",localHash[j]);
-    }
-    printf("\n");
-    printf("avant le reversehash\n");
     bool err = reversehash(localHash, candid, 16);
-    printf("MDP trouvé : %s \n", candid);
-
-    /*est-ce qu'on rajouterait pas deux autres semaphores pour si le tab de mdp est full ou pas ??*/
-    printf("apres le reversehash\n");
+    printf("MDP trouve : %s \n", candid);
     if(!err)
     {
-      printf("aucun inverse n a ete trouve\n");
+      printf("Aucun inverse n a ete trouve\n");
     }
     if(err)
     {
       int ret = add_node(ListCandidat, candid);
       if(ret == -1)
       {
-        printf("Erreur dans l'ajout des noeuds à la liste des candidats");
+        printf("Erreur dans l ajout des noeuds a la liste des candidats");
       }
       return (void *) 0;
     }
     else
     {
-      printf("Aucun candidat n'a pu être trouvé pour au moins un hash");
+      printf("Aucun candidat n a pu etre trouve pour au moins un hash");
     }
   }
   varFinito += 1;
   pthread_exit(NULL);
 }
-
-
-
 
 
 /*
@@ -403,21 +374,19 @@ les etapes du programme:
 3- trier
 4- display ligne par ligne
 
-retourne 0 si l execution a pu se terminer
+Fonction main :
+retourne 0 si l'exécution a pu se terminer
 retourne -1 sinon.
 */
-
 int main(int argc, char **argv)
 {
   sem_init(&semHashBufEmpty,0,1);
   sem_init(&semHashBufFull, 0, 0);
-//  sem_init(&semmpdfull,0,0);
-//  sem_init(&semmdpempty,0,1);
-/////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////
   /* Etape 0: lecture des options */
   /* penser a implementer de la programmation defensive (sur les options, qui ne
 seront pas d office des int ou char*) */
-/////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////
 
   char *fichierout = NULL;
   int opt;
@@ -440,13 +409,13 @@ seront pas d office des int ou char*) */
        if (optopt == 'o')
          fprintf (stderr, "Option -%c requiert un argument.\n", optopt);
        else
-         fprintf (stderr, "Caractère d'option inconnu `\\x%x'.\n", optopt);
+         fprintf (stderr, "Caractere d option inconnu `\\x%x'.\n", optopt);
        return -1;
     }
   }
   if (optind == argc)
   {
-        fprintf (stderr, "Il est nécessaire de spécifier au moins un argument.\n");
+        fprintf (stderr, "Il est necessaire de specifier au moins un argument.\n");
         return -1;
   }
 
@@ -454,7 +423,7 @@ seront pas d office des int ou char*) */
   printf("Nombre de threads: %ld \n", nthread);
   printf("Tri par consonne? %s \n", consonne ? "true" : "false");
   if (fichierout != NULL)
-    printf("Le fichier de sortie a été spécifié comme: %s \n", fichierout);
+    printf("Le fichier de sortie a ete specifie comme: %s \n", fichierout);
   printf("argc: %d, optind: %d \n", argc, optind);
   /* fin de la petite section de test des options */
 
@@ -474,7 +443,7 @@ seront pas d office des int ou char*) */
   HashBuf = (uint8_t **) malloc(nthread*sizeof(uint8_t*));
   if(!HashBuf)
   {
-    printf("not hashbuf due to malloc\n");
+    printf("not Hashbuf due to malloc\n");
   }
   if (HashBuf)
   {
@@ -533,7 +502,7 @@ appel à la fonction trieur qui supprime tous les mauvais candidats de la liste 
   int retTri = trieur(ListCandidat);
   if (retTri == -1)
   {
-    printf("La liste de candidats n'a pas pu être triée\n");
+    printf("La liste de candidats n a pas pu être triee\n");
   }
 
   /////////////////////////////////////////////////////////////////////////////////////////
@@ -548,7 +517,7 @@ appel à la fonction trieur qui supprime tous les mauvais candidats de la liste 
     int retDisp = displayStd(ListCandidat);
     if(retDisp == -1)
     {
-      printf("Les candidats n'ont pas pu être affichés\n");
+      printf("Les candidats n ont pas pu etre affiches\n");
     }
     return 0;
   }
@@ -559,13 +528,10 @@ appel à la fonction trieur qui supprime tous les mauvais candidats de la liste 
     int retDispSpec = displaySpec(ListCandidat);
     if(retDispSpec == -1)
     {
-      printf("Les candidats n'ont pas pu être affichés\n");
+      printf("Les candidats n ont pas pu etre affiches\n");
     }
     return 0;
   }
-
-
-  /* rajouter phtread_join non ? */
 
   free(HashBuf);
 
