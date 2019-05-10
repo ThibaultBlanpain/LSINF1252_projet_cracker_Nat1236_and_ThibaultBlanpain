@@ -17,6 +17,27 @@
 
 /////////////////////////////////////////////////////////////////////////////////////////
 /*
+Introduction au programme:
+Ce programme a pour objectif de proposer une liste de mots de passe decrytptes,
+a partir de fichiers comprenant les hashs de ces mots de passe.
+
+Il est evident que ce programme n est pas fonctionnel. Cependant, en se basant
+sur le rapport, il est possible de comprendre l idee derriere ce programme.
+
+Afin de permettre au lecteur de se reperer dans ce programme qui n a pas ete decoupe
+en plusieurs fichiers ".c" et ".h", voici la structure globale de celui-ci:
+
+-lignes 45 a 79 : variables globales
+-lignes 82 a 248 : fonctions utilitaires
+-lignes 252 a 375 : thread de lecture suivi du thread de reversehash
+-lignes 378 a 541 : fonction main
+
+*/
+/////////////////////////////////////////////////////////////////////////////////////////
+
+
+/////////////////////////////////////////////////////////////////////////////////////////
+/*
 Variables globales du programme
 */
 /////////////////////////////////////////////////////////////////////////////////////////
@@ -48,7 +69,7 @@ list_t * ListCandidat;
 vaut 1 si le thread est en train de lire
 vaut 0 si le thread de lecture a terminé*/
 int varProd = 1;
-/* quand les threads consommateurs ont fini de predre les hashs*/
+/* variable indiquant quand les threads consommateurs ont fini de consommer les hashs*/
 int varFinito = 0;
 
 pthread_mutex_t mutexIndex;
@@ -59,10 +80,9 @@ sem_t semHashBufFull;
 
 
 /* Fonctions utilitaires */
-
 /////////////////////////////////////////////////////////////////////////////////////////
 /*
-Fonction qui affiche sur la sortie standard les codes clairs de la liste : ListCandidat
+Fonction qui affiche sur la sortie standard les codes clairs de la liste ListCandidat
 retourne 0 si les candidats ont été affichés
 retourne -1 sinon
 */
@@ -100,9 +120,9 @@ Candid_Node *init_node(char * codeClair)
   Candid_Node *a=NULL;
   a = (Candid_Node *) malloc(sizeof(Candid_Node));
   if(!a)
-    return NULL;
+    return NULL
+
   strcpy(a->codeclair,codeClair);
-//  a->codeclair = codeClair;
   a->next = NULL;
   return a;
 }
@@ -152,7 +172,7 @@ int compare(int a, int b)
 
 /////////////////////////////////////////////////////////////////////////////////////////
 /*
-calcule le nombre d'occurence de voyelles/consonnes (selon le bool consonne) d'un candidat
+Calcule le nombre d'occurence de voyelles/consonnes (selon le bool consonne) d'un candidat
 et modifie dans la struct Candidats le paramètre nbrOccurence .
 */
 /////////////////////////////////////////////////////////////////////////////////////////
@@ -188,13 +208,13 @@ void calculNbrOccu(Candid_Node * Node)
   return;
 }
 
+
 /////////////////////////////////////////////////////////////////////////////////////////
 /*
 Fonction dont le but est d'enlever les candidats dont le nombre nbrOccurence
 n'est pas égal au nbrOccurence le plus grand
 retourne 1 en cas d'exécution correcte,
 retourne -1 en cas d'échec.
-il faut encore gérer le cas ou on doit enlever le premier noeud
 */
 /////////////////////////////////////////////////////////////////////////////////////////
 int trieur(list_t *ListCandidat)
@@ -211,7 +231,6 @@ int trieur(list_t *ListCandidat)
     /* il faut enlever le noeud suivant */
     if(compare(runner->next->nbrOccurence, ListCandidat->nbrOccMax) == -1)
     {
-      //ajouter un struct Candidats tmp * et puis free()
       struct Candidats * tmp = runner->next;
       runner->next = runner->next->next;
       free(tmp);
@@ -230,13 +249,11 @@ int trieur(list_t *ListCandidat)
 
 
 
-
 /////////////////////////////////////////////////////////////////////////////////////////
 /*
 les threads:
 0- lecture
 1- ecriture
-2- thread
 */
 /////////////////////////////////////////////////////////////////////////////////////////
 
@@ -248,20 +265,19 @@ ces fichiers et stocke les hashs lus dans un buffer nomme HashBuf.
 /////////////////////////////////////////////////////////////////////////////////////////
 void *lecture(void *fichiers)
 {
-  //structure de preference...
   pthread_mutex_lock(&mutexTAILLEFICHIERLIRE);
   int argc = TAILLEFICHIERLIRE;
   pthread_mutex_unlock(&mutexTAILLEFICHIERLIRE);
   char ** fichs = (char **) fichiers;
   int i;
   uint8_t * buf;
-  for(i = 0; i < argc ; i++) //&& fichs[i] != NULL
+  for(i = 0; i < argc ; i++)
   {
-    printf("Préparation de l'ouverture du fichier %s\n", fichs[i]);
+    printf("Préparation de l ouverture du fichier %s\n", fichs[i]);
     int fd = open(fichs[i], O_RDONLY);
     if(fd == -1)
     {
-      printf("Echec de l'ouverture du fichier %s\n", fichs[i]);
+      printf("Echec de l ouverture du fichier %s\n", fichs[i]);
       pthread_exit(NULL); //fails to open ok
     }
     printf("Lecture du fichier numero %d\n", i);
@@ -271,10 +287,6 @@ void *lecture(void *fichiers)
     while(rd > 0)
     {
       sem_wait(&semHashBufEmpty);
-  /*    if(indexG >= HashBufSize)
-      {
-        sem_wait(&semHashBufEmpty);
-      } */
       pthread_mutex_lock(&mutexIndex);
       HashBuf[indexG] = buf ;
       buf = (uint8_t *) malloc(size);
@@ -312,8 +324,7 @@ void *lecture(void *fichiers)
     }
     printf("Le fichier a ete ouvert, lu et ferme\n");
   }
-  //la thread de lecture se finit.
-  varProd = 0;
+  varProd = 0; //Le thread de lecture se finit.
   printf("Tous les fichiers ont ete lus, ouverts et fermes\n");
   sem_destroy(&semHashBufEmpty);
   free(buf); //on free la mémoire allouée précédemment
@@ -324,15 +335,13 @@ void *lecture(void *fichiers)
 /////////////////////////////////////////////////////////////////////////////////////////
 /*
 1- Thread d'écriture : se nourrit directement dans le tableau HashBuf, reversehash
-ses elements un par un et stock les reversehash dans un tableau Reversed.
+ses elements un par un et stocke les reversehash dans un tableau Reversed.
 */
 /////////////////////////////////////////////////////////////////////////////////////////
 void *reverseHashFunc()
 {
-//  uint8_t *localHash;
   while(indexG >= 0 && varProd)
   {
-    //char *candid = (char *) malloc(16);
     char * candid = malloc(17*sizeof(char));
     sem_wait(&semHashBufFull);
     pthread_mutex_lock(&mutexIndex);
@@ -360,7 +369,7 @@ void *reverseHashFunc()
     {
       printf("Aucun candidat n a pu etre trouve pour au moins un hash");
     }
-  }
+  } //Fin de la boucle while
   varFinito += 1;
   pthread_exit(NULL);
 }
@@ -375,7 +384,7 @@ les etapes du programme:
 4- display ligne par ligne
 
 Fonction main :
-retourne 0 si l'exécution a pu se terminer
+retourne 0 si l execution a pu se terminer
 retourne -1 sinon.
 */
 int main(int argc, char **argv)
@@ -384,8 +393,6 @@ int main(int argc, char **argv)
   sem_init(&semHashBufFull, 0, 0);
 //////////////////////////////////////////////
   /* Etape 0: lecture des options */
-  /* penser a implementer de la programmation defensive (sur les options, qui ne
-seront pas d office des int ou char*) */
 //////////////////////////////////////////////
 
   char *fichierout = NULL;
@@ -419,7 +426,7 @@ seront pas d office des int ou char*) */
         return -1;
   }
 
-  /* petite section de test de vérification des options */
+  /* petite section de test de verification des options */
   printf("Nombre de threads: %ld \n", nthread);
   printf("Tri par consonne? %s \n", consonne ? "true" : "false");
   if (fichierout != NULL)
@@ -432,15 +439,12 @@ seront pas d office des int ou char*) */
   il faut des threads (un par type d entree)
   */
   /* on cherche tous les fichier .bin (a lire) */
-
-  /* A faire : maintenant que les fichiers a lire (.bin) sont stockes dans un tableau, il
-  faut les differencier, selon leur provenance et les lire */
 /////////////////////////////////////////////////////////////////////////////////////////
 
   int i ;
   int placeFich = 0 ;
   HashBufSize = nthread;
-  HashBuf = (uint8_t **) malloc(nthread*sizeof(uint8_t*));
+  HashBuf = (uint8_t **) malloc(nthread * sizeof(uint8_t*));
   if(!HashBuf)
   {
     printf("not Hashbuf due to malloc\n");
@@ -457,7 +461,7 @@ seront pas d office des int ou char*) */
   TAILLEFICHIERLIRE = argc-optind;
   char *fichs[TAILLEFICHIERLIRE];
   pthread_mutex_unlock(&mutexTAILLEFICHIERLIRE);
-  for(i = optind; i < argc; i++)
+  for (i = optind; i < argc; i++)
   {
     char *argTestBin = argv[i];
     int lengthArg = strlen(argTestBin);
@@ -478,7 +482,7 @@ seront pas d office des int ou char*) */
 
 /////////////////////////////////////////////////////////////////////////////////////////
   /* Etape 2: reversehash
-  création de tous les thread de reversehash
+  Creation de tous les threads de reversehash
   */
 /////////////////////////////////////////////////////////////////////////////////////////
   pthread_t thread_reverseHash;
@@ -492,7 +496,7 @@ seront pas d office des int ou char*) */
   }
 /////////////////////////////////////////////////////////////////////////////////////////
 /* Etape 3: trieur
-appel à la fonction trieur qui supprime tous les mauvais candidats de la liste chaînée
+Appel a la fonction trieur qui supprime tous les mauvais candidats de la liste chainee
 */
 /////////////////////////////////////////////////////////////////////////////////////////
   while(varFinito != nthread)
@@ -507,7 +511,7 @@ appel à la fonction trieur qui supprime tous les mauvais candidats de la liste 
 
   /////////////////////////////////////////////////////////////////////////////////////////
   /* Etape 4: display ligne par ligne
-  appel à la fonction display qui écrit sur soit la sortie standard, soit dans un fichier
+  Appel a la fonction display qui ecrit sur soit la sortie standard, soit dans un fichier
   précisé, les bons candidats, un par ligne
   */
   /////////////////////////////////////////////////////////////////////////////////////////
@@ -521,7 +525,7 @@ appel à la fonction trieur qui supprime tous les mauvais candidats de la liste 
     }
     return 0;
   }
-  //remplit le fichier "fichierout" qui a été spécifié.
+  //remplit le fichier "fichierout" qui a ete specifie.
   //doit encore etre implemente.
   else
   {
@@ -532,8 +536,6 @@ appel à la fonction trieur qui supprime tous les mauvais candidats de la liste 
     }
     return 0;
   }
-
   free(HashBuf);
-
   return EXIT_SUCCESS;
 } //fin de la main()
