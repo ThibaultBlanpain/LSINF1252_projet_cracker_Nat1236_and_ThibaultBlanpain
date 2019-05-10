@@ -180,6 +180,10 @@ void calculNbrOccu(Candid_Node * Node)
     nbrOccLocal = (strlen(localString) - 1 - nbrOccLocal);
   }
   Node->nbrOccurence = nbrOccLocal;
+  if(ListCandidat->nbrOccMax < Node->nbrOccurence)
+  {
+    ListCandidat->nbrOccMax = Node->nbrOccurence ;
+  }
   return;
 }
 
@@ -303,7 +307,7 @@ void *lecture(void *fichiers)
       if(err==-1)
       {
         printf("Echec de la fermeture du fichier\n");
-        pthread_exit(NULL); 
+        pthread_exit(NULL);
       }
     }
     if( rd < 0)
